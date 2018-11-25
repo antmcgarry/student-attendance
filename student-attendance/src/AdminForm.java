@@ -18,7 +18,7 @@ import student.attendance.tutorList;
 public class AdminForm extends javax.swing.JFrame {
     
     private static DefaultTableModel model;
-
+    public ArrayList<Tutor> list;
     /**
      * Creates new form AdminForm
      */
@@ -30,7 +30,7 @@ public class AdminForm extends javax.swing.JFrame {
     }
     
     private void getTutorList() {
-        ArrayList<Tutor> list;
+       
         tutorList tutorList = new tutorList();
         list = tutorList.getTutors();
         model = (DefaultTableModel) tutorTable.getModel();
@@ -64,7 +64,7 @@ public class AdminForm extends javax.swing.JFrame {
         tutorTable = new javax.swing.JTable();
         addButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
-        deleteTutor = new javax.swing.JButton();
+        removeTutor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1200, 500));
@@ -131,10 +131,10 @@ public class AdminForm extends javax.swing.JFrame {
             }
         });
 
-        deleteTutor.setText("DELETE TUTOR");
-        deleteTutor.addActionListener(new java.awt.event.ActionListener() {
+        removeTutor.setText("REMOVE TUTOR");
+        removeTutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteTutorActionPerformed(evt);
+                removeTutorActionPerformed(evt);
             }
         });
 
@@ -150,7 +150,7 @@ public class AdminForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(removeTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -163,7 +163,7 @@ public class AdminForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(removeTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 16, Short.MAX_VALUE))
         );
 
@@ -184,9 +184,16 @@ public class AdminForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_editButtonActionPerformed
 
-    private void deleteTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTutorActionPerformed
+    private void removeTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTutorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_deleteTutorActionPerformed
+            int selectedRowIndex = tutorTable.getSelectedRow();
+            Object tutorName = tutorTable.getValueAt(selectedRowIndex, 0);
+            String name = tutorName.toString();
+            int listIndex = list.indexOf(name);
+//            list.remove(listIndex);
+            model.removeRow(selectedRowIndex);
+            System.out.print("hello");
+    }//GEN-LAST:event_removeTutorActionPerformed
     public static void AddNewTutor(Tutor tutor){
         Object rowData[] = new Object[8];
         rowData[0] = tutor.getFirstName();
@@ -237,11 +244,11 @@ public class AdminForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JButton deleteTutor;
     private javax.swing.JButton editButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton removeTutor;
     private javax.swing.JTable tutorTable;
     // End of variables declaration//GEN-END:variables
 }
