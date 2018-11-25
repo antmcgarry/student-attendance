@@ -189,10 +189,13 @@ public class AdminForm extends javax.swing.JFrame {
             int selectedRowIndex = tutorTable.getSelectedRow();
             Object tutorName = tutorTable.getValueAt(selectedRowIndex, 0);
             String name = tutorName.toString();
-            int listIndex = list.indexOf(name);
-//            list.remove(listIndex);
+            for(int i = 0; i < list.size(); i++){
+                Tutor t = list.get(i);
+                if(name == t.getFirstName()){
+                    list.remove(t);
+                }
+            }
             model.removeRow(selectedRowIndex);
-            System.out.print("hello");
     }//GEN-LAST:event_removeTutorActionPerformed
     public static void AddNewTutor(Tutor tutor){
         Object rowData[] = new Object[8];
