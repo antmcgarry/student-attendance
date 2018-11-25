@@ -7,7 +7,7 @@ package student.attendance;
 
 /**
  *
- * @author ADMIN
+ * @author Anthony Mcgarry
  */
 public class Student extends Person {
     
@@ -21,10 +21,11 @@ public class Student extends Person {
         int age, 
         String dob, 
         String add,
-        int id
+        int id,
+        String email
     )
     {
-      super(fName, lName, age, dob, add);
+      super(fName, lName, age, dob, add, email);
       this.id = id;
     }
     
@@ -43,6 +44,5 @@ public class Student extends Person {
     public void setRegisteredType(String type){
         this.registered = type;
     }
-    
-    
+       
 }

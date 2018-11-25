@@ -18,13 +18,15 @@ public class Person {
     private int age;
     private final String dateOfBirth;
     private String address;
+    private String email;
     
-    public Person(String fName, String lName, int a, String dob, String add){
+    public Person(String fName, String lName, int a, String dob, String add, String e){
         this.firstName = fName;
         this.lastName = lName;
         this.age = a;
         this.dateOfBirth = dob;
         this.address = add;
+        this.email = e;
     }
 
     Person() {
@@ -60,6 +62,14 @@ public class Person {
     
     public void SetAddress(String add) {
         this.address = add;
+    }
+    
+    public String getEmail(){
+        return email;
+    }
+    
+    public void setEmail(String email){
+        this.email = email;
     }
     
 }
