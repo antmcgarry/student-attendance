@@ -5,6 +5,8 @@
  */
 package student.attendance;
 
+import static java.time.Clock.system;
+
 /**
  *
  * @author anthonymcgarry
@@ -16,6 +18,7 @@ public class StudentAttendance {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
     }
     
 }

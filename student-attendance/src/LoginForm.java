@@ -69,10 +69,8 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Ormskirk University Portal");
 
-        emailTextField.setBackground(new java.awt.Color(255, 255, 255));
         emailTextField.setText("Email");
 
-        passwordTextField.setBackground(new java.awt.Color(255, 255, 255));
         passwordTextField.setText("Password");
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
