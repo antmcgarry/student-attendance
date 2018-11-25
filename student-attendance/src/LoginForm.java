@@ -6,6 +6,7 @@
 
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -171,6 +172,12 @@ public class LoginForm extends javax.swing.JFrame {
             passwordTextField.setText("");
             emailTextField.setText("");
             //Render admin Frame
+            AdminForm af = new AdminForm();
+            af.setVisible(true);
+            af.pack();
+            af.setLocationRelativeTo(null);
+            af.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.dispose();
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 

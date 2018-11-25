@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1000, 1000]"/>
+      <Dimension value="[1200, 500]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -27,42 +27,15 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jPanel1" max="32767" attributes="0"/>
-          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="408" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="pLeaderCheck" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                  <Component id="addressTextField" alignment="1" min="-2" pref="201" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                      <Component id="firstNameTextField" min="-2" pref="200" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Component id="mLeaderCheck" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="ageTextField" alignment="1" min="-2" pref="201" max="-2" attributes="0"/>
-                              <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="dobTextField" pref="201" max="32767" attributes="0"/>
-                              <Component id="lastNameTextField" max="32767" attributes="0"/>
-                              <Component id="emailTextField" pref="201" max="32767" attributes="0"/>
-                              <Component id="addButton" max="32767" attributes="0"/>
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-              </Group>
-              <EmptySpace min="-2" pref="205" max="-2" attributes="0"/>
+          <Component id="jScrollPane1" alignment="0" pref="1200" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="addButton" min="-2" pref="201" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="editButton" min="-2" pref="201" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="deleteTutor" min="-2" pref="201" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,44 +45,13 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="346" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lastNameTextField" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="firstNameTextField" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="dobTextField" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="ageTextField" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="addressTextField" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="emailTextField" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="mLeaderCheck" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="addButton" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
-              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="pLeaderCheck" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="157" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="addButton" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="editButton" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="deleteTutor" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="0" pref="16" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -169,12 +111,12 @@
               <Table columnCount="8" rowCount="0">
                 <Column editable="false" title="First Name" type="java.lang.String"/>
                 <Column editable="false" title="Last Name" type="java.lang.String"/>
-                <Column editable="true" title="Age" type="java.lang.Integer"/>
+                <Column editable="false" title="Age" type="java.lang.Integer"/>
                 <Column editable="false" title="Date of Birth" type="java.lang.String"/>
-                <Column editable="true" title="Address" type="java.lang.String"/>
-                <Column editable="true" title="Email" type="java.lang.String"/>
-                <Column editable="true" title="Module Leader" type="java.lang.Boolean"/>
-                <Column editable="true" title="Program Leader" type="java.lang.Boolean"/>
+                <Column editable="false" title="Address" type="java.lang.String"/>
+                <Column editable="false" title="Email" type="java.lang.String"/>
+                <Column editable="false" title="Module Leader" type="java.lang.Boolean"/>
+                <Column editable="false" title="Program Leader" type="java.lang.Boolean"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -228,65 +170,29 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JTextField" name="lastNameTextField">
-    </Component>
-    <Component class="javax.swing.JTextField" name="firstNameTextField">
-    </Component>
-    <Component class="javax.swing.JTextField" name="dobTextField">
-    </Component>
-    <Component class="javax.swing.JTextField" name="addressTextField">
-    </Component>
-    <Component class="javax.swing.JTextField" name="emailTextField">
-    </Component>
-    <Component class="javax.swing.JTextField" name="ageTextField">
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="mLeaderCheck">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Module Leader"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="pLeaderCheck">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Program Leader"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="addButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Add"/>
+        <Property name="text" type="java.lang.String" value="ADD TUTOR"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JButton" name="editButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="First Name"/>
+        <Property name="text" type="java.lang.String" value="EDIT TUTOR"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButtonActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JButton" name="deleteTutor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Last Name"/>
+        <Property name="text" type="java.lang.String" value="DELETE TUTOR"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Age"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Date of Birth"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel6">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Address"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Email"/>
-      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteTutorActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import student.attendance.Tutor;
 import student.attendance.tutorList;
@@ -16,7 +17,7 @@ import student.attendance.tutorList;
  */
 public class AdminForm extends javax.swing.JFrame {
     
-    private DefaultTableModel model;
+    private static DefaultTableModel model;
 
     /**
      * Creates new form AdminForm
@@ -61,24 +62,12 @@ public class AdminForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tutorTable = new javax.swing.JTable();
-        lastNameTextField = new javax.swing.JTextField();
-        firstNameTextField = new javax.swing.JTextField();
-        dobTextField = new javax.swing.JTextField();
-        addressTextField = new javax.swing.JTextField();
-        emailTextField = new javax.swing.JTextField();
-        ageTextField = new javax.swing.JTextField();
-        mLeaderCheck = new javax.swing.JCheckBox();
-        pLeaderCheck = new javax.swing.JCheckBox();
         addButton = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        editButton = new javax.swing.JButton();
+        deleteTutor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 1000));
+        setPreferredSize(new java.awt.Dimension(1200, 500));
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
 
@@ -115,7 +104,7 @@ public class AdminForm extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, true, true, true, true
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -128,62 +117,41 @@ public class AdminForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tutorTable);
 
-        mLeaderCheck.setText("Module Leader");
-
-        pLeaderCheck.setText("Program Leader");
-
-        addButton.setText("Add");
+        addButton.setText("ADD TUTOR");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("First Name");
+        editButton.setText("EDIT TUTOR");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("Last Name");
-
-        jLabel4.setText("Age");
-
-        jLabel5.setText("Date of Birth");
-
-        jLabel6.setText("Address");
-
-        jLabel7.setText("Email");
+        deleteTutor.setText("DELETE TUTOR");
+        deleteTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteTutorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(408, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pLeaderCheck)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(addressTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(mLeaderCheck)
-                                .addComponent(ageTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6))
-                            .addComponent(jLabel4))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(dobTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                                .addComponent(lastNameTextField)
-                                .addComponent(emailTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                                .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3))
-                            .addComponent(jLabel7))))
-                .addGap(205, 205, 205))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deleteTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,37 +159,12 @@ public class AdminForm extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dobTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mLeaderCheck)
-                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(pLeaderCheck)
-                .addGap(0, 157, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         pack();
@@ -229,29 +172,22 @@ public class AdminForm extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-        
-        String firstName = firstNameTextField.getText();
-        String lastName = lastNameTextField.getText();
-        int age =  Integer.parseInt(ageTextField.getText());        
-        String dob = dobTextField.getText();
-        String add = addressTextField.getText();        
-        String email = emailTextField.getText();
-        Boolean m = mLeaderCheck.isSelected();
-        Boolean p = pLeaderCheck.isSelected();
-        
-        firstNameTextField.setText("");
-        lastNameTextField.setText("");
-        ageTextField.setText("");
-        dobTextField.setText("");
-        addressTextField.setText("");
-        emailTextField.setText("");
-        mLeaderCheck.setSelected(false);
-        pLeaderCheck.setSelected(false);
-        tutorList tutorList = new tutorList();
-        Tutor tutor = new Tutor(firstName, lastName, age, dob, add, email, m, p);
-        System.out.print(tutor.getFirstName());
-        tutorList.add(tutor);
-        model =(DefaultTableModel) tutorTable.getModel();
+            addTutorForm atf = new addTutorForm();
+            atf.setVisible(true);
+            atf.pack();
+            atf.setLocationRelativeTo(null);
+            atf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                       
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editButtonActionPerformed
+
+    private void deleteTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTutorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteTutorActionPerformed
+    public static void AddNewTutor(Tutor tutor){
         Object rowData[] = new Object[8];
         rowData[0] = tutor.getFirstName();
         rowData[1] = tutor.getLastName();
@@ -261,9 +197,9 @@ public class AdminForm extends javax.swing.JFrame {
         rowData[5] = tutor.getEmail();
         rowData[6] = tutor.getModuleLeader();
         rowData[7] = tutor.getProgramLeader();
-        model.addRow(rowData);       
-    }//GEN-LAST:event_addButtonActionPerformed
-
+        model.addRow(rowData);  
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -301,23 +237,11 @@ public class AdminForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JTextField addressTextField;
-    private javax.swing.JTextField ageTextField;
-    private javax.swing.JTextField dobTextField;
-    private javax.swing.JTextField emailTextField;
-    private javax.swing.JTextField firstNameTextField;
+    private javax.swing.JButton deleteTutor;
+    private javax.swing.JButton editButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField lastNameTextField;
-    private javax.swing.JCheckBox mLeaderCheck;
-    private javax.swing.JCheckBox pLeaderCheck;
     private javax.swing.JTable tutorTable;
     // End of variables declaration//GEN-END:variables
 }
