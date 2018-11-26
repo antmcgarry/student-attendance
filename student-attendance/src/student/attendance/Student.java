@@ -16,16 +16,18 @@ public class Student extends Person {
     private final String role = "Student";
            
     public Student(
+        int id,
         String fName, 
         String lName,
         int age, 
         String dob, 
         String add,
-        int id,
-        String email
+        String email,
+        String password
+        
     )
     {
-      super(fName, lName, age, dob, add, email);
+      super(fName, lName, age, dob, add, email, password);
       this.id = id;
     }
     

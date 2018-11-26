@@ -166,13 +166,15 @@ public class addTutorForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_submitActionPerformed
-
+        
+        int id = 3;
         String firstName = textField_firstName.getText();
         String lastName = textField_lastName.getText();
         int age =  Integer.parseInt(textField_age.getText());        
         String dob = textField_dob.getText();
         String add = textField_address.getText();        
         String email = firstName + "." + lastName +"@Ormskirk.ac.uk";
+        String password = "";
         Boolean m = false;
         Boolean p = false;
         
@@ -182,7 +184,7 @@ public class addTutorForm extends javax.swing.JFrame {
         textField_dob.setText("");
         textField_address.setText("");
         tutorList tutorList = new tutorList();
-        Tutor tutor = new Tutor(firstName, lastName, age, dob, add, email, m, p);
+        Tutor tutor = new Tutor(id, firstName, lastName, age, dob, add, email, password, m, p);
         System.out.print(tutor.getFirstName());
         tutorList.add(tutor);
         AdminForm.AddNewTutor(tutor);

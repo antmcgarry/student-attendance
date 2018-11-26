@@ -19,14 +19,16 @@ public class Person {
     private final String dateOfBirth;
     private String address;
     private String email;
+    private String password;
     
-    public Person(String fName, String lName, int a, String dob, String add, String e){
+    public Person(String fName, String lName, int a, String dob, String add, String e, String p){
         this.firstName = fName;
         this.lastName = lName;
         this.age = a;
         this.dateOfBirth = dob;
         this.address = add;
         this.email = e;
+        this.password = p;
     }
 
     Person() {
@@ -72,4 +74,11 @@ public class Person {
         this.email = email;
     }
     
+    public void setPassword(String p){
+        this.password = p;
+    }
+    
+    public String getPassword(){
+        return password;
+    }
 }

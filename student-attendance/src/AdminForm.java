@@ -192,7 +192,7 @@ public class AdminForm extends javax.swing.JFrame {
             for(int i = 0; i < list.size(); i++){
                 Tutor t = list.get(i);
                 if(name == t.getFirstName()){
-                    list.remove(t);
+                   list.remove(t);
                 }
             }
             model.removeRow(selectedRowIndex);

@@ -13,21 +13,25 @@ public class Tutor extends Person {
     private final String role = "Tutor";
     private boolean moduleLeader;
     private boolean programLeader;
+    private int tutorId;
     
      public Tutor(
+        int id,
         String fName, 
         String lName,
         int age, 
         String dob, 
         String add,
         String email,
+        String password,
         Boolean m,
         Boolean p
     )
     {
-      super(fName, lName, age, dob, add, email);
+      super(fName, lName, age, dob, add, email, password);
       this.moduleLeader = m;
       this.programLeader = p;
+      this.tutorId = id;
     }
      
      public void setModuleLeader(Boolean m){
