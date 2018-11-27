@@ -2,6 +2,7 @@
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import student.attendance.JDBConnection.CISConnection;
 import student.attendance.Student;
 import student.attendance.studentList;
 
@@ -32,6 +33,8 @@ public class StudentForm extends javax.swing.JFrame {
     private void getTutorList() {
        
         studentList studentList = new studentList();
+        CISConnection cis = new CISConnection("cis4005");
+        cis.printAllStudents(studentList);
         list = studentList.getStudents();
         model = (DefaultTableModel) studentTable.getModel();
         Object rowData[] = new Object[8];

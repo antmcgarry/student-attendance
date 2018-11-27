@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import student.attendance.Student;
+import student.attendance.studentList;
 
 /**
  *
@@ -83,7 +85,7 @@ public class CISConnection extends DBConnection {
      * Print out all the records contained in the student table.   Prints
      * to System.out. 
      */
-    public void printAllStudents()
+    public void printAllStudents(studentList list)
     {
         final String retrieveQuery = "SELECT * from student";
         this.setQuery(retrieveQuery);
@@ -95,11 +97,19 @@ public class CISConnection extends DBConnection {
         {
             while(output.next())
             {
-                String id = output.getString(1);
                 String fname = output.getString(2);
-                String sname = output.getString(3);
+                String lname = output.getString(3);
                 String studid = output.getString(4);
-                System.out.println(id + ":" + fname + " " + sname);
+                String registered = output.getString(5);
+                String email = output.getString(6);
+                String password = output.getString(7);
+                String dob = output.getString(8);
+                int age = output.getInt(9);
+                String address = output.getString(10);
+                
+                char r = registered.charAt(0);
+                Student student = new Student(Integer.parseInt(studid),fname, lname, age, dob, address, email, password, r);
+                list.add(student);
             }
         }
         }
