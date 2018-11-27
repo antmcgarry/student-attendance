@@ -93,7 +93,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Admin Portal"/>
+            <Property name="text" type="java.lang.String" value="Tutor Portal"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -160,7 +160,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="addButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="ADD TUTOR"/>
+        <Property name="text" type="java.lang.String" value="ADD STUDENT"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButtonActionPerformed"/>
@@ -168,7 +168,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="editButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="EDIT TUTOR"/>
+        <Property name="text" type="java.lang.String" value="EDIT STUDENT"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButtonActionPerformed"/>
@@ -176,7 +176,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="removeTutor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="REMOVE TUTOR"/>
+        <Property name="text" type="java.lang.String" value="REMOVE STUDENT"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeTutorActionPerformed"/>

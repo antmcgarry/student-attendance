@@ -176,6 +176,7 @@ public class AddStudentForm extends javax.swing.JFrame {
         String add = textField_address.getText();        
         String email = firstName + "." + lastName +"@Ormskirk.ac.uk";
         String password = "password";
+        char reg = 'f'; // need to add drop down to form
         
         textField_firstName.setText("");
         textField_lastName.setText("");
@@ -183,7 +184,7 @@ public class AddStudentForm extends javax.swing.JFrame {
         textField_dob.setText("");
         textField_address.setText("");
         studentList tutorList = new studentList();
-        Student student = new Student(id, firstName, lastName, age, dob, add, email, password);
+        Student student = new Student(id, firstName, lastName, age, dob, add, email, password, reg);
         tutorList.add(student);
         StudentForm.AddNewTutor(student);
         this.dispose();

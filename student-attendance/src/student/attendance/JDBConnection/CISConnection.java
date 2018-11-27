@@ -8,6 +8,7 @@ package student.attendance.JDBConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -180,4 +181,30 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when adding module to programme: " + sqle.toString());
         }
     }
+    
+    public Boolean login(final String u, final String p){
+        try {
+            String queryString = "SELECT * FROM student WHERE email= ? and password= ?";
+            PreparedStatement pstmt = getConnection().prepareStatement(queryString);
+            pstmt.setString(1, u);
+            pstmt.setString(2, p);
+            ResultSet result = pstmt.executeQuery();
+            if(result.next()) {
+                String email = result.getString("email");
+                String password =  result.getString("password");
+            if ((u.equals(email)) && (p.equals(password))) {
+                String role  = result.getString("status");
+                //TODO need to add a check in for role to know which portal to render
+                  System.out.println("Succesfully logged in ");
+                  return true;
+                }   
+            }
+            System.out.println("failed to log in");
+            return false;
+        } catch (SQLException sql) {
+            System.out.print(sql);
+            return false;
+        }
+    }
 }
+

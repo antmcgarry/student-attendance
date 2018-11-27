@@ -71,7 +71,7 @@ public class StudentForm extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Admin Portal");
+        jLabel1.setText("Tutor Portal");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,21 +115,21 @@ public class StudentForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(studentTable);
 
-        addButton.setText("ADD TUTOR");
+        addButton.setText("ADD STUDENT");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
             }
         });
 
-        editButton.setText("EDIT TUTOR");
+        editButton.setText("EDIT STUDENT");
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editButtonActionPerformed(evt);
             }
         });
 
-        removeTutor.setText("REMOVE TUTOR");
+        removeTutor.setText("REMOVE STUDENT");
         removeTutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeTutorActionPerformed(evt);

@@ -161,8 +161,10 @@ public class LoginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String password = passwordTextField.getText();
         String email = emailTextField.getText();
+        CISConnection cis = new CISConnection("cis4005");
         
-        if (password.contains("123") && email.contains("admin")) {
+        Boolean login = cis.login(email, password);
+        if(login){
             passwordTextField.setText("");
             emailTextField.setText("");
             //Render admin Frame
