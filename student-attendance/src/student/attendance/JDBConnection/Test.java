@@ -16,7 +16,7 @@ public class Test {
     public static void main(String args[])
     {
         CISConnection cis = new CISConnection("cis4005");
-        //cis.insertStudent("Mark", "Anderson", "0003", "F");
+        //cis.insertStudent("Mark", "Anderson", "0003", "F", "email", "password,);
         cis.printAllStudents();
 
         ResultSet studentRS = cis.findStudentBySurname("Evans");

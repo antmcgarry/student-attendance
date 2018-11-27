@@ -5,6 +5,7 @@
  */
 
 import javax.swing.JFrame;
+import student.attendance.JDBConnection.CISConnection;
 
 /**
  *
@@ -66,10 +67,6 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Ormskirk University Portal");
-
-        emailTextField.setText("Email");
-
-        passwordTextField.setText("Password");
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));

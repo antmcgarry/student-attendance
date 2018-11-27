@@ -11,39 +11,40 @@ package student.attendance;
  */
 public class Student extends Person {
     
-    private final int id;
-    private String registered; //Full-Time || Part-Time
+    private final int studentNo;
+    private char registered; // F = Full-Time || P = Part-Time
     private final String role = "Student";
            
     public Student(
-        int id,
+        int studentNo,
         String fName, 
         String lName,
         int age, 
         String dob, 
         String add,
         String email,
-        String password
-        
+        String password,
+        char r  
     )
     {
       super(fName, lName, age, dob, add, email, password);
-      this.id = id;
+      this.studentNo = studentNo;
+      this.registered = r;
     }
     
-    public int getId(){
-        return id;
+    public int getStudentNo(){
+        return studentNo;
     }
     
     public String getRole(){
         return role;
     }
     
-    public String getRegisteredType(){
+    public char getRegisteredType(){
         return registered;
     }
     
-    public void setRegisteredType(String type){
+    public void setRegisteredType(char type){
         this.registered = type;
     }
        
