@@ -1,6 +1,7 @@
 
-import student.attendance.Tutor;
-import student.attendance.tutorList;
+
+import student.attendance.Student;
+import student.attendance.studentList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,12 +13,12 @@ import student.attendance.tutorList;
  *
  * @author ADMIN
  */
-public class addTutorForm extends javax.swing.JFrame {
+public class AddStudentForm extends javax.swing.JFrame {
 
     /**
      * Creates new form addTutorForm
      */
-    public addTutorForm() {
+    public AddStudentForm() {
         initComponents();
     }
 
@@ -174,20 +175,17 @@ public class addTutorForm extends javax.swing.JFrame {
         String dob = textField_dob.getText();
         String add = textField_address.getText();        
         String email = firstName + "." + lastName +"@Ormskirk.ac.uk";
-        String password = "";
-        Boolean m = false;
-        Boolean p = false;
+        String password = "password";
         
         textField_firstName.setText("");
         textField_lastName.setText("");
         textField_age.setText("");
         textField_dob.setText("");
         textField_address.setText("");
-        tutorList tutorList = new tutorList();
-        Tutor tutor = new Tutor(id, firstName, lastName, age, dob, add, email, password, m, p);
-        System.out.print(tutor.getFirstName());
-        tutorList.add(tutor);
-        AdminForm.AddNewTutor(tutor);
+        studentList tutorList = new studentList();
+        Student student = new Student(id, firstName, lastName, age, dob, add, email, password);
+        tutorList.add(student);
+        StudentForm.AddNewTutor(student);
         this.dispose();
     }//GEN-LAST:event_button_submitActionPerformed
 
@@ -208,20 +206,21 @@ public class addTutorForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addTutorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddStudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addTutorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddStudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addTutorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddStudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addTutorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddStudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new addTutorForm().setVisible(true);
+                new AddStudentForm().setVisible(true);
             }
         });
     }

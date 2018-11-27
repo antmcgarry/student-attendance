@@ -2,8 +2,8 @@
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import student.attendance.Tutor;
-import student.attendance.tutorList;
+import student.attendance.Student;
+import student.attendance.studentList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,14 +15,14 @@ import student.attendance.tutorList;
  *
  * @author ADMIN
  */
-public class AdminForm extends javax.swing.JFrame {
+public class StudentForm extends javax.swing.JFrame {
     
     private static DefaultTableModel model;
-    public ArrayList<Tutor> list;
+    public ArrayList<Student> list;
     /**
      * Creates new form AdminForm
      */
-    public AdminForm() {
+    public StudentForm() {
         initComponents();
         this.setLocationRelativeTo(null); //Centers the login form to the center of the screen
         getTutorList();
@@ -31,9 +31,9 @@ public class AdminForm extends javax.swing.JFrame {
     
     private void getTutorList() {
        
-        tutorList tutorList = new tutorList();
-        list = tutorList.getTutors();
-        model = (DefaultTableModel) tutorTable.getModel();
+        studentList studentList = new studentList();
+        list = studentList.getStudents();
+        model = (DefaultTableModel) studentTable.getModel();
         Object rowData[] = new Object[8];
         
         for(int i = 0; i < list.size(); i++){
@@ -43,8 +43,6 @@ public class AdminForm extends javax.swing.JFrame {
             rowData[3] = list.get(i).getDateofBirth();
             rowData[4] = list.get(i).getAddress();
             rowData[5] = list.get(i).getEmail();
-            rowData[6] = list.get(i).getModuleLeader();
-            rowData[7] = list.get(i).getProgramLeader();
             model.addRow(rowData);
         }
         
@@ -61,7 +59,7 @@ public class AdminForm extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tutorTable = new javax.swing.JTable();
+        studentTable = new javax.swing.JTable();
         addButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         removeTutor = new javax.swing.JButton();
@@ -92,19 +90,19 @@ public class AdminForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tutorTable.setModel(new javax.swing.table.DefaultTableModel(
+        studentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "First Name", "Last Name", "Age", "Date of Birth", "Address", "Email", "Module Leader", "Program Leader"
+                "First Name", "Last Name", "Age", "Date of Birth", "Address", "Email"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -115,7 +113,7 @@ public class AdminForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tutorTable);
+        jScrollPane1.setViewportView(studentTable);
 
         addButton.setText("ADD TUTOR");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -172,7 +170,7 @@ public class AdminForm extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-            addTutorForm atf = new addTutorForm();
+            AddStudentForm atf = new AddStudentForm();
             atf.setVisible(true);
             atf.pack();
             atf.setLocationRelativeTo(null);
@@ -186,27 +184,25 @@ public class AdminForm extends javax.swing.JFrame {
 
     private void removeTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTutorActionPerformed
         // TODO add your handling code here:
-            int selectedRowIndex = tutorTable.getSelectedRow();
-            Object tutorName = tutorTable.getValueAt(selectedRowIndex, 0);
-            String name = tutorName.toString();
+            int selectedRowIndex = studentTable.getSelectedRow();
+            Object studentName = studentTable.getValueAt(selectedRowIndex, 0);
+            String name = studentName.toString();
             for(int i = 0; i < list.size(); i++){
-                Tutor t = list.get(i);
-                if(name == t.getFirstName()){
-                   list.remove(t);
+                Student s = list.get(i);
+                if(name == s.getFirstName()){
+                   list.remove(s);
                 }
             }
             model.removeRow(selectedRowIndex);
     }//GEN-LAST:event_removeTutorActionPerformed
-    public static void AddNewTutor(Tutor tutor){
+    public static void AddNewTutor(Student student){
         Object rowData[] = new Object[8];
-        rowData[0] = tutor.getFirstName();
-        rowData[1] = tutor.getLastName();
-        rowData[2] = tutor.getAge();
-        rowData[3] = tutor.getDateofBirth();
-        rowData[4] = tutor.getAddress();
-        rowData[5] = tutor.getEmail();
-        rowData[6] = tutor.getModuleLeader();
-        rowData[7] = tutor.getProgramLeader();
+        rowData[0] = student.getFirstName();
+        rowData[1] = student.getLastName();
+        rowData[2] = student.getAge();
+        rowData[3] = student.getDateofBirth();
+        rowData[4] = student.getAddress();
+        rowData[5] = student.getEmail();
         model.addRow(rowData);  
     }
     
@@ -227,20 +223,21 @@ public class AdminForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminForm().setVisible(true);
+                new StudentForm().setVisible(true);
             }
         });
     }
@@ -252,6 +249,6 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton removeTutor;
-    private javax.swing.JTable tutorTable;
+    private javax.swing.JTable studentTable;
     // End of variables declaration//GEN-END:variables
 }

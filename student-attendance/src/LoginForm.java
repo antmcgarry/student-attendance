@@ -169,7 +169,7 @@ public class LoginForm extends javax.swing.JFrame {
             passwordTextField.setText("");
             emailTextField.setText("");
             //Render admin Frame
-            AdminForm af = new AdminForm();
+            StudentForm af = new StudentForm();
             af.setVisible(true);
             af.pack();
             af.setLocationRelativeTo(null);
