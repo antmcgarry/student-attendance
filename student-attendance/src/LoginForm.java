@@ -12,7 +12,7 @@ import student.attendance.JDBConnection.CISConnection;
  * @author Anthony Mcgarry
  */
 public class LoginForm extends javax.swing.JFrame {
-
+    private String role = "admin";
     /**
      * Creates new form LoginForm
      */
@@ -42,7 +42,7 @@ public class LoginForm extends javax.swing.JFrame {
         loginButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboBoxRole = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
 
@@ -98,11 +98,16 @@ public class LoginForm extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Role");
+        jLabel4.setText("Role:");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrator", "Tutor", "Student" }));
+        comboBoxRole.setBackground(new java.awt.Color(255, 255, 255));
+        comboBoxRole.setForeground(new java.awt.Color(0, 0, 0));
+        comboBoxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrator", "Tutor", "Student" }));
+        comboBoxRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxRoleActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -123,8 +128,8 @@ public class LoginForm extends javax.swing.JFrame {
                             .addComponent(emailTextField)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(comboBoxRole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(149, 149, 149)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +153,7 @@ public class LoginForm extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -180,7 +185,7 @@ public class LoginForm extends javax.swing.JFrame {
         String email = emailTextField.getText();
         CISConnection cis = new CISConnection("cis4005");
         
-        Boolean login = cis.login(email, password);
+        Boolean login = cis.login(email, password, role);
         if(login){
             passwordTextField.setText("");
             emailTextField.setText("");
@@ -193,6 +198,19 @@ public class LoginForm extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void comboBoxRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxRoleActionPerformed
+        // TODO add your handling code here:
+        if(comboBoxRole.getSelectedItem().equals("Administrator")){
+            this.role = "admin";
+        }
+         if(comboBoxRole.getSelectedItem().equals("Tutor")){
+            this.role = "tutor";
+        }
+          if(comboBoxRole.getSelectedItem().equals("Student")){
+            this.role = "student";
+        }
+    }//GEN-LAST:event_comboBoxRoleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,8 +249,8 @@ public class LoginForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
+    private javax.swing.JComboBox<String> comboBoxRole;
     private javax.swing.JTextField emailTextField;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

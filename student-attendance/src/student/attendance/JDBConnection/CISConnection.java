@@ -301,9 +301,16 @@ public class CISConnection extends DBConnection {
         }
     }
     
-    public Boolean login(final String u, final String p){
+    public Boolean login(final String u, final String p, final String role){
+        String queryString = null;
+        if(role == "student"){
+                queryString = "SELECT * FROM student WHERE email= ? and password= ?";
+            } else if (role == "Administrator") {
+                queryString = "SELECT * FROM admin WHERE email= ? and password= ?";
+            }else if ( role == "tutor"){
+                queryString = "SELECT * FROM tutor WHERE email= ? and password= ?";
+            }
         try {
-            String queryString = "SELECT * FROM student WHERE email= ? and password= ?";
             PreparedStatement pstmt = getConnection().prepareStatement(queryString);
             pstmt.setString(1, u);
             pstmt.setString(2, p);
@@ -312,7 +319,6 @@ public class CISConnection extends DBConnection {
                 String email = result.getString("email");
                 String password =  result.getString("password");
             if ((u.equals(email)) && (p.equals(password))) {
-                String role  = result.getString("status");
                 //TODO need to add a check in for role to know which portal to render
                   System.out.println("Succesfully logged in ");
                   return true;
