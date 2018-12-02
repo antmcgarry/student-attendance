@@ -221,12 +221,7 @@ public class AddStudentForm extends javax.swing.JFrame {
         String email = firstName + "." + lastName +"@ormskirk.ac.uk";
         String password = "password";
         char reg = this.register; // need to add drop down to form
-        
-        textField_firstName.setText("");
-        textField_lastName.setText("");
-        textField_age.setText("");
-        textField_dob.setText("");
-        textField_address.setText("");
+ 
         Student student = new Student(id, firstName, lastName, age, dob, add, email, password, reg);
         CISConnection cis = new CISConnection("cis4005");
         cis.insertStudent(student);

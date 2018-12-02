@@ -141,18 +141,17 @@ public class CISConnection extends DBConnection {
 
     /**
      * Insert a new programme record into the database
-     * @param code The programme code
-     * @param name The programme name
+     * @param p The programme object
      */
-    public void insertProgramme(final String code,
-            final String name)
+    public void insertProgramme(Programme p)
     {
-        final String insertStmt = "INSERT INTO programme (programmeCode, programmeName) VALUES (?,?)";
+        final String insertStmt = "INSERT INTO programme (programmeCode, programmeName, level) VALUES (?,?,?)";
         try
         {
             PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
-            pstmt.setString(1, code);
-            pstmt.setString(2, name);
+            pstmt.setString(1, p.getProgramCode());
+            pstmt.setString(2, p.getProgramTitle());
+            pstmt.setInt(3, p.getProgramLevel());
             pstmt.executeUpdate();
         }
         catch (SQLException sqle)
@@ -161,7 +160,32 @@ public class CISConnection extends DBConnection {
         }
     }
     
-    public void getProgrammeList(ProgrammeList plist){
+    /**
+     * 
+     * @param code used to find the programme in the DB
+     * Then removes the programme once found
+     */
+    public void removeProgramme(String code){
+        final String sql = "DELETE FROM programme WHERE programmecode = ?";
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setString(1, code);
+            // execute the delete statement
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when deleting student record: " + sqle.toString());
+        }
+    }
+    /**
+     * Get a List of all the programme records from the database
+     * @param list The programme list object which uses the programme object to
+     * store all the information received from the DB
+     */
+    public void getProgrammeList(ProgrammeList list){
         final String retrieveQuery = "SELECT * from programme";
         this.setQuery(retrieveQuery);
         this.runQuery();
@@ -177,8 +201,7 @@ public class CISConnection extends DBConnection {
                 String title = output.getString(3);
                 int level = output.getInt(4);
                 Programme p = new Programme(id, code, title, level);
-                System.out.println(p.getProgramTitle());
-                plist.add(p);
+                list.add(p);
             }
         }
         }
