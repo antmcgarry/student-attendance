@@ -292,11 +292,11 @@ public class ProgramForm extends javax.swing.JFrame {
             Programme p = list.get(i);
             if(code == p.getProgramCode()){
                list.remove(p);
+               cis.removeProgramme(code);
+               model.removeRow(selectedRowIndex);
+               System.out.println("REMOVE");
             }
         }
-        cis.removeProgramme(code);
-        model.removeRow(selectedRowIndex);
-        System.out.println("REMOVE");
     }//GEN-LAST:event_removeProgrammeActionPerformed
 
     /**

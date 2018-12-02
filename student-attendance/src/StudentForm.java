@@ -184,11 +184,11 @@ public class StudentForm extends javax.swing.JFrame {
                 if(name == s.getFirstName()){
                    list.remove(s);
                    studentNo = s.getStudentNo();
+                   cis.removeStudent(studentNo);
+                   model.removeRow(selectedRowIndex);
+                   System.out.println("REMOVE");
                 }
             }
-            cis.removeStudent(studentNo);
-            model.removeRow(selectedRowIndex);
-            System.out.println("REMOVE");
     }//GEN-LAST:event_removeTutorActionPerformed
     
     /**

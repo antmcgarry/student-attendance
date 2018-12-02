@@ -31,7 +31,7 @@ public class ModuleList {
         moduleList.remove(m);
     }
     
-    public ArrayList<Module> getProgrammes() {
+    public ArrayList<Module> getModules() {
         return moduleList;
     }
     

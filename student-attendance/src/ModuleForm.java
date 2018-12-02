@@ -1,3 +1,9 @@
+
+import javax.swing.table.DefaultTableModel;
+import model.Module;
+import student.attendance.JDBConnection.CISConnection;
+import student.attendance.ModuleList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,14 +15,40 @@
  * @author anthonymcgarry
  */
 public class ModuleForm extends javax.swing.JFrame {
-
+    private static DefaultTableModel model;
+    private ModuleList list = new ModuleList();
+    private int level = 1;
+    private int semester = 1;
+    
     /**
      * Creates new form ModuleForm
      */
     public ModuleForm() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        getModules();
     }
-
+    
+    public void getModules(){
+        CISConnection cis = new CISConnection("cis4005");
+        cis.getModuleList(list);
+        list.getModules();
+        model = (DefaultTableModel) moduleTable.getModel();
+        System.out.println(list);
+        for(int i = 0; i < list.Size(); i++){
+           insertTableRow(list.get(i));
+        }
+    }
+    
+    private void insertTableRow(Module m){
+        Object rowData[] = new Object[5];
+        rowData[0] = m.getModuleCode();
+        rowData[1] = m.getModuleTitle();
+        rowData[2] = m.getModuleCredit();
+        rowData[3] = m.getModuleLevel();
+        rowData[4] = m.getModuleSemester();
+        model.addRow(rowData);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,20 +61,20 @@ public class ModuleForm extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        moduleTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        textFieldModuleTitle = new javax.swing.JFormattedTextField();
+        textFieldModuleCode = new javax.swing.JFormattedTextField();
+        textFieldModuleCredit = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        comboBoxModuleLevel = new javax.swing.JComboBox<>();
+        comboBoxModuleSemester = new javax.swing.JComboBox<>();
+        addModule = new javax.swing.JButton();
+        removeModule = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,7 +84,7 @@ public class ModuleForm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Module Portal");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        moduleTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -75,7 +107,7 @@ public class ModuleForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(moduleTable);
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -89,14 +121,14 @@ public class ModuleForm extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Module Credit:");
 
-        jFormattedTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jFormattedTextField1.setForeground(new java.awt.Color(0, 0, 0));
+        textFieldModuleTitle.setBackground(new java.awt.Color(255, 255, 255));
+        textFieldModuleTitle.setForeground(new java.awt.Color(0, 0, 0));
 
-        jFormattedTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jFormattedTextField2.setForeground(new java.awt.Color(0, 0, 0));
+        textFieldModuleCode.setBackground(new java.awt.Color(255, 255, 255));
+        textFieldModuleCode.setForeground(new java.awt.Color(0, 0, 0));
 
-        jFormattedTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jFormattedTextField3.setForeground(new java.awt.Color(0, 0, 0));
+        textFieldModuleCredit.setBackground(new java.awt.Color(255, 255, 255));
+        textFieldModuleCredit.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -106,20 +138,40 @@ public class ModuleForm extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Module Semester:");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Level 1", "Level 2", "Level 3" }));
+        comboBoxModuleLevel.setBackground(new java.awt.Color(255, 255, 255));
+        comboBoxModuleLevel.setForeground(new java.awt.Color(0, 0, 0));
+        comboBoxModuleLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Level 1", "Level 2", "Level 3" }));
+        comboBoxModuleLevel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxModuleLevelActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semester 1", "Semester 2" }));
+        comboBoxModuleSemester.setBackground(new java.awt.Color(255, 255, 255));
+        comboBoxModuleSemester.setForeground(new java.awt.Color(0, 0, 0));
+        comboBoxModuleSemester.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semester 1", "Semester 2" }));
+        comboBoxModuleSemester.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxModuleSemesterActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("Add Module");
+        addModule.setText("Add Module");
+        addModule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addModuleActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Remove Module");
+        removeModule.setText("Remove Module");
+        removeModule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeModuleActionPerformed(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(153, 0, 51));
-        jButton3.setText("Cancel");
+        cancelButton.setBackground(new java.awt.Color(153, 0, 51));
+        cancelButton.setText("Cancel");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -135,7 +187,7 @@ public class ModuleForm extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(textFieldModuleCredit, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -144,31 +196,31 @@ public class ModuleForm extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(textFieldModuleTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(39, 39, 39)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(comboBoxModuleSemester, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(52, 52, 52)
-                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                        .addComponent(comboBoxModuleLevel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(354, 354, 354)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(removeModule, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(addModule, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(57, 57, 57)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(89, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(150, 150, 150)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(503, Short.MAX_VALUE)))
+                    .addComponent(textFieldModuleCode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(500, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,29 +233,29 @@ public class ModuleForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxModuleLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textFieldModuleTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(comboBoxModuleSemester, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textFieldModuleCredit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(addModule)
+                    .addComponent(cancelButton))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(removeModule)
                 .addContainerGap(28, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(365, 365, 365)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textFieldModuleCode, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(204, Short.MAX_VALUE)))
         );
 
@@ -221,6 +273,92 @@ public class ModuleForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addModuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addModuleActionPerformed
+        // TODO add your handling code here:
+        String code = textFieldModuleCode.getText();
+        String title = textFieldModuleTitle.getText();
+        String credit = textFieldModuleCredit.getText();
+        if(code == null || code.equals("") || title == null || title.equals("") || credit == null || credit.equals("") ){
+            return;
+        }
+        if(!isNumeric(credit)){
+            System.out.println("Credit must be a number");
+            return;
+        }
+        int newId = list.get(list.Size() -1).getModuleId();
+        if (newId >= 1) {
+          newId++;
+        } else {
+           newId = 1;
+        }
+        int id = newId;
+        int numberCredit = Integer.parseInt(credit);
+        Module m = new Module(id, title, numberCredit, code, level, semester);
+        CISConnection cis = new CISConnection("cis4005");
+        cis.insertModule(m);
+        list.add(m);
+        insertTableRow(m);
+        textFieldModuleCode.setText("");
+        textFieldModuleTitle.setText("");
+        textFieldModuleCredit.setText("");
+        comboBoxModuleLevel.setSelectedIndex(0);
+        comboBoxModuleSemester.setSelectedIndex(0);
+        level = 1;
+        semester = 1;
+       
+        
+    }//GEN-LAST:event_addModuleActionPerformed
+
+    private void removeModuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeModuleActionPerformed
+        // TODO add your handling code here:
+        int selectedRowIndex = moduleTable.getSelectedRow();
+        Object moduleCode = moduleTable.getValueAt(selectedRowIndex, 0);
+        String code = moduleCode.toString();
+        CISConnection cis = new CISConnection("cis4005");
+        for(int i = 0; i < list.Size(); i++){
+            Module m = list.get(i);
+            if(code == m.getModuleCode()){
+               list.remove(m);
+               cis.removeModule(code);
+               model.removeRow(selectedRowIndex);
+               System.out.println("REMOVE");
+            }
+        }
+        
+    }//GEN-LAST:event_removeModuleActionPerformed
+
+    private void comboBoxModuleLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxModuleLevelActionPerformed
+        // TODO add your handling code here:
+        if(comboBoxModuleLevel.getSelectedItem().equals("Level 1")){
+            this.level = 1;
+        }
+        else if(comboBoxModuleLevel.getSelectedItem().equals("Level 2")){
+            this.level = 2;
+        }
+        else if(comboBoxModuleLevel.getSelectedItem().equals("Level 3")){
+            this.level = 3;
+        }
+    }//GEN-LAST:event_comboBoxModuleLevelActionPerformed
+
+    private void comboBoxModuleSemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxModuleSemesterActionPerformed
+        // TODO add your handling code here:
+        if(comboBoxModuleSemester.getSelectedItem().equals("Semester 1")){
+            this.semester = 1;
+        }
+        else if(comboBoxModuleSemester.getSelectedItem().equals("Semester 2")){
+            this.semester = 2;
+        }
+    }//GEN-LAST:event_comboBoxModuleSemesterActionPerformed
+    
+    /**
+     * 
+     * @param s Check if a string is a number
+     * This method is to make sure the credit is a number
+     * @return 
+     */
+    public boolean isNumeric(String s) {  
+    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
+} 
     /**
      * @param args the command line arguments
      */
@@ -257,14 +395,10 @@ public class ModuleForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
+    private javax.swing.JButton addModule;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JComboBox<String> comboBoxModuleLevel;
+    private javax.swing.JComboBox<String> comboBoxModuleSemester;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -273,6 +407,10 @@ public class ModuleForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable moduleTable;
+    private javax.swing.JButton removeModule;
+    private javax.swing.JFormattedTextField textFieldModuleCode;
+    private javax.swing.JFormattedTextField textFieldModuleCredit;
+    private javax.swing.JFormattedTextField textFieldModuleTitle;
     // End of variables declaration//GEN-END:variables
 }

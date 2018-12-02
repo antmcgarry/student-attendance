@@ -8,8 +8,10 @@ package student.attendance.JDBConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import model.Module;
 import model.Programme;
 import model.Student;
+import student.attendance.ModuleList;
 import student.attendance.ProgrammeList;
 import student.attendance.StudentList;
 
@@ -210,32 +212,70 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when printing all students: " + sqle.toString());
         }
     }
-
+    
+    public void getModuleList(ModuleList list){
+        final String retrieveQuery = "SELECT * from module";
+        this.setQuery(retrieveQuery);
+        this.runQuery();
+        ResultSet output = this.getResultSet();
+        try
+        {
+        if (null != output)
+        {
+            while(output.next())
+            {
+                int id = output.getInt(1);
+                String title = output.getString(2);
+                int credit = output.getInt(3);
+                String code = output.getString(4);
+                int level = output.getInt(5);
+                int semester = output.getInt(6);
+                Module m = new Module(id, title, credit, code, level, semester);
+                list.add(m);
+            }
+        }
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when printing all students: " + sqle.toString());
+        }
+    }
     /**
      * Insert a new module into the database
-     * @param title The module title
-     * @param credit The number of credits for the module
-     * @param code The module code
-     * @param level The level of the module (4,5,6 or 7)
-     * @param semester The semester that the module runs in
+     * @param m The module object
      */
-    public void insertModule(final String title, final int credit,
-            final String code, final String level, final String semester)
+    public void insertModule(Module m)
     {
         final String insertStmt = "INSERT INTO module (moduleTitle, credits, moduleCode, level, semester) VALUES (?,?,?,?,?)";
         try
         {
             PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
-            pstmt.setString(1, title);
-            pstmt.setInt(2, credit);
-            pstmt.setString(3, code);
-            pstmt.setString(4, level);
-            pstmt.setString(5, semester);
+            pstmt.setString(1, m.getModuleTitle());
+            pstmt.setInt(2, m.getModuleCredit());
+            pstmt.setString(3, m.getModuleCode());
+            pstmt.setInt(4, m.getModuleLevel());
+            pstmt.setInt(5, m.getModuleSemester());
             pstmt.executeUpdate();
         }
         catch (SQLException sqle)
         {
             System.out.println("Exception when inserting module record: " + sqle.toString());
+        }
+    }
+    
+        public void removeModule(String code){
+        final String sql = "DELETE FROM module WHERE modulecode = ?";
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setString(1, code);
+            // execute the delete statement
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when deleting student record: " + sqle.toString());
         }
     }
 
