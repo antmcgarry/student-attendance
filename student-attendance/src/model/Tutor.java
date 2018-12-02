@@ -9,7 +9,7 @@ import model.Person;
 
 /**
  *
- * @author ADMIN
+ * @author Anthony Mcgarry
  */
 public class Tutor extends Person {
     private final String role = "Tutor";

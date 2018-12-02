@@ -27,8 +27,7 @@ public class CISConnection extends DBConnection {
      * connection to the named database
      * @param dbName Service name of database
      */
-    public CISConnection(final String dbName)
-    {
+    public CISConnection(final String dbName){
         this.connectDatabase(dbName);
     }
 
@@ -81,8 +80,7 @@ public class CISConnection extends DBConnection {
      * @param surname The surname of the student to find
      * @return ResultSet containing those students with the specified surname
      */
-    public ResultSet findStudentBySurname(final String surname)
-    {
+    public ResultSet findStudentBySurname(final String surname){
         final String findStmt = "SELECT * FROM student WHERE surname = ?";
         ResultSet rs = null;
         try
@@ -107,8 +105,7 @@ public class CISConnection extends DBConnection {
      * and load the students into new student objects and add them to student
      * list
      */
-    public void getAllStudents(StudentList list)
-    {
+    public void getAllStudents(StudentList list){
         final String retrieveQuery = "SELECT * from student";
         this.setQuery(retrieveQuery);
         this.runQuery();
@@ -145,8 +142,7 @@ public class CISConnection extends DBConnection {
      * Insert a new programme record into the database
      * @param p The programme object
      */
-    public void insertProgramme(Programme p)
-    {
+    public void insertProgramme(Programme p){
         final String insertStmt = "INSERT INTO programme (programmeCode, programmeName, level) VALUES (?,?,?)";
         try
         {
@@ -263,7 +259,7 @@ public class CISConnection extends DBConnection {
         }
     }
     
-        public void removeModule(String code){
+    public void removeModule(String code){
         final String sql = "DELETE FROM module WHERE modulecode = ?";
         try
         {
@@ -303,13 +299,19 @@ public class CISConnection extends DBConnection {
     
     public Boolean login(final String u, final String p, final String role){
         String queryString = null;
-        if(role == "student"){
+        switch (role) {
+            case "student":
                 queryString = "SELECT * FROM student WHERE email= ? and password= ?";
-            } else if (role == "Administrator") {
+                break;
+            case "Administrator":
                 queryString = "SELECT * FROM admin WHERE email= ? and password= ?";
-            }else if ( role == "tutor"){
+                break;
+            case "tutor":
                 queryString = "SELECT * FROM tutor WHERE email= ? and password= ?";
-            }
+                break;
+            default:
+                break;
+        }
         try {
             PreparedStatement pstmt = getConnection().prepareStatement(queryString);
             pstmt.setString(1, u);
@@ -318,10 +320,10 @@ public class CISConnection extends DBConnection {
             if(result.next()) {
                 String email = result.getString("email");
                 String password =  result.getString("password");
-            if ((u.equals(email)) && (p.equals(password))) {
-                //TODO need to add a check in for role to know which portal to render
-                  System.out.println("Succesfully logged in ");
-                  return true;
+                if ((u.equals(email)) && (p.equals(password))) {
+                    //TODO need to add a check in for role to know which portal to render
+                    System.out.println("Succesfully logged in ");
+                    return true;
                 }   
             }
             System.out.println("failed to log in");
