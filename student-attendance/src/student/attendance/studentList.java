@@ -6,6 +6,7 @@ package student.attendance;
  * and open the template in the editor.
  */
 
+import model.Student;
 import java.util.ArrayList;
 
 /**
@@ -23,11 +24,19 @@ public class studentList {
         studentList.add(s);
     }
     
+    public Student get(int i){
+        return studentList.get(i);
+    }
+    
     public void remove(Student s){
         studentList.remove(s);
     }
     
     public ArrayList<Student> getStudents() {
         return studentList;
+    }
+    
+    public int Size(){
+        return studentList.size();
     }
 }

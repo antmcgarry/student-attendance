@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package student.attendance.course;
+package model;
 
 /**
  *
@@ -47,11 +47,5 @@ public class Module {
     public void setModuleSemester(int s) { this.semester = s; }
     
     public int getModuleSemester() { return semester; } 
-    
-    
-    
-    
-    
-    
-    
+
 }

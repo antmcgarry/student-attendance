@@ -1,9 +1,8 @@
 
-import java.util.ArrayList;
-import javax.swing.JFrame;
+
 import javax.swing.table.DefaultTableModel;
 import student.attendance.JDBConnection.CISConnection;
-import student.attendance.Student;
+import model.Student;
 import student.attendance.studentList;
 
 /*
@@ -19,7 +18,7 @@ import student.attendance.studentList;
 public class StudentForm extends javax.swing.JFrame {
     
     private static DefaultTableModel model;
-    public ArrayList<Student> list;
+    public studentList list = new studentList();
     /**
      * Creates new form AdminForm
      */
@@ -27,29 +26,33 @@ public class StudentForm extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null); //Centers the login form to the center of the screen
         getTutorList();
-       
     }
     
     private void getTutorList() {
        
-        studentList studentList = new studentList();
         CISConnection cis = new CISConnection("cis4005");
-        cis.printAllStudents(studentList);
-        list = studentList.getStudents();
+        cis.getAllStudents(list);
+        list.getStudents();
         model = (DefaultTableModel) studentTable.getModel();
-        Object rowData[] = new Object[8];
         
-        for(int i = 0; i < list.size(); i++){
-            rowData[0] = list.get(i).getFirstName();
-            rowData[1] = list.get(i).getLastName();
-            rowData[2] = list.get(i).getAge();
-            rowData[3] = list.get(i).getDateofBirth();
-            rowData[4] = list.get(i).getAddress();
-            rowData[5] = list.get(i).getEmail();
-            model.addRow(rowData);
+        for(int i = 0; i < list.Size(); i++){
+           insertNewStudent(list.get(i));
         }
         
     }
+    
+    public static void insertNewStudent(Student student){
+      Object rowData[] = new Object[9];
+      rowData[0] = student.getFirstName();
+      rowData[1] = student.getLastName();
+      rowData[2] = student.getAge();
+      rowData[3] = student.getDateofBirth();
+      rowData[4] = student.getAddress();
+      rowData[5] = student.getEmail();
+      rowData[6] = student.getRegisteredType();
+      model.addRow(rowData);  
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +67,6 @@ public class StudentForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
         addButton = new javax.swing.JButton();
-        editButton = new javax.swing.JButton();
         removeTutor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -98,14 +100,14 @@ public class StudentForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "First Name", "Last Name", "Age", "Date of Birth", "Address", "Email"
+                "First Name", "Last Name", "Age", "Date of Birth", "Address", "Email", "Register"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -125,13 +127,6 @@ public class StudentForm extends javax.swing.JFrame {
             }
         });
 
-        editButton.setText("EDIT STUDENT");
-        editButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButtonActionPerformed(evt);
-            }
-        });
-
         removeTutor.setText("REMOVE STUDENT");
         removeTutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,9 +143,7 @@ public class StudentForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(removeTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -163,7 +156,6 @@ public class StudentForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(removeTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 16, Short.MAX_VALUE))
         );
@@ -173,41 +165,31 @@ public class StudentForm extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-            AddStudentForm atf = new AddStudentForm();
+            AddStudentForm atf = new AddStudentForm(list);
             atf.setVisible(true);
-            atf.pack();
             atf.setLocationRelativeTo(null);
-            atf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            model.fireTableDataChanged();
                        
     }//GEN-LAST:event_addButtonActionPerformed
-
-    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editButtonActionPerformed
 
     private void removeTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTutorActionPerformed
         // TODO add your handling code here:
             int selectedRowIndex = studentTable.getSelectedRow();
             Object studentName = studentTable.getValueAt(selectedRowIndex, 0);
             String name = studentName.toString();
-            for(int i = 0; i < list.size(); i++){
+            int studentNo = 0;
+            CISConnection cis = new CISConnection("cis4005");
+            for(int i = 0; i < list.Size(); i++){
                 Student s = list.get(i);
                 if(name == s.getFirstName()){
                    list.remove(s);
+                   studentNo = s.getStudentNo();
                 }
             }
+            cis.removeStudent(studentNo);
             model.removeRow(selectedRowIndex);
+            System.out.println("REMOVE");
     }//GEN-LAST:event_removeTutorActionPerformed
-    public static void AddNewTutor(Student student){
-        Object rowData[] = new Object[8];
-        rowData[0] = student.getFirstName();
-        rowData[1] = student.getLastName();
-        rowData[2] = student.getAge();
-        rowData[3] = student.getDateofBirth();
-        rowData[4] = student.getAddress();
-        rowData[5] = student.getEmail();
-        model.addRow(rowData);  
-    }
     
     /**
      * @param args the command line arguments
@@ -247,7 +229,6 @@ public class StudentForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JButton editButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
