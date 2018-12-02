@@ -1,6 +1,8 @@
 
 import javax.swing.table.DefaultTableModel;
+import model.Programme;
 import student.attendance.JDBConnection.CISConnection;
+import student.attendance.ProgrammeList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,18 +16,33 @@ import student.attendance.JDBConnection.CISConnection;
  */
 public class ProgramForm extends javax.swing.JFrame {
     private static DefaultTableModel model;
+    private ProgrammeList list = new ProgrammeList();
     /**
      * Creates new form ProgramForm
      */
     public ProgramForm() {
         initComponents();
         this.setLocationRelativeTo(null);
+        getProgrammeList();
     }
     
     public void getProgrammeList(){
         CISConnection cis = new CISConnection("cis4005");
-       //TODO make a call to the database to get the programmeList
-       
+        cis.getProgrammeList(list);
+        list.getProgrammes();
+        model = (DefaultTableModel) programmeTable.getModel();
+        System.out.println(list);
+        for(int i = 0; i < list.Size(); i++){
+           insertTableRow(list.get(i));
+        }
+    }
+    
+    private void insertTableRow(Programme p){
+      Object rowData[] = new Object[3];
+      rowData[0] = p.getProgramCode();
+      rowData[1] = p.getProgramTitle();
+      rowData[2] = p.getProgramLevel();
+      model.addRow(rowData);  
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,7 +55,7 @@ public class ProgramForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        programmeTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         textFieldProgrammeTitle = new javax.swing.JFormattedTextField();
@@ -48,24 +65,26 @@ public class ProgramForm extends javax.swing.JFrame {
         removeProgramme = new javax.swing.JButton();
         modulesButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        programmeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Programme TIlte", "Programme Code"
+                "Programme Code", "Programme TIlte", "Level"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -76,9 +95,9 @@ public class ProgramForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jScrollPane1.setViewportView(programmeTable);
+        if (programmeTable.getColumnModel().getColumnCount() > 0) {
+            programmeTable.getColumnModel().getColumn(0).setResizable(false);
         }
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
@@ -124,6 +143,15 @@ public class ProgramForm extends javax.swing.JFrame {
         backButton.setBackground(new java.awt.Color(153, 0, 51));
         backButton.setText("Back");
 
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Programme Level:");
+
+        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
+        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Level 1", "Level 2", "Level 3" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -138,18 +166,24 @@ public class ProgramForm extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textFieldProgrammeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(titleFieldProgrammeCode, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textFieldProgrammeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(titleFieldProgrammeCode, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(51, 51, 51)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(removeProgramme, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(addProgramme, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(46, 46, 46)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(modulesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                            .addComponent(modulesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                             .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(29, 29, 29))
         );
@@ -170,13 +204,13 @@ public class ProgramForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(titleFieldProgrammeCode, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backButton)
-                    .addComponent(removeProgramme))
-                .addContainerGap())
+                    .addComponent(jLabel4)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removeProgramme)
+                    .addComponent(backButton))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -243,13 +277,15 @@ public class ProgramForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addProgramme;
     private javax.swing.JButton backButton;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton modulesButton;
+    private javax.swing.JTable programmeTable;
     private javax.swing.JButton removeProgramme;
     private javax.swing.JFormattedTextField textFieldProgrammeTitle;
     private javax.swing.JFormattedTextField titleFieldProgrammeCode;

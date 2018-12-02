@@ -8,8 +8,10 @@ package student.attendance.JDBConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import model.Programme;
 import model.Student;
-import student.attendance.studentList;
+import student.attendance.ProgrammeList;
+import student.attendance.StudentList;
 
 /**
  *
@@ -103,7 +105,7 @@ public class CISConnection extends DBConnection {
      * and load the students into new student objects and add them to student
      * list
      */
-    public void getAllStudents(studentList list)
+    public void getAllStudents(StudentList list)
     {
         final String retrieveQuery = "SELECT * from student";
         this.setQuery(retrieveQuery);
@@ -156,6 +158,33 @@ public class CISConnection extends DBConnection {
         catch (SQLException sqle)
         {
             System.out.println("Exception when inserting programme record: " + sqle.toString());
+        }
+    }
+    
+    public void getProgrammeList(ProgrammeList plist){
+        final String retrieveQuery = "SELECT * from programme";
+        this.setQuery(retrieveQuery);
+        this.runQuery();
+        ResultSet output = this.getResultSet();
+        try
+        {
+        if (null != output)
+        {
+            while(output.next())
+            {
+                int id = output.getInt(1);
+                String code = output.getString(2);
+                String title = output.getString(3);
+                int level = output.getInt(4);
+                Programme p = new Programme(id, code, title, level);
+                System.out.println(p.getProgramTitle());
+                plist.add(p);
+            }
+        }
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when printing all students: " + sqle.toString());
         }
     }
 

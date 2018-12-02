@@ -13,10 +13,10 @@ import java.util.ArrayList;
  *
  * @author Anthony Mcgarry
  */
-public class studentList {
+public class StudentList {
     private final ArrayList<Student> studentList;
     
-    public studentList(){
+    public StudentList(){
         studentList = new ArrayList<>();
     }
     

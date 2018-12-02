@@ -3,7 +3,7 @@
 import javax.swing.table.DefaultTableModel;
 import student.attendance.JDBConnection.CISConnection;
 import model.Student;
-import student.attendance.studentList;
+import student.attendance.StudentList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,7 +18,7 @@ import student.attendance.studentList;
 public class StudentForm extends javax.swing.JFrame {
     
     private static DefaultTableModel model;
-    public studentList list = new studentList();
+    public StudentList list = new StudentList();
     /**
      * Creates new form AdminForm
      */

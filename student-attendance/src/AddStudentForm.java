@@ -3,7 +3,7 @@
 import java.util.Random;
 import student.attendance.JDBConnection.CISConnection;
 import model.Student;
-import student.attendance.studentList;
+import student.attendance.StudentList;
 
 
 /*
@@ -17,7 +17,7 @@ import student.attendance.studentList;
  * @author ADMIN
  */
 public class AddStudentForm extends javax.swing.JFrame {
-    public studentList sl;
+    public StudentList sl;
     private char register = 'F';
     /**
      * Creates new form addTutorForm
@@ -26,7 +26,7 @@ public class AddStudentForm extends javax.swing.JFrame {
 
     }
     
-    public AddStudentForm(studentList list){
+    public AddStudentForm(StudentList list){
         this.sl = list;
         initComponents();
 
