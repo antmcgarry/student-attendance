@@ -14,7 +14,7 @@ import student.attendance.StudentList;
 
 /**
  *
- * @author ADMIN
+ * @author Anthony Mcgarry
  */
 public class AddStudentForm extends javax.swing.JFrame {
     public StudentList sl;
@@ -29,7 +29,6 @@ public class AddStudentForm extends javax.swing.JFrame {
     public AddStudentForm(StudentList list){
         this.sl = list;
         initComponents();
-
     }
 
     /**

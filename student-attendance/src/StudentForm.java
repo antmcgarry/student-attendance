@@ -13,7 +13,7 @@ import student.attendance.StudentList;
 
 /**
  *
- * @author ADMIN
+ * @author Anthony Mcgarry
  */
 public class StudentForm extends javax.swing.JFrame {
     
