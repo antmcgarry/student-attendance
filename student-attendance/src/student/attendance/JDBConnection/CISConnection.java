@@ -297,6 +297,52 @@ public class CISConnection extends DBConnection {
         }
     }
     
+    public void getModluesToProgramme(ModuleList list, int id){
+        final String retrieveQuery = "SELECT MODULE.ID, MODULE.MODULETITLE, MODULE.CREDITS, MODULECODE, LEVEL, SEMESTER FROM CIS4005.MODULE inner join CIS4005.MODULEPROGRAMME on MODULEPROGRAMME.PROGRAMMEID = ? AND MODULEPROGRAMME.MODULEID = MODULE.ID";
+        ResultSet output;
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(retrieveQuery);
+            pstmt.setInt(1, id);
+            output = pstmt.executeQuery();
+        if (null != output)
+        {
+            while(output.next())
+            {
+                id = output.getInt(1);
+                String title = output.getString(2);
+                int credit = output.getInt(3);
+                String code = output.getString(4);
+                int level = output.getInt(5);
+                int semester = output.getInt(6);
+                Module m = new Module(id, title, credit, code, level, semester);
+                list.add(m);
+            }
+        }
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when printing all students: " + sqle.toString());
+        }
+    }
+    
+    public void removeModuleFromProgramme(final int moduleId, final int programmeId){
+        final String sql = "DELETE FROM moduleprogramme WHERE moduleid = ? and programmeId = ?";
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setInt(1, moduleId);
+            pstmt.setInt(2, programmeId);
+            // execute the delete statement
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when deleting student record: " + sqle.toString());
+        }
+    }
+    
     public Boolean login(final String u, final String p, final String role){
         String queryString = null;
         switch (role) {
