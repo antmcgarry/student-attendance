@@ -5,7 +5,6 @@
  */
 package model;
 
-import model.Person;
 
 /**
  *
@@ -13,46 +12,54 @@ import model.Person;
  */
 public class Tutor extends Person {
     private final String role = "Tutor";
-    private boolean moduleLeader;
-    private boolean programLeader;
-    private int tutorId;
+    private String tutorNo;
+    private int id;
+    private Module module;
+    private Programme programme;
+    
     
      public Tutor(
         int id,
         String fName, 
         String lName,
+        String tutorId,
         int age, 
         String dob, 
         String add,
         String email,
-        String password,
-        Boolean m,
-        Boolean p
+        String password
     )
     {
       super(fName, lName, age, dob, add, email, password);
-      this.moduleLeader = m;
-      this.programLeader = p;
-      this.tutorId = id;
+      this.tutorNo = tutorNo;
+      this.id = id;
     }
-     
-     public void setModuleLeader(Boolean m){
-         this.moduleLeader = m;
-     }
-     
-     public Boolean getModuleLeader(){
-         return moduleLeader;
-     }
-     
-     public void setProgramLeader(Boolean p){
-         this.programLeader = p;
-     }
+
+    public String getRole(){
+        return role;
+    }
     
-     public Boolean getProgramLeader(){
-         return programLeader;
-     }
+    public String getTutorNo() {
+        return tutorNo;
+    }
     
-     public String getRole(){
-         return role;
-     }
+    public int getTutorId(){
+        return id;
+    }
+    
+    public void setProgrammeLeader(Programme p){
+        this.programme = p;
+    }
+    
+    public Programme getProgrammeLeader(){
+        return programme;
+    }
+    
+    public void setModuleLeader(Module m){
+        this.module = m;
+    }
+    
+    public Module getModuleLeader() {
+        return module;
+    }
 }
