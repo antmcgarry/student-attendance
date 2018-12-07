@@ -20,12 +20,12 @@ public class StudentAttendance {
         
         CISConnection cis = new CISConnection("cis4005");
         // TODO code application logic here
-//        Tutor t = new Tutor("John", "Smith", "T0003", 40, "11/04/1978", "9 Dale Street", "john.smith@ormskirk.ac.uk", "password");
-//        System.out.println(t.getTutorNo());
-//        
-//        cis.insertTutor(t);
-//        System.out.println("Done!!");
-//        
+        Tutor t = new Tutor(1,"Elaine", "Greene", "T0004", 22, "22/11/1996", "32 Regent Street", "elaine.greene@ormskirk.ac.uk", "password");
+        System.out.println(t.getTutorNo());
+        
+        cis.insertTutor(t);
+        System.out.println("Done!!");
+        
     }
     
 }

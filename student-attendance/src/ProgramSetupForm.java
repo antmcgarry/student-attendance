@@ -4,6 +4,7 @@ import model.Module;
 import model.Programme;
 import student.attendance.JDBConnection.CISConnection;
 import student.attendance.ModuleList;
+import student.attendance.TutorList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,6 +21,7 @@ public class ProgramSetupForm extends javax.swing.JFrame {
     CISConnection cis = new CISConnection("cis4005");
     ModuleList list = new ModuleList();
     ModuleList tList = new ModuleList();
+    TutorList tutorList = new TutorList();
     private static DefaultTableModel model;
     /**
      * Creates new form ProgramSetupForm
@@ -28,6 +30,7 @@ public class ProgramSetupForm extends javax.swing.JFrame {
     public ProgramSetupForm(Programme p) {
         initComponents();
         loadModules();
+        loadTutors();
         model = (DefaultTableModel) moduleTable.getModel();
         this.p = p;
         labelProgrammeTitle.setText(p.getProgramTitle());
@@ -47,12 +50,22 @@ public class ProgramSetupForm extends javax.swing.JFrame {
     ProgramSetupForm() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
     private void loadModules(){
         cis.getModuleList(list);
         list.getModules();
         comboBoxModule.addItem("Select...");
         for(int i = 0; i < list.Size(); i++){
            comboBoxModule.addItem(list.get(i).getModuleTitle());
+        }
+    }
+    
+    private void loadTutors(){
+        cis.getAllTutors(tutorList);
+        tutorList.getTutors();
+        comboBoxTutors.addItem("Select...");
+        for(int i = 0; i < tutorList.Size(); i++){
+           comboBoxTutors.addItem(tutorList.get(i).getFirstName() + " " + tutorList.get(i).getLastName());
         }
     }
     private void insertTableRow(Module m){
@@ -84,7 +97,7 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         comboBoxModule = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        comboBoxTutors = new javax.swing.JComboBox<>();
         removeModuleButton = new javax.swing.JButton();
         assignModuleButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -207,7 +220,7 @@ public class ProgramSetupForm extends javax.swing.JFrame {
                                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(122, 122, 122)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboBoxTutors, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -248,7 +261,7 @@ public class ProgramSetupForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboBoxTutors, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
@@ -347,10 +360,10 @@ public class ProgramSetupForm extends javax.swing.JFrame {
     private javax.swing.JLabel LabelTutorName;
     private javax.swing.JButton assignModuleButton;
     private javax.swing.JComboBox<String> comboBoxModule;
+    private javax.swing.JComboBox<String> comboBoxTutors;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

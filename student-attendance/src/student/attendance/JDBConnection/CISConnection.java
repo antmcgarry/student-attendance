@@ -15,6 +15,7 @@ import model.Tutor;
 import student.attendance.ModuleList;
 import student.attendance.ProgrammeList;
 import student.attendance.StudentList;
+import student.attendance.TutorList;
 
 /**
  *
@@ -30,6 +31,42 @@ public class CISConnection extends DBConnection {
      */
     public CISConnection(final String dbName){
         this.connectDatabase(dbName);
+    }
+    
+    /**
+     * Collects all the tutors from the data base and stores them in a list object
+     * @param list 
+     */
+    public void getAllTutors(TutorList list){
+        final String retrieveQuery = "SELECT * from tutor";
+        this.setQuery(retrieveQuery);
+        this.runQuery();
+        ResultSet output = this.getResultSet();
+        try
+        {
+        if (null != output)
+        {
+            while(output.next())
+            {
+                int id = output.getInt(1);
+                String fname = output.getString(2);
+                String lname = output.getString(3);
+                String tutorNo = output.getString(4);
+                String email = output.getString(5);
+                String password = output.getString(6);
+                String dob = output.getString(7);
+                int age = output.getInt(8);
+                String address = output.getString(9);
+                Tutor tutor = new Tutor(id, fname, lname, tutorNo, age, dob, address, email, password);
+                list.add(tutor);
+            }
+        }
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when printing all students: " + sqle.toString());
+        }
+
     }
     
     /**
