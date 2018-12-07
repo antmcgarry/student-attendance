@@ -22,7 +22,7 @@ public class Tutor extends Person {
         int id,
         String fName, 
         String lName,
-        String tutorId,
+        String tutorNo,
         int age, 
         String dob, 
         String add,

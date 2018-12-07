@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import model.Module;
 import model.Programme;
 import model.Student;
+import model.Tutor;
 import student.attendance.ModuleList;
 import student.attendance.ProgrammeList;
 import student.attendance.StudentList;
@@ -30,6 +31,55 @@ public class CISConnection extends DBConnection {
     public CISConnection(final String dbName){
         this.connectDatabase(dbName);
     }
+    
+    /**
+     * Insert a new tutor record into the database
+     * @param tutor used to pass the Tutor object model
+     */
+    public void insertTutor(Tutor tutor){
+        final String insertStmt = "INSERT INTO tutor (forename, surname, tutorNo, email, password, dob, age, address, status) VALUES (?,?,?,?,?,?,?,?,?)";
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
+//            pstmt.setInt(1, 1);
+            pstmt.setString(1, tutor.getFirstName());
+            pstmt.setString(2, tutor.getLastName());
+            pstmt.setString(3, tutor.getTutorNo());
+            pstmt.setString(4, tutor.getEmail());
+            pstmt.setString(5, tutor.getPassword());
+            pstmt.setString(6, tutor.getDateofBirth());
+            pstmt.setInt(7, tutor.getAge());
+            pstmt.setString(8, tutor.getAddress());
+            pstmt.setString(9, tutor.getRole());
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when inserting student record: " + sqle.toString());
+        }
+    }
+    
+    /**
+     * Remove tutor record from the database
+     * @param id to located the tutor in the database
+     */
+    public void removeTutor(int id){
+        final String sql = "DELETE FROM tutor WHERE TUTORNO = ?";
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setInt(1, id);
+            // execute the delete statement
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when deleting student record: " + sqle.toString());
+        }
+
+    }
+    
 
     /**
      * Insert a new student record into the database

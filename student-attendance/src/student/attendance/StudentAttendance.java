@@ -4,9 +4,7 @@
  * and open the template in the editor.
  */
 package student.attendance;
-import java.sql.*;
-import static java.time.Clock.system;
-import java.sql.Connection;
+import model.Tutor;
 import student.attendance.JDBConnection.CISConnection;
 
 /**
@@ -22,22 +20,12 @@ public class StudentAttendance {
         
         CISConnection cis = new CISConnection("cis4005");
         // TODO code application logic here
-//        try {
-//           Class.forName("org.apache.derby.jdbc.EmbeddedDriver"); 
-//        }catch(ClassNotFoundException e){
-//            System.err.println(e);
-//        }
+//        Tutor t = new Tutor("John", "Smith", "T0003", 40, "11/04/1978", "9 Dale Street", "john.smith@ormskirk.ac.uk", "password");
+//        System.out.println(t.getTutorNo());
 //        
-//        try{
-//            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/cis4005", "cis4005", "cis4005");
-//            Statement stmt = con.createStatement();
-//           
-//            ResultSet st = stmt.executeQuery("SELECT * from student");
-//
-//        }catch(SQLException e){
-//            System.err.println(e);
-//        }
-        
+//        cis.insertTutor(t);
+//        System.out.println("Done!!");
+//        
     }
     
 }
