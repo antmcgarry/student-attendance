@@ -480,6 +480,23 @@ public class CISConnection extends DBConnection {
         }
     }
     
+    public void removeProgrammeLeader(final int tutorId, final int programmeId){
+        final String sql = "DELETE FROM tutorprogramme WHERE tutorid = ? and programmeId = ?";
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setInt(1, tutorId);
+            pstmt.setInt(2, programmeId);
+            // execute the delete statement
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when deleting student record: " + sqle.toString());
+        }
+    }
+    
     public Boolean login(final String u, final String p, final String role){
         String queryString = null;
         switch (role) {

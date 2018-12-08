@@ -199,6 +199,11 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         });
 
         onRemoveProgrammeLeader.setText("Remove Programme Leader");
+        onRemoveProgrammeLeader.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onRemoveProgrammeLeaderActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(153, 0, 51));
         jButton5.setText("Back");
@@ -361,6 +366,20 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         String lName = tutorList.get(s -1).getLastName();
         labelTutorName.setText(tutorNo + " " + fName + " " + lName );
     }//GEN-LAST:event_onAssignProgrammeLeaderActionPerformed
+
+    private void onRemoveProgrammeLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onRemoveProgrammeLeaderActionPerformed
+        // TODO add your handling code here:
+        if (!leader) return;
+        Tutor t = cis.getProgrammeLeader(p.getProgramId());
+        if (t == null) return;
+        int tutorId = t.getTutorId();
+        int programmeId = p.getProgramId();
+        cis.removeProgrammeLeader(tutorId, programmeId);
+        labelTutorName.setText("No Leader Assigned");
+        leader = false;
+        System.out.println("REMOVE");
+
+    }//GEN-LAST:event_onRemoveProgrammeLeaderActionPerformed
 
     /**
      * @param args the command line arguments
