@@ -2,6 +2,7 @@
 import javax.swing.table.DefaultTableModel;
 import model.Module;
 import model.Programme;
+import model.Tutor;
 import student.attendance.JDBConnection.CISConnection;
 import student.attendance.ModuleList;
 import student.attendance.TutorList;
@@ -23,6 +24,7 @@ public class ProgramSetupForm extends javax.swing.JFrame {
     ModuleList tList = new ModuleList();
     TutorList tutorList = new TutorList();
     private static DefaultTableModel model;
+    Boolean leader = false;
     /**
      * Creates new form ProgramSetupForm
      * @param p getting the programme passed from the setup Page
@@ -37,12 +39,27 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         labelProgrammeCode.setText(p.getProgramCode());
         labelProgrammeLevel.setText(Integer.toString(p.getProgramLevel()));
         getModulesAssigned();
+        getProgrammeLeader();
+    }
+    
+    private void getProgrammeLeader() {
+       Tutor temp = cis.getProgrammeLeader(p.getProgramId());
+       if(temp == null){
+           labelTutorName.setText("No Leader Assigned");
+       } else {
+           String fName = temp.getFirstName();
+           String lName = temp.getLastName();
+           String tutorNo = temp.getTutorNo();
+           leader = true;
+           labelTutorName.setText(tutorNo + " " + fName + " " + lName);
+        }
     }
     
     private void getModulesAssigned(){
         cis.getModluesToProgramme(tList, p.getProgramId());
         tList.getModules();
         for(int i = 0; i < tList.Size(); i++){
+           System.out.println(list.get(i).getModuleTitle());
            insertTableRow(list.get(i));
         }
     }
@@ -92,7 +109,7 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         moduleTable = new javax.swing.JTable();
         labelProgrammeTitle = new javax.swing.JLabel();
-        LabelTutorName = new javax.swing.JLabel();
+        labelTutorName = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -100,8 +117,8 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         comboBoxTutors = new javax.swing.JComboBox<>();
         removeModuleButton = new javax.swing.JButton();
         assignModuleButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        onAssignProgrammeLeader = new javax.swing.JButton();
+        onRemoveProgrammeLeader = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         labelProgrammeCode = new javax.swing.JLabel();
         labelProgrammeTitle2 = new javax.swing.JLabel();
@@ -145,9 +162,9 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         labelProgrammeTitle.setForeground(new java.awt.Color(255, 255, 255));
         labelProgrammeTitle.setText("Programme Title");
 
-        LabelTutorName.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        LabelTutorName.setForeground(new java.awt.Color(255, 255, 255));
-        LabelTutorName.setText("Tutor Name");
+        labelTutorName.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        labelTutorName.setForeground(new java.awt.Color(255, 255, 255));
+        labelTutorName.setText("Tutor Name");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -175,9 +192,14 @@ public class ProgramSetupForm extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Assign Programme Leader");
+        onAssignProgrammeLeader.setText("Assign Programme Leader");
+        onAssignProgrammeLeader.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onAssignProgrammeLeaderActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Remove Programme Leader");
+        onRemoveProgrammeLeader.setText("Remove Programme Leader");
 
         jButton5.setBackground(new java.awt.Color(153, 0, 51));
         jButton5.setText("Back");
@@ -221,14 +243,14 @@ public class ProgramSetupForm extends javax.swing.JFrame {
                                 .addGap(122, 122, 122)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(comboBoxTutors, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))
+                            .addComponent(onAssignProgrammeLeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(onRemoveProgrammeLeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LabelTutorName, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(labelTutorName, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -255,7 +277,7 @@ public class ProgramSetupForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(LabelTutorName))
+                    .addComponent(labelTutorName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -268,11 +290,11 @@ public class ProgramSetupForm extends javax.swing.JFrame {
                         .addComponent(comboBoxModule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
+                    .addComponent(onAssignProgrammeLeader)
                     .addComponent(assignModuleButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
+                    .addComponent(onRemoveProgrammeLeader)
                     .addComponent(removeModuleButton)
                     .addComponent(jButton5))
                 .addGap(20, 20, 20))
@@ -321,6 +343,22 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeModuleButtonActionPerformed
 
+    private void onAssignProgrammeLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onAssignProgrammeLeaderActionPerformed
+        // TODO add your handling code here:
+        int s = comboBoxTutors.getSelectedIndex();
+        if (s < 1) return ;
+        if(leader) return;
+        int tutorId = tutorList.get(s -1).getTutorId();
+        int programmeID = p.getProgramId();
+        cis.assignProgrammeLeader(tutorId, programmeID);
+        System.out.println("Programme Leader Assigned");
+        leader = true;
+        String tutorNo = tutorList.get(s -1).getTutorNo();
+        String fName = tutorList.get(s -1).getFirstName();
+        String lName = tutorList.get(s -1).getLastName();
+        labelTutorName.setText(tutorNo + " " + fName + " " + lName );
+    }//GEN-LAST:event_onAssignProgrammeLeaderActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -357,12 +395,9 @@ public class ProgramSetupForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel LabelTutorName;
     private javax.swing.JButton assignModuleButton;
     private javax.swing.JComboBox<String> comboBoxModule;
     private javax.swing.JComboBox<String> comboBoxTutors;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -374,7 +409,10 @@ public class ProgramSetupForm extends javax.swing.JFrame {
     private javax.swing.JLabel labelProgrammeLevel;
     private javax.swing.JLabel labelProgrammeTitle;
     private javax.swing.JLabel labelProgrammeTitle2;
+    private javax.swing.JLabel labelTutorName;
     private javax.swing.JTable moduleTable;
+    private javax.swing.JButton onAssignProgrammeLeader;
+    private javax.swing.JButton onRemoveProgrammeLeader;
     private javax.swing.JButton removeModuleButton;
     // End of variables declaration//GEN-END:variables
 }

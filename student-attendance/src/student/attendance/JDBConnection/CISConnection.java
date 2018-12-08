@@ -413,6 +413,39 @@ public class CISConnection extends DBConnection {
         }
     }
     
+        public Tutor getProgrammeLeader(int ProgrammeId){
+        final String retrieveQuery = "SELECT TUTOR.ID, TUTOR.FORENAME, TUTOR.SURNAME, TUTOR.TUTORNO, TUTOR.EMAIL, TUTOR.PASSWORD, TUTOR.DOB, TUTOR.AGE, TUTOR.ADDRESS, TUTOR.STATUS FROM CIS4005.TUTOR inner join CIS4005.TUTORPROGRAMME on TUTORPROGRAMME.PROGRAMMEID = ? AND TUTORPROGRAMME.TUTORID = TUTOR.ID";
+        ResultSet output;
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(retrieveQuery);
+            pstmt.setInt(1, ProgrammeId);
+            output = pstmt.executeQuery();
+        if (null != output)
+        {
+            while(output.next())
+            {
+                int id = output.getInt(1);
+                String fName = output.getString(2);
+                String lName = output.getString(3);
+                String tutorNo = output.getString(4);
+                String email = output.getString(5);
+                String password = output.getString(6);
+                String dob = output.getString(7);
+                int age = output.getInt(8);
+                String address = output.getString(9);
+                Tutor t = new Tutor(id, fName, lName, tutorNo, age, dob, address, email, password);
+                return t;
+            }
+        }
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when printing all programme leader: " + sqle.toString());
+        }
+        return null;
+    }
+    
     public void removeModuleFromProgramme(final int moduleId, final int programmeId){
         final String sql = "DELETE FROM moduleprogramme WHERE moduleid = ? and programmeId = ?";
         try
@@ -427,6 +460,23 @@ public class CISConnection extends DBConnection {
         catch (SQLException sqle)
         {
             System.out.println("Exception when deleting student record: " + sqle.toString());
+        }
+    }
+    
+    public void assignProgrammeLeader(final int TutorId, final int programmeId)
+    {
+        final String insertStmt = "INSERT INTO TUTORPROGRAMME (tutorId, programmeId) VALUES (?,?)";
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
+            pstmt.setInt(1, TutorId);
+            pstmt.setInt(2, programmeId);
+
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when adding module to programme: " + sqle.toString());
         }
     }
     
