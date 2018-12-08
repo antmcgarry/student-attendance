@@ -59,8 +59,7 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         cis.getModluesToProgramme(tList, p.getProgramId());
         tList.getModules();
         for(int i = 0; i < tList.Size(); i++){
-           System.out.println(list.get(i).getModuleTitle());
-           insertTableRow(list.get(i));
+           insertTableRow(tList.get(i));
         }
     }
 
@@ -318,26 +317,30 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         int s = comboBoxModule.getSelectedIndex();
         int level = p.getProgramLevel();
-        if(level == 1 && tList.Size() == 5) return;
-        if(level == 2 && tList.Size() == 10) return;
-        if(level == 3 && tList.Size() == 15) return;
+
+        if(level == 1 && tList.Size() >= 5) return;
+        if(level == 2 && tList.Size() >= 10) return;
+        if(level == 3 && tList.Size() >= 15) return;
         if (s < 1) return ;
-        int moduleID = list.get(s -1).getModuleId();
+        Module m = list.get(s -1);
+        if(tList.Contains(m)) return;
+        int moduleID = m.getModuleId();
         int programmeID = p.getProgramId();
         cis.addModuleToProgramme(moduleID, programmeID);
-        insertTableRow(list.get(s -1));
+        tList.add(m);
+        insertTableRow(m);
     }//GEN-LAST:event_assignModuleButtonActionPerformed
 
     private void removeModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeModuleButtonActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = moduleTable.getSelectedRow();
-        int id = tList.get(selectedRowIndex-1).getModuleId();
+        Module m = tList.get(selectedRowIndex-1);
+        int id =  m.getModuleId();
         for(int i = 0; i < tList.Size(); i++){
-            Module m = tList.get(i);
             if(id == m.getModuleId()){
-               list.remove(m);
                cis.removeModuleFromProgramme(id, p.getProgramId());
                model.removeRow(selectedRowIndex);
+               tList.remove(m);
                System.out.println("REMOVE");
             }
         }

@@ -38,4 +38,8 @@ public class ModuleList {
     public int Size(){
         return moduleList.size();
     }
+    
+    public Boolean Contains(Module m){
+        return moduleList.contains(m);
+    }
 }
