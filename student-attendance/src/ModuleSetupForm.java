@@ -379,7 +379,7 @@ public class ModuleSetupForm extends javax.swing.JFrame {
     private void onAssignModuleLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onAssignModuleLeaderActionPerformed
         // TODO add your handling code here:
         int s = comboBoxTutors.getSelectedIndex();
-        if (s < 0) {
+        if (s < 1) {
             JOptionPane.showMessageDialog(null, "Please select a valid tutor", "Warning",JOptionPane.WARNING_MESSAGE);
             return;
         } ;

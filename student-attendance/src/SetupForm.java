@@ -227,8 +227,11 @@ public class SetupForm extends javax.swing.JFrame {
     private void setupProgrammeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setupProgrammeButtonActionPerformed
         // TODO add your handling code here:
         int s = comboBoxProgramme.getSelectedIndex();
-        if (s < 1) return ; //TODO add Error message
-        Programme p = pList.get(s -1);
+        if (s < 1) {
+            JOptionPane.showMessageDialog(null, "Please select a valid programme", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Programme p = pList.get(s);
         ProgramSetupForm psf = new ProgramSetupForm(p);
             psf.setVisible(true);
             psf.pack();
@@ -240,8 +243,11 @@ public class SetupForm extends javax.swing.JFrame {
     private void setupModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setupModuleButtonActionPerformed
         // TODO add your handling code here:
         int s = comboBoxModule.getSelectedIndex();
-        if (s < 1) return ; //TODO add Error message
-        Module m = mList.get(s -1);
+        if (s < 1){
+            JOptionPane.showMessageDialog(null, "Please select a valid module", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Module m = mList.get(s);
         ModuleSetupForm msf = new ModuleSetupForm(m);
             msf.setVisible(true);
             msf.pack();
