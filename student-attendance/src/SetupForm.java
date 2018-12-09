@@ -1,5 +1,6 @@
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import model.Module;
 import model.Programme;
 import student.attendance.JDBConnection.CISConnection;
@@ -81,7 +82,7 @@ public class SetupForm extends javax.swing.JFrame {
         setupModuleButton = new javax.swing.JButton();
         viewStudentButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        onLogoutButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,8 +126,13 @@ public class SetupForm extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Tutor Zone");
 
-        jButton4.setBackground(new java.awt.Color(153, 0, 0));
-        jButton4.setText("Logout");
+        onLogoutButton.setBackground(new java.awt.Color(153, 0, 0));
+        onLogoutButton.setText("Logout");
+        onLogoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onLogoutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -148,7 +154,7 @@ public class SetupForm extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboBoxModule, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(setupModuleButton, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(onLogoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
@@ -185,7 +191,7 @@ public class SetupForm extends javax.swing.JFrame {
                     .addComponent(setupModuleButton)
                     .addComponent(viewStudentButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                .addComponent(onLogoutButton)
                 .addGap(25, 25, 25))
         );
 
@@ -244,6 +250,17 @@ public class SetupForm extends javax.swing.JFrame {
             this.dispose();
     }//GEN-LAST:event_setupModuleButtonActionPerformed
 
+    private void onLogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onLogoutButtonActionPerformed
+        // TODO add your handling code here:
+        int option = JOptionPane.showConfirmDialog(null, "Do you really want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
+        if(option == 1) return;
+        LoginForm lf = new LoginForm();
+        lf.setVisible(true);
+        lf.pack();
+        lf.setLocationRelativeTo(null);
+        this.dispose();  
+    }//GEN-LAST:event_onLogoutButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -283,13 +300,13 @@ public class SetupForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBoxModule;
     private javax.swing.JComboBox<String> comboBoxProgramme;
     private javax.swing.JComboBox<String> comboBoxStudent;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton onLogoutButton;
     private javax.swing.JButton setupModuleButton;
     private javax.swing.JButton setupProgrammeButton;
     private javax.swing.JButton viewStudentButton;
