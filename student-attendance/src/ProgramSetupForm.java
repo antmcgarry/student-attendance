@@ -361,10 +361,8 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         // TODO add your handling code here:
        int selectedRowIndex = moduleTable.getSelectedRow();
        if(selectedRowIndex < 0){
-           {
             JOptionPane.showMessageDialog(null, "Please select a module", "Warning",JOptionPane.WARNING_MESSAGE);
             return;
-        }
        }
         Module m = tList.get(selectedRowIndex);
         System.out.println(m.getModuleTitle());

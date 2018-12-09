@@ -1,4 +1,5 @@
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Module;
 import model.Student;
@@ -119,8 +120,8 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         comboBoxTutors = new javax.swing.JComboBox<>();
         removeStudentButton = new javax.swing.JButton();
         assignStudentButton = new javax.swing.JButton();
-        onAssignProgrammeLeader = new javax.swing.JButton();
-        onRemoveProgrammeLeader = new javax.swing.JButton();
+        onAssignModuleLeader = new javax.swing.JButton();
+        onRemoveModuleLeader = new javax.swing.JButton();
         onBackButton = new javax.swing.JButton();
         labelModuleCode = new javax.swing.JLabel();
         labelProgrammeTitle2 = new javax.swing.JLabel();
@@ -171,17 +172,17 @@ public class ModuleSetupForm extends javax.swing.JFrame {
             }
         });
 
-        onAssignProgrammeLeader.setText("Assign Module Leader");
-        onAssignProgrammeLeader.addActionListener(new java.awt.event.ActionListener() {
+        onAssignModuleLeader.setText("Assign Module Leader");
+        onAssignModuleLeader.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onAssignProgrammeLeaderActionPerformed(evt);
+                onAssignModuleLeaderActionPerformed(evt);
             }
         });
 
-        onRemoveProgrammeLeader.setText("Remove Module Leader");
-        onRemoveProgrammeLeader.addActionListener(new java.awt.event.ActionListener() {
+        onRemoveModuleLeader.setText("Remove Module Leader");
+        onRemoveModuleLeader.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRemoveProgrammeLeaderActionPerformed(evt);
+                onRemoveModuleLeaderActionPerformed(evt);
             }
         });
 
@@ -256,8 +257,8 @@ public class ModuleSetupForm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(comboBoxTutors, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(onAssignProgrammeLeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(onRemoveProgrammeLeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))
+                            .addComponent(onAssignModuleLeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(onRemoveModuleLeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -306,11 +307,11 @@ public class ModuleSetupForm extends javax.swing.JFrame {
                         .addComponent(comboBoxStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(onAssignProgrammeLeader)
+                    .addComponent(onAssignModuleLeader)
                     .addComponent(assignStudentButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(onRemoveProgrammeLeader)
+                    .addComponent(onRemoveModuleLeader)
                     .addComponent(removeStudentButton)
                     .addComponent(onBackButton))
                 .addGap(20, 20, 20))
@@ -338,15 +339,16 @@ public class ModuleSetupForm extends javax.swing.JFrame {
     private void assignStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignStudentButtonActionPerformed
         // TODO add your handling code here:
         int s = comboBoxStudent.getSelectedIndex();
-        int level = m.getModuleLevel();
-
-        if(level == 1 && tList.Size() >= 5) return;
-        if(level == 2 && tList.Size() >= 10) return;
-        if(level == 3 && tList.Size() >= 15) return;
-        if (s < 1) return ;
+        if (s < 1){
+            JOptionPane.showMessageDialog(null, "Please select a valid student", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        } ;
         Student student = list.get(s -1);
         student.setStudentId(list.get(s -1).getStudentId());
-        if(tList.Contains(student)) return;
+        if(tList.Contains(student)) {
+            JOptionPane.showMessageDialog(null, "Can't have duplicate students in the module", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        };
         int studentId = student.getStudentId();
         int moduleId = m.getModuleId();
         cis.addStudenttoModule(studentId, moduleId);
@@ -357,7 +359,11 @@ public class ModuleSetupForm extends javax.swing.JFrame {
     private void removeStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStudentButtonActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = studentTable.getSelectedRow();
-        Student s = tList.get(selectedRowIndex-1);
+        if(selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a student to remove", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Student s = tList.get(selectedRowIndex);
         int id =  s.getStudentId();
         for(int i = 0; i < tList.Size(); i++){
             if(id == tList.get(i).getStudentId()){
@@ -370,27 +376,39 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeStudentButtonActionPerformed
 
-    private void onAssignProgrammeLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onAssignProgrammeLeaderActionPerformed
+    private void onAssignModuleLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onAssignModuleLeaderActionPerformed
         // TODO add your handling code here:
         int s = comboBoxTutors.getSelectedIndex();
-        if (s < 1) return ;
-        if(leader) return;
-        int tutorId = tutorList.get(s -1).getTutorId();
+        if (s < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a valid tutor", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        } ;
+        if(leader) {
+            JOptionPane.showMessageDialog(null, "Programme leader already assigned", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        };
+        int tutorId = tutorList.get(s).getTutorId();
         int moduleId = m.getModuleId();
         cis.assignModuleLeader(tutorId, moduleId);
         System.out.println("Programme Leader Assigned");
         leader = true;
-        String tutorNo = tutorList.get(s -1).getTutorNo();
-        String fName = tutorList.get(s -1).getFirstName();
-        String lName = tutorList.get(s -1).getLastName();
+        String tutorNo = tutorList.get(s).getTutorNo();
+        String fName = tutorList.get(s).getFirstName();
+        String lName = tutorList.get(s).getLastName();
         labelTutorName.setText(tutorNo + " " + fName + " " + lName );
-    }//GEN-LAST:event_onAssignProgrammeLeaderActionPerformed
+    }//GEN-LAST:event_onAssignModuleLeaderActionPerformed
 
-    private void onRemoveProgrammeLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onRemoveProgrammeLeaderActionPerformed
+    private void onRemoveModuleLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onRemoveModuleLeaderActionPerformed
         // TODO add your handling code here:
-        if (!leader) return;
+        if (!leader) {
+            JOptionPane.showMessageDialog(null, "No Module leader assigned", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Tutor t = cis.getProgrammeLeader(m.getModuleId());
-        if (t == null) return;
+        if (t == null) {
+            JOptionPane.showMessageDialog(null, "Uable to find Module Leader in database please try again", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        };
         int tutorId = t.getTutorId();
         int moduleId = m.getModuleId();
         cis.removeModuleLeader(tutorId, moduleId);
@@ -398,7 +416,7 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         leader = false;
         System.out.println("REMOVE");
 
-    }//GEN-LAST:event_onRemoveProgrammeLeaderActionPerformed
+    }//GEN-LAST:event_onRemoveModuleLeaderActionPerformed
 
     private void onBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onBackButtonActionPerformed
         // TODO add your handling code here:
@@ -459,9 +477,9 @@ public class ModuleSetupForm extends javax.swing.JFrame {
     private javax.swing.JLabel labelModuleTitle;
     private javax.swing.JLabel labelProgrammeTitle2;
     private javax.swing.JLabel labelTutorName;
-    private javax.swing.JButton onAssignProgrammeLeader;
+    private javax.swing.JButton onAssignModuleLeader;
     private javax.swing.JButton onBackButton;
-    private javax.swing.JButton onRemoveProgrammeLeader;
+    private javax.swing.JButton onRemoveModuleLeader;
     private javax.swing.JButton removeStudentButton;
     private javax.swing.JTable studentTable;
     // End of variables declaration//GEN-END:variables

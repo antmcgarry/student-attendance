@@ -70,8 +70,8 @@
                           </Group>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="comboBoxTutors" alignment="1" max="32767" attributes="0"/>
-                              <Component id="onAssignProgrammeLeader" alignment="1" max="32767" attributes="0"/>
-                              <Component id="onRemoveProgrammeLeader" alignment="1" pref="210" max="32767" attributes="0"/>
+                              <Component id="onAssignModuleLeader" alignment="1" max="32767" attributes="0"/>
+                              <Component id="onRemoveModuleLeader" alignment="1" pref="210" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
@@ -136,12 +136,12 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="onAssignProgrammeLeader" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="onAssignModuleLeader" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="assignStudentButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="onRemoveProgrammeLeader" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="onRemoveModuleLeader" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="removeStudentButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="onBackButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -263,20 +263,20 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="assignStudentButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="onAssignProgrammeLeader">
+        <Component class="javax.swing.JButton" name="onAssignModuleLeader">
           <Properties>
             <Property name="text" type="java.lang.String" value="Assign Module Leader"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onAssignProgrammeLeaderActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onAssignModuleLeaderActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="onRemoveProgrammeLeader">
+        <Component class="javax.swing.JButton" name="onRemoveModuleLeader">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remove Module Leader"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRemoveProgrammeLeaderActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onRemoveModuleLeaderActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="onBackButton">
