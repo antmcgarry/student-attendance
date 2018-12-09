@@ -347,6 +347,7 @@ public class ProgramSetupForm extends javax.swing.JFrame {
                model.removeRow(selectedRowIndex);
                tList.remove(m);
                System.out.println("REMOVE");
+               return;
             }
         }
     }//GEN-LAST:event_removeModuleButtonActionPerformed

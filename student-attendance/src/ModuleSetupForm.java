@@ -360,6 +360,7 @@ public class ModuleSetupForm extends javax.swing.JFrame {
                model.removeRow(selectedRowIndex);
                tList.remove(s);
                System.out.println("REMOVE");
+               return;
             }
         }
     }//GEN-LAST:event_removeStudentButtonActionPerformed
