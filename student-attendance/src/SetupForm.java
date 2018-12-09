@@ -1,5 +1,6 @@
 
 import javax.swing.JFrame;
+import model.Module;
 import model.Programme;
 import student.attendance.JDBConnection.CISConnection;
 import student.attendance.ModuleList;
@@ -18,9 +19,9 @@ import student.attendance.StudentList;
  */
 public class SetupForm extends javax.swing.JFrame {
     CISConnection cis = new CISConnection("cis4005");
-    ProgrammeList plist = new ProgrammeList();
-    ModuleList mlist = new ModuleList();
-    StudentList slist = new StudentList();
+    ProgrammeList pList = new ProgrammeList();
+    ModuleList mList = new ModuleList();
+    StudentList sList = new StudentList();
     /**
      * Creates new form SetupForm
      */
@@ -33,30 +34,30 @@ public class SetupForm extends javax.swing.JFrame {
     }
     
     private void loadProgrammes() {
-        cis.getProgrammeList(plist);
-        plist.getProgrammes();
+        cis.getProgrammeList(pList);
+        pList.getProgrammes();
         comboBoxProgramme.addItem("Select...");
-        for(int i = 0; i < plist.Size(); i++){
-           comboBoxProgramme.addItem(plist.get(i).getProgramTitle());
+        for(int i = 0; i < pList.Size(); i++){
+           comboBoxProgramme.addItem(pList.get(i).getProgramTitle());
         }
     }
     
     private void loadModules(){
-        cis.getModuleList(mlist);
-        mlist.getModules();
+        cis.getModuleList(mList);
+        mList.getModules();
         comboBoxModule.addItem("Select...");
-        for(int i = 0; i < mlist.Size(); i++){
-           comboBoxModule.addItem(mlist.get(i).getModuleTitle());
+        for(int i = 0; i < mList.Size(); i++){
+           comboBoxModule.addItem(mList.get(i).getModuleTitle());
         }
     }
     
     private void loadStudents(){
-        cis.getAllStudents(slist);
-        slist.getStudents();
+        cis.getAllStudents(sList);
+        sList.getStudents();
         comboBoxStudent.addItem("Select...");
-        for(int i = 0; i < slist.Size(); i++){
-           comboBoxStudent.addItem((slist.get(i).getFirstName() + " " + 
-                                    slist.get(i).getLastName()));
+        for(int i = 0; i < sList.Size(); i++){
+           comboBoxStudent.addItem((sList.get(i).getFirstName() + " " + 
+                                    sList.get(i).getLastName()));
         }
     }
     /**
@@ -112,6 +113,11 @@ public class SetupForm extends javax.swing.JFrame {
         });
 
         setupModuleButton.setText("Setup Module");
+        setupModuleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setupModuleButtonActionPerformed(evt);
+            }
+        });
 
         viewStudentButton.setText("View Student");
 
@@ -216,7 +222,7 @@ public class SetupForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         int s = comboBoxProgramme.getSelectedIndex();
         if (s < 1) return ; //TODO add Error message
-        Programme p = plist.get(s -1);
+        Programme p = pList.get(s -1);
         ProgramSetupForm psf = new ProgramSetupForm(p);
             psf.setVisible(true);
             psf.pack();
@@ -224,6 +230,19 @@ public class SetupForm extends javax.swing.JFrame {
             psf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.dispose();
     }//GEN-LAST:event_setupProgrammeButtonActionPerformed
+
+    private void setupModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setupModuleButtonActionPerformed
+        // TODO add your handling code here:
+        int s = comboBoxModule.getSelectedIndex();
+        if (s < 1) return ; //TODO add Error message
+        Module m = mList.get(s -1);
+        ModuleSetupForm msf = new ModuleSetupForm(m);
+            msf.setVisible(true);
+            msf.pack();
+            msf.setLocationRelativeTo(null);
+            msf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.dispose();
+    }//GEN-LAST:event_setupModuleButtonActionPerformed
 
     /**
      * @param args the command line arguments

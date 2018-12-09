@@ -39,4 +39,8 @@ public class StudentList {
     public int Size(){
         return studentList.size();
     }
+    
+    public Boolean Contains(Student s){
+        return studentList.contains(s);
+    }
 }

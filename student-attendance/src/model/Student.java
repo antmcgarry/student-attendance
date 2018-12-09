@@ -14,6 +14,7 @@ public class Student extends Person {
     private final int studentNo;
     private char registered; // F = Full-Time || P = Part-Time
     private final String role = "Student";
+    private int studentId;
            
     public Student(
         int studentNo,
@@ -30,6 +31,14 @@ public class Student extends Person {
       super(fName, lName, age, dob, add, email, password);
       this.studentNo = studentNo;
       this.registered = r;
+    }
+    
+    public void setStudentId(int id){
+        this.studentId = id;
+    }
+    
+    public int getStudentId(){
+        return studentId;
     }
     
     public int getStudentNo(){

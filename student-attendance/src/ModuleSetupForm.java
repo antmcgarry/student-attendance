@@ -1,10 +1,10 @@
 
 import javax.swing.table.DefaultTableModel;
 import model.Module;
-import model.Programme;
+import model.Student;
 import model.Tutor;
 import student.attendance.JDBConnection.CISConnection;
-import student.attendance.ModuleList;
+import student.attendance.StudentList;
 import student.attendance.TutorList;
 
 /*
@@ -17,11 +17,11 @@ import student.attendance.TutorList;
  *
  * @author anthonymcgarry
  */
-public class ProgramSetupForm extends javax.swing.JFrame {
-    Programme p;
+public class ModuleSetupForm extends javax.swing.JFrame {
+    Module m;
     CISConnection cis = new CISConnection("cis4005");
-    ModuleList list = new ModuleList();
-    ModuleList tList = new ModuleList();
+    StudentList list = new StudentList();
+    StudentList tList = new StudentList();
     TutorList tutorList = new TutorList();
     private static DefaultTableModel model;
     Boolean leader = false;
@@ -29,21 +29,21 @@ public class ProgramSetupForm extends javax.swing.JFrame {
      * Creates new form ProgramSetupForm
      * @param p getting the programme passed from the setup Page
      */
-    public ProgramSetupForm(Programme p) {
+    public ModuleSetupForm(Module module) {
         initComponents();
-        loadModules();
+        loadStudents();
         loadTutors();
-        model = (DefaultTableModel) moduleTable.getModel();
-        this.p = p;
-        labelProgrammeTitle.setText(p.getProgramTitle());
-        labelProgrammeCode.setText(p.getProgramCode());
-        labelProgrammeLevel.setText(Integer.toString(p.getProgramLevel()));
-        getModulesAssigned();
-        getProgrammeLeader();
+        model = (DefaultTableModel) studentTable.getModel();
+        this.m = module;
+        labelModuleTitle.setText(m.getModuleTitle());
+        labelModuleCode.setText(m.getModuleCode());
+        labelModuleLevel.setText(Integer.toString(m.getModuleLevel()));
+        getStudentAssigned();
+        getModuleLeader();
     }
     
-    private void getProgrammeLeader() {
-       Tutor temp = cis.getProgrammeLeader(p.getProgramId());
+    private void getModuleLeader() {
+       Tutor temp = cis.getModuleLeader(m.getModuleId());
        if(temp == null){
            labelTutorName.setText("No Leader Assigned");
        } else {
@@ -55,24 +55,26 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         }
     }
     
-    private void getModulesAssigned(){
-        cis.getModluesToProgramme(tList, p.getProgramId());
-        tList.getModules();
+    private void getStudentAssigned(){
+        cis.getStudenttoModule(tList, m.getModuleId());
+        tList.getStudents();
         for(int i = 0; i < tList.Size(); i++){
            insertTableRow(tList.get(i));
         }
     }
 
-    ProgramSetupForm() {
+    ModuleSetupForm() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    private void loadModules(){
-        cis.getModuleList(list);
-        list.getModules();
-        comboBoxModule.addItem("Select...");
+    private void loadStudents(){
+        cis.getAllStudents(list);
+        list.getStudents();
+        comboBoxStudent.addItem("Select...");
         for(int i = 0; i < list.Size(); i++){
-           comboBoxModule.addItem(list.get(i).getModuleTitle());
+           String fName = list.get(i).getFirstName();
+           String lName = list.get(i).getLastName();
+           comboBoxStudent.addItem(fName + " " + lName);
         }
     }
     
@@ -84,14 +86,17 @@ public class ProgramSetupForm extends javax.swing.JFrame {
            comboBoxTutors.addItem(tutorList.get(i).getFirstName() + " " + tutorList.get(i).getLastName());
         }
     }
-    private void insertTableRow(Module m){
-        Object rowData[] = new Object[5];
-        rowData[0] = m.getModuleCode();
-        rowData[1] = m.getModuleTitle();
-        rowData[2] = m.getModuleCredit();
-        rowData[3] = m.getModuleLevel();
-        rowData[4] = m.getModuleSemester();
-        model.addRow(rowData);
+    
+    public static void insertTableRow(Student student){
+      Object rowData[] = new Object[9];
+      rowData[0] = student.getFirstName();
+      rowData[1] = student.getLastName();
+      rowData[2] = student.getAge();
+      rowData[3] = student.getDateofBirth();
+      rowData[4] = student.getAddress();
+      rowData[5] = student.getEmail();
+      rowData[6] = student.getRegisteredType();
+      model.addRow(rowData);  
     }
 
     /**
@@ -105,23 +110,23 @@ public class ProgramSetupForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        moduleTable = new javax.swing.JTable();
-        labelProgrammeTitle = new javax.swing.JLabel();
+        labelModuleTitle = new javax.swing.JLabel();
         labelTutorName = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        comboBoxModule = new javax.swing.JComboBox<>();
+        comboBoxStudent = new javax.swing.JComboBox<>();
         comboBoxTutors = new javax.swing.JComboBox<>();
-        removeModuleButton = new javax.swing.JButton();
-        assignModuleButton = new javax.swing.JButton();
+        removeStudentButton = new javax.swing.JButton();
+        assignStudentButton = new javax.swing.JButton();
         onAssignProgrammeLeader = new javax.swing.JButton();
         onRemoveProgrammeLeader = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        labelProgrammeCode = new javax.swing.JLabel();
+        labelModuleCode = new javax.swing.JLabel();
         labelProgrammeTitle2 = new javax.swing.JLabel();
-        labelProgrammeLevel = new javax.swing.JLabel();
+        labelModuleLevel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        studentTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,21 +135,84 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Programme setup -");
+        jLabel1.setText("Module setup -");
 
-        moduleTable.setModel(new javax.swing.table.DefaultTableModel(
+        labelModuleTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        labelModuleTitle.setForeground(new java.awt.Color(255, 255, 255));
+        labelModuleTitle.setText("Module Title");
+
+        labelTutorName.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        labelTutorName.setForeground(new java.awt.Color(255, 255, 255));
+        labelTutorName.setText("Tutor Name");
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Module Leader -");
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Assign Student:");
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Assign Module Leader:");
+
+        removeStudentButton.setText("Remove Student");
+        removeStudentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeStudentButtonActionPerformed(evt);
+            }
+        });
+
+        assignStudentButton.setText("Assign Student");
+        assignStudentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assignStudentButtonActionPerformed(evt);
+            }
+        });
+
+        onAssignProgrammeLeader.setText("Assign Module Leader");
+        onAssignProgrammeLeader.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onAssignProgrammeLeaderActionPerformed(evt);
+            }
+        });
+
+        onRemoveProgrammeLeader.setText("Remove Module Leader");
+        onRemoveProgrammeLeader.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onRemoveProgrammeLeaderActionPerformed(evt);
+            }
+        });
+
+        jButton5.setBackground(new java.awt.Color(153, 0, 51));
+        jButton5.setText("Back");
+
+        labelModuleCode.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        labelModuleCode.setForeground(new java.awt.Color(255, 255, 255));
+        labelModuleCode.setText("Module Code");
+
+        labelProgrammeTitle2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        labelProgrammeTitle2.setForeground(new java.awt.Color(255, 255, 255));
+        labelProgrammeTitle2.setText("Level");
+
+        labelModuleLevel.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        labelModuleLevel.setForeground(new java.awt.Color(255, 255, 255));
+        labelModuleLevel.setText("0");
+
+        studentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Module Code", "Title", "Credit", "Level", "Semester"
+                "First Name", "Last Name", "Age", "Date of Birth", "Address", "Email", "Register"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -155,76 +223,12 @@ public class ProgramSetupForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(moduleTable);
-
-        labelProgrammeTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        labelProgrammeTitle.setForeground(new java.awt.Color(255, 255, 255));
-        labelProgrammeTitle.setText("Programme Title");
-
-        labelTutorName.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        labelTutorName.setForeground(new java.awt.Color(255, 255, 255));
-        labelTutorName.setText("Tutor Name");
-
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Programme Leader -");
-
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Assign Module:");
-
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Assign Programme Leader:");
-
-        removeModuleButton.setText("Remove Module");
-        removeModuleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeModuleButtonActionPerformed(evt);
-            }
-        });
-
-        assignModuleButton.setText("Assign Module");
-        assignModuleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                assignModuleButtonActionPerformed(evt);
-            }
-        });
-
-        onAssignProgrammeLeader.setText("Assign Programme Leader");
-        onAssignProgrammeLeader.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onAssignProgrammeLeaderActionPerformed(evt);
-            }
-        });
-
-        onRemoveProgrammeLeader.setText("Remove Programme Leader");
-        onRemoveProgrammeLeader.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onRemoveProgrammeLeaderActionPerformed(evt);
-            }
-        });
-
-        jButton5.setBackground(new java.awt.Color(153, 0, 51));
-        jButton5.setText("Back");
-
-        labelProgrammeCode.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        labelProgrammeCode.setForeground(new java.awt.Color(255, 255, 255));
-        labelProgrammeCode.setText("Programme Code");
-
-        labelProgrammeTitle2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        labelProgrammeTitle2.setForeground(new java.awt.Color(255, 255, 255));
-        labelProgrammeTitle2.setText("Level");
-
-        labelProgrammeLevel.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        labelProgrammeLevel.setForeground(new java.awt.Color(255, 255, 255));
-        labelProgrammeLevel.setText("0");
+        jScrollPane1.setViewportView(studentTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,13 +239,13 @@ public class ProgramSetupForm extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addGap(18, 18, 18)
-                                        .addComponent(comboBoxModule, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(comboBoxStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                                         .addComponent(jLabel3))
-                                    .addComponent(assignModuleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(assignStudentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(12, 12, 12))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(removeModuleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(removeStudentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(122, 122, 122)))
@@ -258,15 +262,20 @@ public class ProgramSetupForm extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelProgrammeTitle)
+                                .addComponent(labelModuleTitle)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(labelProgrammeCode)
+                                .addComponent(labelModuleCode)
                                 .addGap(31, 31, 31)
                                 .addComponent(labelProgrammeTitle2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelProgrammeLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(labelModuleLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,34 +283,37 @@ public class ProgramSetupForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(labelProgrammeTitle)
-                    .addComponent(labelProgrammeCode)
+                    .addComponent(labelModuleTitle)
+                    .addComponent(labelModuleCode)
                     .addComponent(labelProgrammeTitle2)
-                    .addComponent(labelProgrammeLevel))
+                    .addComponent(labelModuleLevel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(labelTutorName))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(301, 301, 301)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(comboBoxTutors, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(comboBoxModule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(comboBoxStudent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(onAssignProgrammeLeader)
-                    .addComponent(assignModuleButton))
+                    .addComponent(assignStudentButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(onRemoveProgrammeLeader)
-                    .addComponent(removeModuleButton)
+                    .addComponent(removeStudentButton)
                     .addComponent(jButton5))
                 .addGap(20, 20, 20))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(77, 77, 77)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(135, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -318,38 +330,39 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void assignModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignModuleButtonActionPerformed
+    private void assignStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignStudentButtonActionPerformed
         // TODO add your handling code here:
-        int s = comboBoxModule.getSelectedIndex();
-        int level = p.getProgramLevel();
+        int s = comboBoxStudent.getSelectedIndex();
+        int level = m.getModuleLevel();
 
         if(level == 1 && tList.Size() >= 5) return;
         if(level == 2 && tList.Size() >= 10) return;
         if(level == 3 && tList.Size() >= 15) return;
         if (s < 1) return ;
-        Module m = list.get(s -1);
-        if(tList.Contains(m)) return;
-        int moduleID = m.getModuleId();
-        int programmeID = p.getProgramId();
-        cis.addModuleToProgramme(moduleID, programmeID);
-        tList.add(m);
-        insertTableRow(m);
-    }//GEN-LAST:event_assignModuleButtonActionPerformed
+        Student student = list.get(s -1);
+        student.setStudentId(list.get(s -1).getStudentId());
+        if(tList.Contains(student)) return;
+        int studentId = student.getStudentId();
+        int moduleId = m.getModuleId();
+        cis.addStudenttoModule(studentId, moduleId);
+        tList.add(student);
+        insertTableRow(student);
+    }//GEN-LAST:event_assignStudentButtonActionPerformed
 
-    private void removeModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeModuleButtonActionPerformed
+    private void removeStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStudentButtonActionPerformed
         // TODO add your handling code here:
-        int selectedRowIndex = moduleTable.getSelectedRow();
-        Module m = tList.get(selectedRowIndex-1);
-        int id =  m.getModuleId();
+        int selectedRowIndex = studentTable.getSelectedRow();
+        Student s = tList.get(selectedRowIndex-1);
+        int id =  s.getStudentId();
         for(int i = 0; i < tList.Size(); i++){
-            if(id == tList.get(i).getModuleId()){
-               cis.removeModuleFromProgramme(id, p.getProgramId());
+            if(id == tList.get(i).getStudentId()){
+               cis.removeStudentFromModule(id, m.getModuleId());
                model.removeRow(selectedRowIndex);
-               tList.remove(m);
+               tList.remove(s);
                System.out.println("REMOVE");
             }
         }
-    }//GEN-LAST:event_removeModuleButtonActionPerformed
+    }//GEN-LAST:event_removeStudentButtonActionPerformed
 
     private void onAssignProgrammeLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onAssignProgrammeLeaderActionPerformed
         // TODO add your handling code here:
@@ -357,8 +370,8 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         if (s < 1) return ;
         if(leader) return;
         int tutorId = tutorList.get(s -1).getTutorId();
-        int programmeID = p.getProgramId();
-        cis.assignProgrammeLeader(tutorId, programmeID);
+        int moduleId = m.getModuleId();
+        cis.assignModuleLeader(tutorId, moduleId);
         System.out.println("Programme Leader Assigned");
         leader = true;
         String tutorNo = tutorList.get(s -1).getTutorNo();
@@ -370,11 +383,11 @@ public class ProgramSetupForm extends javax.swing.JFrame {
     private void onRemoveProgrammeLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onRemoveProgrammeLeaderActionPerformed
         // TODO add your handling code here:
         if (!leader) return;
-        Tutor t = cis.getProgrammeLeader(p.getProgramId());
+        Tutor t = cis.getProgrammeLeader(m.getModuleId());
         if (t == null) return;
         int tutorId = t.getTutorId();
-        int programmeId = p.getProgramId();
-        cis.removeProgrammeLeader(tutorId, programmeId);
+        int moduleId = m.getModuleId();
+        cis.removeModuleLeader(tutorId, moduleId);
         labelTutorName.setText("No Leader Assigned");
         leader = false;
         System.out.println("REMOVE");
@@ -417,8 +430,8 @@ public class ProgramSetupForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton assignModuleButton;
-    private javax.swing.JComboBox<String> comboBoxModule;
+    private javax.swing.JButton assignStudentButton;
+    private javax.swing.JComboBox<String> comboBoxStudent;
     private javax.swing.JComboBox<String> comboBoxTutors;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
@@ -427,14 +440,14 @@ public class ProgramSetupForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel labelProgrammeCode;
-    private javax.swing.JLabel labelProgrammeLevel;
-    private javax.swing.JLabel labelProgrammeTitle;
+    private javax.swing.JLabel labelModuleCode;
+    private javax.swing.JLabel labelModuleLevel;
+    private javax.swing.JLabel labelModuleTitle;
     private javax.swing.JLabel labelProgrammeTitle2;
     private javax.swing.JLabel labelTutorName;
-    private javax.swing.JTable moduleTable;
     private javax.swing.JButton onAssignProgrammeLeader;
     private javax.swing.JButton onRemoveProgrammeLeader;
-    private javax.swing.JButton removeModuleButton;
+    private javax.swing.JButton removeStudentButton;
+    private javax.swing.JTable studentTable;
     // End of variables declaration//GEN-END:variables
 }

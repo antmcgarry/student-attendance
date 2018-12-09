@@ -203,6 +203,8 @@ public class CISConnection extends DBConnection {
         {
             while(output.next())
             {
+                
+                int studentId = output.getInt(1);
                 String fname = output.getString(2);
                 String lname = output.getString(3);
                 String studid = output.getString(4);
@@ -214,6 +216,7 @@ public class CISConnection extends DBConnection {
                 String address = output.getString(10);
                 char r = registered.charAt(0);
                 Student student = new Student(Integer.parseInt(studid),fname, lname, age, dob, address, email, password, r);
+                student.setStudentId(studentId);
                 list.add(student);
             }
         }
@@ -413,9 +416,9 @@ public class CISConnection extends DBConnection {
         }
     }
     
-        public Tutor getProgrammeLeader(int ProgrammeId){
-        final String retrieveQuery = "SELECT TUTOR.ID, TUTOR.FORENAME, TUTOR.SURNAME, TUTOR.TUTORNO, TUTOR.EMAIL, TUTOR.PASSWORD, TUTOR.DOB, TUTOR.AGE, TUTOR.ADDRESS, TUTOR.STATUS FROM CIS4005.TUTOR inner join CIS4005.TUTORPROGRAMME on TUTORPROGRAMME.PROGRAMMEID = ? AND TUTORPROGRAMME.TUTORID = TUTOR.ID";
-        ResultSet output;
+    public Tutor getProgrammeLeader(int ProgrammeId){
+    final String retrieveQuery = "SELECT TUTOR.ID, TUTOR.FORENAME, TUTOR.SURNAME, TUTOR.TUTORNO, TUTOR.EMAIL, TUTOR.PASSWORD, TUTOR.DOB, TUTOR.AGE, TUTOR.ADDRESS, TUTOR.STATUS FROM CIS4005.TUTOR inner join CIS4005.TUTORPROGRAMME on TUTORPROGRAMME.PROGRAMMEID = ? AND TUTORPROGRAMME.TUTORID = TUTOR.ID";
+    ResultSet output;
         try
         {
             PreparedStatement pstmt = getConnection().prepareStatement(retrieveQuery);
@@ -463,13 +466,13 @@ public class CISConnection extends DBConnection {
         }
     }
     
-    public void assignProgrammeLeader(final int TutorId, final int programmeId)
+    public void assignProgrammeLeader(final int tutorId, final int programmeId)
     {
         final String insertStmt = "INSERT INTO TUTORPROGRAMME (tutorId, programmeId) VALUES (?,?)";
         try
         {
             PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
-            pstmt.setInt(1, TutorId);
+            pstmt.setInt(1, tutorId);
             pstmt.setInt(2, programmeId);
 
             pstmt.executeUpdate();
@@ -494,6 +497,142 @@ public class CISConnection extends DBConnection {
         catch (SQLException sqle)
         {
             System.out.println("Exception when deleting student record: " + sqle.toString());
+        }
+    }
+    
+    public Tutor getModuleLeader(int moduleId){
+    final String retrieveQuery = "SELECT TUTOR.ID, TUTOR.FORENAME, TUTOR.SURNAME, TUTOR.TUTORNO, TUTOR.EMAIL, TUTOR.PASSWORD, TUTOR.DOB, TUTOR.AGE, TUTOR.ADDRESS, TUTOR.STATUS FROM CIS4005.TUTOR inner join CIS4005.TUTORMODULE on TUTORMODULE.MODULEID = ? AND TUTORMODULE.TUTORID = TUTOR.ID";
+    ResultSet output;
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(retrieveQuery);
+            pstmt.setInt(1, moduleId);
+            output = pstmt.executeQuery();
+        if (null != output)
+        {
+            while(output.next())
+            {
+                int id = output.getInt(1);
+                String fName = output.getString(2);
+                String lName = output.getString(3);
+                String tutorNo = output.getString(4);
+                String email = output.getString(5);
+                String password = output.getString(6);
+                String dob = output.getString(7);
+                int age = output.getInt(8);
+                String address = output.getString(9);
+                Tutor t = new Tutor(id, fName, lName, tutorNo, age, dob, address, email, password);
+                return t;
+            }
+        }
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when printing all programme leader: " + sqle.toString());
+        }
+        return null;
+    }
+    
+    public void getStudenttoModule(StudentList list, int id) {
+        final String retrieveQuery = "SELECT STUDENT.ID, STUDENT.FORENAME, STUDENT.SURNAME, STUDENT.STUDENTNO, STUDENT.FULLPARTTIME, STUDENT.EMAIL, STUDENT.PASSWORD, STUDENT.DOB, STUDENT.AGE, STUDENT.ADDRESS, STUDENT.STATUS FROM CIS4005.STUDENT inner join CIS4005.STUDENTMODULE on STUDENTMODULE.STUDENTID = STUDENT.ID AND STUDENTMODULE.MODULEID = ?";
+        ResultSet output;
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(retrieveQuery);
+            pstmt.setInt(1, id);
+            output = pstmt.executeQuery();
+        if (null != output)
+        {
+            while(output.next())
+            {
+                id = output.getInt(1);
+                String fName = output.getString(2);
+                String lName = output.getString(3);
+                int code = output.getInt(4);
+                String reg = output.getString(5);
+                String email = output.getString(6);
+                String password = output.getString(7);
+                String dob = output.getString(8);
+                int age = output.getInt(9);
+                String add = output.getString(10);
+                String role = output.getString(11);
+                char c = reg.charAt(0);
+                Student s = new Student(code, fName,lName,age, dob, add, email,password, c);
+                s.setStudentId(id);
+                list.add(s);
+            }
+        }
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when printing all students: " + sqle.toString());
+        }
+    }
+    
+    public void addStudenttoModule(int studentId, int moduleId){
+        final String insertStmt = "INSERT INTO studentmodule (studentId, moduleId) VALUES (?,?)";
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
+            pstmt.setInt(1, studentId);
+            pstmt.setInt(2, moduleId);
+
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when adding module to programme: " + sqle.toString());
+        }
+    }
+    
+    public void removeStudentFromModule(int studentId, int moduleId){
+        final String sql = "DELETE FROM studentmodule WHERE studentId = ? and moduleId = ?";
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setInt(1, studentId);
+            pstmt.setInt(2, moduleId);
+            // execute the delete statement
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when deleting student record: " + sqle.toString());
+        }
+    }
+    
+    public void removeModuleLeader(int tutorId, int moduleId){
+        final String sql = "DELETE FROM tutormodule WHERE tutorId = ? and moduleId = ?";
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setInt(1, tutorId);
+            pstmt.setInt(2, moduleId);
+            // execute the delete statement
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when deleting student record: " + sqle.toString());
+        }
+    }
+    
+    public void assignModuleLeader(int tutorId, int moduleId)
+    {
+        final String insertStmt = "INSERT INTO TUTORMODULE (tutorId, moduleId) VALUES (?,?)";
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
+            pstmt.setInt(1, tutorId);
+            pstmt.setInt(2, moduleId);
+
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when adding module to programme: " + sqle.toString());
         }
     }
     
