@@ -128,6 +128,8 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         labelModuleLevel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
+        onViewStudent = new javax.swing.JButton();
+        onTakeRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -231,6 +233,20 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(studentTable);
 
+        onViewStudent.setText("View Student");
+        onViewStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onViewStudentActionPerformed(evt);
+            }
+        });
+
+        onTakeRegister.setText("Take Register");
+        onTakeRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onTakeRegisterActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -241,20 +257,26 @@ public class ModuleSetupForm extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboBoxStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 417, Short.MAX_VALUE)
+                                .addComponent(jLabel3))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(comboBoxStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 417, Short.MAX_VALUE)
-                                        .addComponent(jLabel3))
-                                    .addComponent(assignStudentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(12, 12, 12))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(removeStudentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(320, 320, 320)
+                                        .addComponent(assignStudentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(removeStudentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(onTakeRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(97, 97, 97)
+                                        .addComponent(onViewStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(84, 84, 84)))
                                 .addComponent(onBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(61, 61, 61)))
+                        .addGap(12, 12, 12)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(comboBoxTutors, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(onAssignModuleLeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -313,7 +335,9 @@ public class ModuleSetupForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(onRemoveModuleLeader)
                     .addComponent(removeStudentButton)
-                    .addComponent(onBackButton))
+                    .addComponent(onBackButton)
+                    .addComponent(onViewStudent)
+                    .addComponent(onTakeRegister))
                 .addGap(20, 20, 20))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -427,6 +451,19 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         this.dispose();    
     }//GEN-LAST:event_onBackButtonActionPerformed
 
+    private void onViewStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onViewStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_onViewStudentActionPerformed
+
+    private void onTakeRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onTakeRegisterActionPerformed
+        // TODO add your handling code here:
+        RegisterForm rf = new RegisterForm(tList, m);
+        rf.setVisible(true);
+        rf.pack();
+        rf.setLocationRelativeTo(null);
+        this.dispose();  
+    }//GEN-LAST:event_onTakeRegisterActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -480,6 +517,8 @@ public class ModuleSetupForm extends javax.swing.JFrame {
     private javax.swing.JButton onAssignModuleLeader;
     private javax.swing.JButton onBackButton;
     private javax.swing.JButton onRemoveModuleLeader;
+    private javax.swing.JButton onTakeRegister;
+    private javax.swing.JButton onViewStudent;
     private javax.swing.JButton removeStudentButton;
     private javax.swing.JTable studentTable;
     // End of variables declaration//GEN-END:variables

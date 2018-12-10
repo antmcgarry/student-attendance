@@ -49,25 +49,32 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="comboBoxStudent" min="-2" pref="189" max="-2" attributes="0"/>
+                                  <EmptySpace pref="417" max="32767" attributes="0"/>
+                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                          <Component id="comboBoxStudent" min="-2" pref="189" max="-2" attributes="0"/>
-                                          <EmptySpace pref="417" max="32767" attributes="0"/>
-                                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="assignStudentButton" min="-2" pref="149" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="assignStudentButton" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="removeStudentButton" min="-2" pref="149" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="onTakeRegister" min="-2" pref="149" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+                                          <Component id="onViewStudent" min="-2" pref="149" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="removeStudentButton" min="-2" pref="149" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="320" max="-2" attributes="0"/>
                                   <Component id="onBackButton" min="-2" pref="149" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="comboBoxTutors" alignment="1" max="32767" attributes="0"/>
                               <Component id="onAssignModuleLeader" alignment="1" max="32767" attributes="0"/>
@@ -144,6 +151,8 @@
                       <Component id="onRemoveModuleLeader" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="removeStudentButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="onBackButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="onViewStudent" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="onTakeRegister" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
@@ -350,6 +359,22 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="onViewStudent">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="View Student"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onViewStudentActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="onTakeRegister">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Take Register"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onTakeRegisterActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

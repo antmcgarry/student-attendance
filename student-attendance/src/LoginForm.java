@@ -5,6 +5,7 @@
  */
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import student.attendance.JDBConnection.CISConnection;
 
 /**
@@ -189,14 +190,33 @@ public class LoginForm extends javax.swing.JFrame {
         if(login){
             passwordTextField.setText("");
             emailTextField.setText("");
-            //Render admin Frame
-            StudentForm af = new StudentForm();
-            af.setVisible(true);
-            af.pack();
-            af.setLocationRelativeTo(null);
-            af.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.dispose();
+            if(null != role) //Render admin Frame
+            switch (role) {
+                case "admin":
+                    AdminSetupForm asf = new AdminSetupForm();
+                    asf.setVisible(true);
+                    asf.pack();
+                    asf.setLocationRelativeTo(null);
+                    asf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    this.dispose();
+                    break;
+                case "tutor":
+                    SetupForm sf = new SetupForm();
+                    sf.setVisible(true);
+                    sf.pack();
+                    sf.setLocationRelativeTo(null);
+                    sf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    this.dispose();
+                    break;
+                case "student":
+                    System.out.println("SOON IT WILL BE HERE");
+                    break;
+                default:
+                    break;
+            }
+            
         }
+        JOptionPane.showMessageDialog(null, "Invalid login please try again", "Warning",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void comboBoxRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxRoleActionPerformed
