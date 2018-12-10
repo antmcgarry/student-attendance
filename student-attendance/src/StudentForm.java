@@ -25,10 +25,10 @@ public class StudentForm extends javax.swing.JFrame {
     public StudentForm() {
         initComponents();
         this.setLocationRelativeTo(null); //Centers the login form to the center of the screen
-        getTutorList();
+        getStudentList();
     }
     
-    private void getTutorList() {
+    private void getStudentList() {
        
         CISConnection cis = new CISConnection("cis4005");
         cis.getAllStudents(list);
@@ -66,8 +66,9 @@ public class StudentForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
-        addButton = new javax.swing.JButton();
-        removeTutor = new javax.swing.JButton();
+        onAddButton = new javax.swing.JButton();
+        onRemoveButton = new javax.swing.JButton();
+        onBackButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1200, 500));
@@ -76,7 +77,7 @@ public class StudentForm extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Tutor Portal");
+        jLabel1.setText("Manage Students:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,17 +121,25 @@ public class StudentForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(studentTable);
 
-        addButton.setText("ADD STUDENT");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        onAddButton.setText("ADD STUDENT");
+        onAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                onAddButtonActionPerformed(evt);
             }
         });
 
-        removeTutor.setText("REMOVE STUDENT");
-        removeTutor.addActionListener(new java.awt.event.ActionListener() {
+        onRemoveButton.setText("REMOVE STUDENT");
+        onRemoveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeTutorActionPerformed(evt);
+                onRemoveButtonActionPerformed(evt);
+            }
+        });
+
+        onBackButton.setBackground(new java.awt.Color(153, 0, 51));
+        onBackButton.setText("Back");
+        onBackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onBackButtonActionPerformed(evt);
             }
         });
 
@@ -142,10 +151,12 @@ public class StudentForm extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(onAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(removeTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(onRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(onBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,24 +166,25 @@ public class StudentForm extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(removeTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(onAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(onRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(onBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+    private void onAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onAddButtonActionPerformed
         // TODO add your handling code here:
             AddStudentForm atf = new AddStudentForm(list);
             atf.setVisible(true);
             atf.setLocationRelativeTo(null);
             model.fireTableDataChanged();
                        
-    }//GEN-LAST:event_addButtonActionPerformed
+    }//GEN-LAST:event_onAddButtonActionPerformed
 
-    private void removeTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTutorActionPerformed
+    private void onRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onRemoveButtonActionPerformed
         // TODO add your handling code here:
             int selectedRowIndex = studentTable.getSelectedRow();
             Object studentName = studentTable.getValueAt(selectedRowIndex, 0);
@@ -187,9 +199,19 @@ public class StudentForm extends javax.swing.JFrame {
                    cis.removeStudent(studentNo);
                    model.removeRow(selectedRowIndex);
                    System.out.println("REMOVE");
+                   return;
                 }
             }
-    }//GEN-LAST:event_removeTutorActionPerformed
+    }//GEN-LAST:event_onRemoveButtonActionPerformed
+
+    private void onBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onBackButtonActionPerformed
+        // TODO add your handling code here:
+        LoginForm lf = new LoginForm();
+        lf.setVisible(true);
+        lf.pack(); // Pack method sizes the frame so that all its contents are at or above their preferred sizes.
+        lf.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_onBackButtonActionPerformed
     
     /**
      * @param args the command line arguments
@@ -228,11 +250,12 @@ public class StudentForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton removeTutor;
+    private javax.swing.JButton onAddButton;
+    private javax.swing.JButton onBackButton;
+    private javax.swing.JButton onRemoveButton;
     private javax.swing.JTable studentTable;
     // End of variables declaration//GEN-END:variables
 }

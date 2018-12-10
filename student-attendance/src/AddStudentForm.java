@@ -1,6 +1,7 @@
 
 
 import java.util.Random;
+import javax.swing.JOptionPane;
 import student.attendance.JDBConnection.CISConnection;
 import model.Student;
 import student.attendance.StudentList;
@@ -220,7 +221,26 @@ public class AddStudentForm extends javax.swing.JFrame {
         String email = firstName + "." + lastName +"@ormskirk.ac.uk";
         String password = "password";
         char reg = this.register; // need to add drop down to form
- 
+        if(firstName == " " || firstName == null){
+            JOptionPane.showMessageDialog(null, "Please fill in First Name field", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(lastName == " " || lastName == null){
+            JOptionPane.showMessageDialog(null, "Please fill in Last Name field", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(age < 18 ){
+            JOptionPane.showMessageDialog(null, "Please provide an age greater than 18 field", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(dob == " " || dob == null){
+           JOptionPane.showMessageDialog(null, "Please fill in Date of Birth field", "Warning",JOptionPane.WARNING_MESSAGE);
+           return;
+        }
+         if(add == " " || add == null){
+            JOptionPane.showMessageDialog(null, "Please fill in Address field", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Student student = new Student(id, firstName, lastName, age, dob, add, email, password, reg);
         CISConnection cis = new CISConnection("cis4005");
         cis.insertStudent(student);

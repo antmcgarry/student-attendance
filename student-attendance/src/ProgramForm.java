@@ -1,4 +1,5 @@
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Programme;
 import student.attendance.JDBConnection.CISConnection;
@@ -248,6 +249,7 @@ public class ProgramForm extends javax.swing.JFrame {
         String title = textFieldProgrammeTitle.getText();
  
         if(code == null || code.equals("") || title == null || title.equals("") ){
+            JOptionPane.showMessageDialog(null, "Please fill in all the fields", "Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -295,6 +297,7 @@ public class ProgramForm extends javax.swing.JFrame {
                cis.removeProgramme(code);
                model.removeRow(selectedRowIndex);
                System.out.println("REMOVE");
+               return;
             }
         }
     }//GEN-LAST:event_removeProgrammeActionPerformed
