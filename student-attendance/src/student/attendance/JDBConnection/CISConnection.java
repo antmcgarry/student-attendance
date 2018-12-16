@@ -555,7 +555,6 @@ public class CISConnection extends DBConnection {
                 String dob = output.getString(8);
                 int age = output.getInt(9);
                 String add = output.getString(10);
-                String role = output.getString(11);
                 char c = reg.charAt(0);
                 Student s = new Student(code, fName,lName,age, dob, add, email,password, c);
                 s.setStudentId(id);
@@ -681,6 +680,41 @@ public class CISConnection extends DBConnection {
         {
             System.out.println("Exception when printing all students: " + sqle.toString());
         } 
+    }
+    
+    public Boolean checkAttendance(int moduleId, int studentId, char reg){
+        String retrieveQuery = null;
+        int attended = 0;
+        if(reg == 'f'){
+          retrieveQuery = "SELECT * FROM CIS4005.REGISTER WHERE STUDENTID = ? AND ATTENDED = 0;";
+        } else {
+          retrieveQuery = "SELECT * FROM CIS4005.REGISTER WHERE STUDENTID = ? AND MODULEID = ? AND ATTENDED = 0";
+        }
+         ResultSet output;
+        try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(retrieveQuery);
+            pstmt.setInt(1, studentId);
+            pstmt.setInt(2, moduleId);
+            output = pstmt.executeQuery();
+        if (null != output)
+        {
+            while(output.next())
+            {
+             if(attended >= 2){
+                 return true;
+             }
+             attended++;
+            }
+            return false;
+        }
+        return false;
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when printing all students: " + sqle.toString());
+        } 
+        return false;
     }
     
     public Boolean login(final String u, final String p, final String role){

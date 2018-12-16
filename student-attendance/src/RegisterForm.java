@@ -202,6 +202,12 @@ public class RegisterForm extends javax.swing.JFrame {
         cis.submitRegister(moduleId, studentId, moduleSemester, attended);
         list.remove(student);
         comboBoxStudent.removeItemAt(s);
+        cis.checkAttendance(moduleId, studentId, student.getRegisteredType());
+        Boolean checkAttendance = cis.checkAttendance(moduleId, studentId, student.getRegisteredType());
+        if(checkAttendance){
+          String name = student.getFirstName() + " " + student.getLastName();
+          JOptionPane.showMessageDialog(null, "Warning " + name + " attendance does not meet the requirements of the programme ", "Warning",JOptionPane.WARNING_MESSAGE);
+        }
         System.out.println("Student Present Sent");
     }//GEN-LAST:event_onPresentButtonActionPerformed
 
@@ -221,6 +227,11 @@ public class RegisterForm extends javax.swing.JFrame {
         cis.submitRegister(moduleId, studentId, moduleSemester, attended);
         list.remove(student);
         comboBoxStudent.removeItemAt(s);
+        Boolean checkAttendance = cis.checkAttendance(moduleId, studentId, student.getRegisteredType());
+        if(checkAttendance){
+          String name = student.getFirstName() + " " + student.getLastName();
+          JOptionPane.showMessageDialog(null, "Warning " + name + " attendance does not meet the requirements of the programme ", "Warning",JOptionPane.WARNING_MESSAGE);
+        }
         System.out.println("Student Absent Sent");
     }//GEN-LAST:event_onAbsentButtonActionPerformed
 
