@@ -1,4 +1,5 @@
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Module;
@@ -128,7 +129,6 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         labelModuleLevel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
-        onViewStudent = new javax.swing.JButton();
         onTakeRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -233,13 +233,6 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(studentTable);
 
-        onViewStudent.setText("View Student");
-        onViewStudent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onViewStudentActionPerformed(evt);
-            }
-        });
-
         onTakeRegister.setText("Take Register");
         onTakeRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,9 +264,7 @@ public class ModuleSetupForm extends javax.swing.JFrame {
                                         .addComponent(removeStudentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(onTakeRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(97, 97, 97)
-                                        .addComponent(onViewStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(84, 84, 84)))
+                                        .addGap(330, 330, 330)))
                                 .addComponent(onBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(61, 61, 61)))
                         .addGap(12, 12, 12)
@@ -336,7 +327,6 @@ public class ModuleSetupForm extends javax.swing.JFrame {
                     .addComponent(onRemoveModuleLeader)
                     .addComponent(removeStudentButton)
                     .addComponent(onBackButton)
-                    .addComponent(onViewStudent)
                     .addComponent(onTakeRegister))
                 .addGap(20, 20, 20))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -451,12 +441,12 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         this.dispose();    
     }//GEN-LAST:event_onBackButtonActionPerformed
 
-    private void onViewStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onViewStudentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_onViewStudentActionPerformed
-
     private void onTakeRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onTakeRegisterActionPerformed
         // TODO add your handling code here:
+        if (tList.Size() <= 0) {
+            JOptionPane.showMessageDialog(null, "Module has no students assigned for the register", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         RegisterForm rf = new RegisterForm(tList, m);
         rf.setVisible(true);
         rf.pack();
@@ -518,7 +508,6 @@ public class ModuleSetupForm extends javax.swing.JFrame {
     private javax.swing.JButton onBackButton;
     private javax.swing.JButton onRemoveModuleLeader;
     private javax.swing.JButton onTakeRegister;
-    private javax.swing.JButton onViewStudent;
     private javax.swing.JButton removeStudentButton;
     private javax.swing.JTable studentTable;
     // End of variables declaration//GEN-END:variables

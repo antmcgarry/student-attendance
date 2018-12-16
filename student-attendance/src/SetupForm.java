@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.Module;
 import model.Programme;
+import model.Student;
 import student.attendance.JDBConnection.CISConnection;
 import student.attendance.ModuleList;
 import student.attendance.ProgrammeList;
@@ -121,6 +122,11 @@ public class SetupForm extends javax.swing.JFrame {
         });
 
         viewStudentButton.setText("View Student");
+        viewStudentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewStudentButtonActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -231,7 +237,7 @@ public class SetupForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select a valid programme", "Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Programme p = pList.get(s);
+        Programme p = pList.get(s -1);
         ProgramSetupForm psf = new ProgramSetupForm(p);
             psf.setVisible(true);
             psf.pack();
@@ -247,7 +253,7 @@ public class SetupForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select a valid module", "Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Module m = mList.get(s);
+        Module m = mList.get(s -1);
         ModuleSetupForm msf = new ModuleSetupForm(m);
             msf.setVisible(true);
             msf.pack();
@@ -266,6 +272,22 @@ public class SetupForm extends javax.swing.JFrame {
         lf.setLocationRelativeTo(null);
         this.dispose();  
     }//GEN-LAST:event_onLogoutButtonActionPerformed
+
+    private void viewStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewStudentButtonActionPerformed
+        // TODO add your handling code here:
+        int s = comboBoxStudent.getSelectedIndex();
+        if (s < 1){
+            JOptionPane.showMessageDialog(null, "Please select a valid student", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Student student = sList.get(s -1);
+        StudentInfoForm form = new StudentInfoForm(student);
+        form.setVisible(true);
+        form.pack();
+        form.setLocationRelativeTo(null);
+        form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_viewStudentButtonActionPerformed
 
     /**
      * @param args the command line arguments

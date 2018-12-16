@@ -190,7 +190,6 @@ public class LoginForm extends javax.swing.JFrame {
         if(login){
             passwordTextField.setText("");
             emailTextField.setText("");
-            if(null != role) //Render admin Frame
             switch (role) {
                 case "admin":
                     AdminSetupForm asf = new AdminSetupForm();
@@ -214,7 +213,7 @@ public class LoginForm extends javax.swing.JFrame {
                 default:
                     break;
             }
-            
+            return;
         }
         JOptionPane.showMessageDialog(null, "Invalid login please try again", "Warning",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_loginButtonActionPerformed
