@@ -1,7 +1,7 @@
-Mon Dec 10 19:18:49 GMT 2018 : Apache Derby Network Server - 10.10.2.0 - (1582446) started and ready to accept connections on port 1527
+Sun Dec 16 14:32:46 GMT 2018 : Apache Derby Network Server - 10.10.2.0 - (1582446) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Mon Dec 10 19:18:53 GMT 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0167-998e-c301-000066815159 
+Sun Dec 16 14:32:50 GMT 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0167-b76f-0818-000066815159 
 on database directory /Users/anthonymcgarry/Documents/Univeristy/application development in java/student-attendance/studentdb/cis4005 with class loader sun.misc.Launcher$AppClassLoader@6f94fa3e 
 Loaded from file:/Applications/NetBeans/glassfish-4.1.1/javadb/lib/derby.jar
 java.vendor=Oracle Corporation

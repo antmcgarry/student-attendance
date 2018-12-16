@@ -1,5 +1,7 @@
 
+import javax.swing.JOptionPane;
 import model.Module;
+import model.Student;
 import student.attendance.JDBConnection.CISConnection;
 import student.attendance.StudentList;
 
@@ -77,8 +79,18 @@ public class RegisterForm extends javax.swing.JFrame {
         jLabel2.setText("Register");
 
         onAbsentButton.setText("Absent");
+        onAbsentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onAbsentButtonActionPerformed(evt);
+            }
+        });
 
         onPresentButton.setText("Present");
+        onPresentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onPresentButtonActionPerformed(evt);
+            }
+        });
 
         onBackButton.setBackground(new java.awt.Color(153, 0, 51));
         onBackButton.setText("Back");
@@ -173,6 +185,44 @@ public class RegisterForm extends javax.swing.JFrame {
         msf.setLocationRelativeTo(null);
         this.dispose(); 
     }//GEN-LAST:event_onBackButtonActionPerformed
+
+    private void onPresentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onPresentButtonActionPerformed
+        // TODO add your handling code here:
+        int s = comboBoxStudent.getSelectedIndex();
+        if (s < 1){
+            JOptionPane.showMessageDialog(null, "Please select a valid student", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Student student = list.get(s-1);
+        System.out.println(student.getFirstName());
+        int moduleId = module.getModuleId();
+        int studentId = student.getStudentId();
+        int moduleSemester = module.getModuleSemester();
+        int attended = 1;
+        cis.submitRegister(moduleId, studentId, moduleSemester, attended);
+        list.remove(student);
+        comboBoxStudent.removeItemAt(s);
+        System.out.println("Student Present Sent");
+    }//GEN-LAST:event_onPresentButtonActionPerformed
+
+    private void onAbsentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onAbsentButtonActionPerformed
+        // TODO add your handling code here:
+        int s = comboBoxStudent.getSelectedIndex();
+        if (s < 1){
+            JOptionPane.showMessageDialog(null, "Please select a valid student", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Student student = list.get(s-1);
+        System.out.println(student.getFirstName());
+        int moduleId = module.getModuleId();
+        int studentId = student.getStudentId();
+        int moduleSemester = module.getModuleSemester();
+        int attended = 0;
+        cis.submitRegister(moduleId, studentId, moduleSemester, attended);
+        list.remove(student);
+        comboBoxStudent.removeItemAt(s);
+        System.out.println("Student Absent Sent");
+    }//GEN-LAST:event_onAbsentButtonActionPerformed
 
     /**
      * @param args the command line arguments

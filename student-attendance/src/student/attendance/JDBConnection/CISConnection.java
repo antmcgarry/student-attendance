@@ -636,6 +636,24 @@ public class CISConnection extends DBConnection {
         }
     }
     
+    public void submitRegister(int moduleId, int studentId, int semester, int attended){
+         final String insertStmt = "INSERT INTO REGISTER (studentId, moduleId, attended, semester) VALUES (?,?,?,?)";
+         try
+        {
+            PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
+            pstmt.setInt(1, studentId);
+            pstmt.setInt(2, moduleId);
+            pstmt.setInt(3, attended);
+            pstmt.setInt(4, semester);
+
+            pstmt.executeUpdate();
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println("Exception when adding module to programme: " + sqle.toString());
+        }
+    }
+    
     public Boolean login(final String u, final String p, final String role){
         String queryString = null;
         switch (role) {
