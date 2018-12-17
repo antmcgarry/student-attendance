@@ -26,7 +26,6 @@ public class StudentInfoForm extends javax.swing.JFrame {
     /**
      * Creates new form StudentInfoForm
      * @param s get the student which was selected to be viewed and populate the information
-     * @param m stores the module for navigating back to the previous page
      */
     public StudentInfoForm(Student s) {
         initComponents();
@@ -38,7 +37,12 @@ public class StudentInfoForm extends javax.swing.JFrame {
     private StudentInfoForm() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+    /**
+     * getModules
+     * This methods get all the modules assigned to the selected student
+     * Stores all the modules in a module list
+     * Populates all the modules in the JTable
+     */
     public void getModules(){
         int studentId = student.getStudentId();
         cis.getModulesToStudent(list,studentId);
@@ -47,7 +51,11 @@ public class StudentInfoForm extends javax.swing.JFrame {
            insertTableRow(list.get(i));
         }
     }
-    
+    /**
+     * insertTableRow
+     * @param m get the module object and populates the required information
+     * in the JTable
+     */
     private void insertTableRow(Module m){
         Object rowData[] = new Object[5];
         rowData[0] = m.getModuleCode();
@@ -57,7 +65,13 @@ public class StudentInfoForm extends javax.swing.JFrame {
         rowData[4] = m.getModuleSemester();
         model.addRow(rowData);
     }
-    
+    /**
+     * setStudentLabels
+     * Sets all the required labels with the information from the selected 
+     * student
+     * a check is also carried out on the student register type to be able to
+     * display a better understand instead of the corresponding char value
+     */
     private void setStudentLabels(){
         String reg;
         if(student.getRegisteredType() == 'F'){
@@ -295,7 +309,12 @@ public class StudentInfoForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * onBackButtonActionPerformed
+     * Navigate the user back to the Setup Form
+     * Closes this form
+     * @param evt 
+     */
     private void onBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onBackButtonActionPerformed
         // TODO add your handling code here:
         SetupForm sf = new SetupForm();
@@ -305,7 +324,12 @@ public class StudentInfoForm extends javax.swing.JFrame {
         sf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_onBackButtonActionPerformed
-
+    /**
+     * onPrintButtonActionPerformed
+     * Simulates that students information is being printed out by displaying a
+     * message
+     * @param evt 
+     */
     private void onPrintButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onPrintButtonActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Information has been sent to the printer");

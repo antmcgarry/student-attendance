@@ -34,7 +34,11 @@ public class SetupForm extends javax.swing.JFrame {
         loadModules();
         loadStudents();
     }
-    
+     /**
+      * loadProgrammes
+      * gets all the programmes from the DB and stores them in a list
+      * which populates respected comboBox with the title for the user to select
+      */
     private void loadProgrammes() {
         cis.getProgrammeList(pList);
         pList.getProgrammes();
@@ -43,7 +47,11 @@ public class SetupForm extends javax.swing.JFrame {
            comboBoxProgramme.addItem(pList.get(i).getProgramTitle());
         }
     }
-    
+    /**
+      * loadModules
+      * gets all the modules from the DB and stores them in a list
+      * which populates respected comboBox with the title for the user to select
+      */
     private void loadModules(){
         cis.getModuleList(mList);
         mList.getModules();
@@ -52,7 +60,11 @@ public class SetupForm extends javax.swing.JFrame {
            comboBoxModule.addItem(mList.get(i).getModuleTitle());
         }
     }
-    
+     /**
+      * loadStudents
+      * gets all the students from the DB and stores them in a list
+      * which populates respected comboBox with the name for the user to select
+      */
     private void loadStudents(){
         cis.getAllStudents(sList);
         sList.getStudents();
@@ -229,7 +241,15 @@ public class SetupForm extends javax.swing.JFrame {
     private void comboBoxProgrammeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxProgrammeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBoxProgrammeActionPerformed
-
+    
+    /**
+     * setupProgrammeButtonActionPerformed
+     * Checks if a valid option has been selected
+     * If a valid option has been selected then the Programme Setup Form is loaded by passing the 
+     * selected option to the required parameter
+     * this form is closed
+     * @param evt 
+     */
     private void setupProgrammeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setupProgrammeButtonActionPerformed
         // TODO add your handling code here:
         int s = comboBoxProgramme.getSelectedIndex();
@@ -245,7 +265,14 @@ public class SetupForm extends javax.swing.JFrame {
             psf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.dispose();
     }//GEN-LAST:event_setupProgrammeButtonActionPerformed
-
+     /**
+     * setupModuleButtonActionPerformed
+     * Checks if a valid option has been selected
+     * If a valid option has been selected then the Module Setup Form is loaded by passing the 
+     * selected option to the required parameter
+     * this form is closed
+     * @param evt 
+     */
     private void setupModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setupModuleButtonActionPerformed
         // TODO add your handling code here:
         int s = comboBoxModule.getSelectedIndex();
@@ -261,7 +288,13 @@ public class SetupForm extends javax.swing.JFrame {
             msf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.dispose();
     }//GEN-LAST:event_setupModuleButtonActionPerformed
-
+     /**
+     * onLogoutButtonActionPerformed
+     * Checks if the user want to logout or not
+     * if true the user is navigated back to the Login Form
+     * if false the message is closed
+     * @param evt 
+     */
     private void onLogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onLogoutButtonActionPerformed
         // TODO add your handling code here:
         int option = JOptionPane.showConfirmDialog(null, "Do you really want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
@@ -272,7 +305,14 @@ public class SetupForm extends javax.swing.JFrame {
         lf.setLocationRelativeTo(null);
         this.dispose();  
     }//GEN-LAST:event_onLogoutButtonActionPerformed
-
+    /**
+     * viewStudentButtonActionPerformed
+     * Checks if a valid option has been selected
+     * If a valid option has been selected then the Student Info Form is loaded by passing the 
+     * selected option to the required parameter
+     * this form is closed
+     * @param evt 
+     */
     private void viewStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewStudentButtonActionPerformed
         // TODO add your handling code here:
         int s = comboBoxStudent.getSelectedIndex();

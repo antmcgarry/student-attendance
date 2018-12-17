@@ -1,5 +1,6 @@
 
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import student.attendance.JDBConnection.CISConnection;
 import model.Student;
@@ -16,7 +17,7 @@ import student.attendance.StudentList;
  * @author Anthony Mcgarry
  */
 public class StudentForm extends javax.swing.JFrame {
-    
+    CISConnection cis = new CISConnection("cis4005");
     private static DefaultTableModel model;
     public StudentList list = new StudentList();
     /**
@@ -28,19 +29,26 @@ public class StudentForm extends javax.swing.JFrame {
         getStudentList();
     }
     
+    /**
+     * getStudentList
+     * get all the student from the DB and populates the information in a list
+     * which renders the information in a JTable
+     */
     private void getStudentList() {
-       
-        CISConnection cis = new CISConnection("cis4005");
         cis.getAllStudents(list);
-        list.getStudents();
         model = (DefaultTableModel) studentTable.getModel();
-        
         for(int i = 0; i < list.Size(); i++){
            insertNewStudent(list.get(i));
         }
         
     }
     
+    /**
+     * insertNewStudent
+     * This method was made static to allow the Add Student Form access to the method to be
+     * able to update the JTable when a valid student was created
+     * @param student takes a student object to render a new row in the JTable
+     */
     public static void insertNewStudent(Student student){
       Object rowData[] = new Object[9];
       rowData[0] = student.getFirstName();
@@ -183,19 +191,28 @@ public class StudentForm extends javax.swing.JFrame {
             model.fireTableDataChanged();
                        
     }//GEN-LAST:event_onAddButtonActionPerformed
-
+    /**
+     * onRemoveButtonActionPerformed
+     * checks if a valid student has been selected
+     * Checks if the student is a valid student in the list
+     * once this is successful the student is removed and the JTable, List and DB 
+     * is updated accordingly
+     * @param evt 
+     */
     private void onRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onRemoveButtonActionPerformed
         // TODO add your handling code here:
             int selectedRowIndex = studentTable.getSelectedRow();
+            if(selectedRowIndex < 0){
+                JOptionPane.showMessageDialog(null, "Please select a student", "Warning",JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             Object studentName = studentTable.getValueAt(selectedRowIndex, 0);
             String name = studentName.toString();
-            int studentNo = 0;
-            CISConnection cis = new CISConnection("cis4005");
             for(int i = 0; i < list.Size(); i++){
                 Student s = list.get(i);
                 if(name == s.getFirstName()){
                    list.remove(s);
-                   studentNo = s.getStudentNo();
+                   int studentNo = s.getStudentNo();
                    cis.removeStudent(studentNo);
                    model.removeRow(selectedRowIndex);
                    System.out.println("REMOVE");
@@ -203,7 +220,11 @@ public class StudentForm extends javax.swing.JFrame {
                 }
             }
     }//GEN-LAST:event_onRemoveButtonActionPerformed
-
+    /**
+     * onBackButtonActionPerformed
+     * Navigates the user back to the Admin Setup Form
+     * @param evt 
+     */
     private void onBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onBackButtonActionPerformed
         // TODO add your handling code here:
         AdminSetupForm form = new AdminSetupForm();

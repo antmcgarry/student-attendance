@@ -22,6 +22,8 @@ public class RegisterForm extends javax.swing.JFrame {
 
     /**
      * Creates new form RegisterForm
+     * @param l list of students that have been assigned to the module
+     * @param m module which the register is being taken for
      */
     public RegisterForm(StudentList l, Module m) {
         initComponents();
@@ -37,7 +39,11 @@ public class RegisterForm extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    
+    /**
+     * loadStudents
+     * loads all the students from the student list provided
+     * which populates their names in a comboBox to be selected by the user
+     */
     public void loadStudents(){
         comboBoxStudent.addItem("Select...");
         for(int i = 0; i < list.Size(); i++){
@@ -176,7 +182,12 @@ public class RegisterForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * onBackButtonActionPerformed
+     * Navigate back the Module Setup Form which takes the module as a parameter
+     * closes this form
+     * @param evt 
+     */
     private void onBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onBackButtonActionPerformed
         // TODO add your handling code here:
         ModuleSetupForm msf = new ModuleSetupForm(module);
@@ -185,7 +196,16 @@ public class RegisterForm extends javax.swing.JFrame {
         msf.setLocationRelativeTo(null);
         this.dispose(); 
     }//GEN-LAST:event_onBackButtonActionPerformed
-
+    /**
+     * onPresentButtonActionPerformed
+     * checks if a student has been selected
+     * takes the register for the selected student and say they are present
+     * This has been updated to the DB
+     * another check is carried out depending on the register of the user full-time/part-time 
+     * to check if the student attendance matches the requirement of the module
+     * removes the student from the register once completed
+     * @param evt 
+     */
     private void onPresentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onPresentButtonActionPerformed
         // TODO add your handling code here:
         int s = comboBoxStudent.getSelectedIndex();
@@ -194,7 +214,6 @@ public class RegisterForm extends javax.swing.JFrame {
             return;
         }
         Student student = list.get(s-1);
-        System.out.println(student.getFirstName());
         int moduleId = module.getModuleId();
         int studentId = student.getStudentId();
         int moduleSemester = module.getModuleSemester();
@@ -210,7 +229,16 @@ public class RegisterForm extends javax.swing.JFrame {
         }
         System.out.println("Student Present Sent");
     }//GEN-LAST:event_onPresentButtonActionPerformed
-
+     /**
+     * onAbsentButtonActionPerformed
+     * checks if a student has been selected
+     * takes the register for the selected student and say they are absent
+     * This has been updated to the DB
+     * another check is carried out depending on the register of the user full-time/part-time 
+     * to check if the student attendance matches the requirement of the module
+     * removes the student from the register once completed
+     * @param evt 
+     */
     private void onAbsentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onAbsentButtonActionPerformed
         // TODO add your handling code here:
         int s = comboBoxStudent.getSelectedIndex();

@@ -28,20 +28,26 @@ public class TutorForm extends javax.swing.JFrame {
         this.setLocationRelativeTo(null); //Centers the login form to the center of the screen
         getTutorList();
     }
-    
+    /**
+     * getTutorList
+     * get all the tutors from the DB and stores them in the tutor list
+     * defines the JTable model
+     * passes each tutor to the insertNewRow method
+     */
     private void getTutorList() {
-       
-        
         cis.getAllTutors(list);
         list.getTutors();
         model = (DefaultTableModel) tutorTable.getModel();
-        
         for(int i = 0; i < list.Size(); i++){
            insertNewRow(list.get(i));
         }
         
     }
-    
+    /**
+     * insertNewRow
+     * @param t takes a Tutor object which is used to display each tutor
+     * in the JTable
+     */
     private void insertNewRow(Tutor t){
       Object rowData[] = new Object[9];
       rowData[0] = t.getTutorNo();
@@ -286,7 +292,13 @@ public class TutorForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * addButtonActionPerformed
+     * checks if all the fields have been filled in
+     * if successful a new tutor is created and the JTable, List and DB is update accordingly
+     * @param evt 
+     */
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
         int newId = list.get(list.Size() -1).getTutorId();
@@ -341,10 +353,20 @@ public class TutorForm extends javax.swing.JFrame {
 
                        
     }//GEN-LAST:event_addButtonActionPerformed
-
+    /**
+     * removeTutorActionPerformed
+     * Checks that a tutor has been selected
+     * Checks the selected tutor is valid in the tutor list
+     * if successful then the tutor is removed from the JTable, List and DB
+     * @param evt 
+     */
     private void removeTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTutorActionPerformed
         // TODO add your handling code here:
             int selectedRowIndex = tutorTable.getSelectedRow();
+            if(selectedRowIndex < 0){
+                JOptionPane.showMessageDialog(null, "Please select a tutor", "Warning",JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             Object code = tutorTable.getValueAt(selectedRowIndex, 0);
             String tutorNo = code.toString();
             for(int i = 0; i < list.Size(); i++){
@@ -359,7 +381,13 @@ public class TutorForm extends javax.swing.JFrame {
                 }
             }
     }//GEN-LAST:event_removeTutorActionPerformed
-
+    
+    /**
+     * onBackButtonActionPerformed
+     * Navigates the user back to the Admin Setup Form
+     * Closes this form
+     * @param evt 
+     */
     private void onBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onBackButtonActionPerformed
         // TODO add your handling code here:
         AdminSetupForm asf = new AdminSetupForm();
