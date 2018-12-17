@@ -29,7 +29,7 @@ public class ModuleSetupForm extends javax.swing.JFrame {
     Boolean leader = false;
     /**
      * Creates new form ProgramSetupForm
-     * @param p getting the programme passed from the setup Page
+     * @param module getting the module passed from the setup Page
      */
     public ModuleSetupForm(Module module) {
         initComponents();
@@ -43,7 +43,11 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         getStudentAssigned();
         getModuleLeader();
     }
-    
+    /**
+     * getModuleLeader
+     * This method checks if the module which was selected has a module leader
+     * if the is a leader in the DB records then the label will show the Tutors name
+     */
     private void getModuleLeader() {
        Tutor temp = cis.getModuleLeader(m.getModuleId());
        if(temp == null){
@@ -56,7 +60,10 @@ public class ModuleSetupForm extends javax.swing.JFrame {
            labelTutorName.setText(tutorNo + " " + fName + " " + lName);
         }
     }
-    
+    /**
+     * getStudentAssigned
+     * Fetches all the current students that are assigned to module
+     */
     private void getStudentAssigned(){
         cis.getStudenttoModule(tList, m.getModuleId());
         tList.getStudents();
@@ -69,9 +76,13 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    /**
+     * loadStudents
+     * loads all the students in the DB and stores them in a list and
+     * populates their names in a comboBox so the user can select each student
+     */
     private void loadStudents(){
         cis.getAllStudents(list);
-        list.getStudents();
         comboBoxStudent.addItem("Select...");
         for(int i = 0; i < list.Size(); i++){
            String fName = list.get(i).getFirstName();
@@ -80,6 +91,11 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * loadTutors
+     * loads all the tutors in the DB and stores them in a list and
+     * populates their names in a comboBox so the user can select each tutor
+     */
     private void loadTutors(){
         cis.getAllTutors(tutorList);
         tutorList.getTutors();
@@ -89,6 +105,12 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * insertTableRow
+     * Loads all the students that are currently assigned to the module and displays
+     * the information in a JTable
+     * @param student get the student model passed from getStudentsAssigned
+     */
     public static void insertTableRow(Student student){
       Object rowData[] = new Object[9];
       rowData[0] = student.getFirstName();
@@ -349,7 +371,15 @@ public class ModuleSetupForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * assignStudentButtonActionPerformed
+     * if a student is selected in the comboBox and the user press the assign student button
+     * then the student is enrolled to module unless the student is already 
+     * assigned a warning message will appear
+     * The information will also be stored in the DB
+     * @param evt 
+     */
     private void assignStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignStudentButtonActionPerformed
         // TODO add your handling code here:
         int s = comboBoxStudent.getSelectedIndex();
@@ -369,9 +399,15 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         tList.add(student);
         insertTableRow(student);
     }//GEN-LAST:event_assignStudentButtonActionPerformed
-
+    
+    /**
+     * removeStudentButtonActionPerformed
+     * This method requires the user to select a student from the JTable
+     * and press the remove student which will unassign the selected student 
+     * from the module and update the table and DB.
+     * @param evt 
+     */
     private void removeStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStudentButtonActionPerformed
-        // TODO add your handling code here:
         int selectedRowIndex = studentTable.getSelectedRow();
         if(selectedRowIndex < 0) {
             JOptionPane.showMessageDialog(null, "Please select a student to remove", "Warning",JOptionPane.WARNING_MESSAGE);
@@ -389,7 +425,13 @@ public class ModuleSetupForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_removeStudentButtonActionPerformed
-
+    /**
+     * onAssignModuleLeaderActionPerformed
+     * This method requires the user to select a tutor to assign as module leader
+     * If the module already has a leader then the user will be given a warning massage
+     * when tutor is assigned as the module leader the label will be update along side with the DB
+     * @param evt 
+     */
     private void onAssignModuleLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onAssignModuleLeaderActionPerformed
         // TODO add your handling code here:
         int s = comboBoxTutors.getSelectedIndex();
@@ -411,7 +453,13 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         String lName = tutorList.get(s).getLastName();
         labelTutorName.setText(tutorNo + " " + fName + " " + lName );
     }//GEN-LAST:event_onAssignModuleLeaderActionPerformed
-
+    /**
+     * onRemoveModuleLeaderActionPerformed
+     * This method requires for a leader to already be assigned to the module
+     * as an extra check a DB call is made to check if the module has a leader or not
+     * if the module leader is found then the tutor is unassigned as the module leader and the DB is updated
+     * @param evt 
+     */
     private void onRemoveModuleLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onRemoveModuleLeaderActionPerformed
         // TODO add your handling code here:
         if (!leader) {
@@ -431,7 +479,11 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         System.out.println("REMOVE");
 
     }//GEN-LAST:event_onRemoveModuleLeaderActionPerformed
-
+    /**
+     * onBackButtonActionPerformed
+     * Returns the user back to the Setup Form and closes this form
+     * @param evt 
+     */
     private void onBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onBackButtonActionPerformed
         // TODO add your handling code here:
         SetupForm sf = new SetupForm();
@@ -440,11 +492,20 @@ public class ModuleSetupForm extends javax.swing.JFrame {
         sf.setLocationRelativeTo(null);
         this.dispose();    
     }//GEN-LAST:event_onBackButtonActionPerformed
-
+    /**
+     * onTakeRegisterActionPerformed
+     * navigates the user to the register form for the given module to take the register
+     * a check is made first to make sure that the module has students assigned and a module leader is able to take register
+     * @param evt 
+     */
     private void onTakeRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onTakeRegisterActionPerformed
         // TODO add your handling code here:
         if (tList.Size() <= 0) {
             JOptionPane.showMessageDialog(null, "Module has no students assigned for the register", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (!leader) {
+            JOptionPane.showMessageDialog(null, "No Module leader assigned to take register", "Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
         RegisterForm rf = new RegisterForm(tList, m);

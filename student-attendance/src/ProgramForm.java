@@ -27,18 +27,23 @@ public class ProgramForm extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         getProgrammeList();
     }
-    
+    /**
+     * getProgrammeList
+     * Loads all the programs from the DB and passe the programme 
+     * object to insertTableRow
+     */
     public void getProgrammeList(){
         CISConnection cis = new CISConnection("cis4005");
         cis.getProgrammeList(list);
-        list.getProgrammes();
         model = (DefaultTableModel) programmeTable.getModel();
         System.out.println(list);
         for(int i = 0; i < list.Size(); i++){
            insertTableRow(list.get(i));
         }
     }
-    
+    /**
+     * @param p programme object used to render information in JTable
+     */
     private void insertTableRow(Programme p){
       Object rowData[] = new Object[3];
       rowData[0] = p.getProgramCode();
@@ -242,7 +247,16 @@ public class ProgramForm extends javax.swing.JFrame {
     private void textFieldProgrammeCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldProgrammeCodeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldProgrammeCodeActionPerformed
-
+    
+    /**
+     * addProgrammeActionPerformed
+     * This method first checks that all fields have been filled in 
+     * else displays a warning to the user instructing them to fill in the fields
+     * if successful filled in all the fields then a Programme object will be created
+     * and the JTable, list and DB will be updated accordingly with the new record
+     * and the fields will be reset back to default values.
+     * @param evt 
+     */
     private void addProgrammeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProgrammeActionPerformed
         // TODO add your handling code here:
         String code = textFieldProgrammeCode.getText();
@@ -270,7 +284,11 @@ public class ProgramForm extends javax.swing.JFrame {
         comboBoxLevel.setSelectedIndex(0);
         level = 1;
     }//GEN-LAST:event_addProgrammeActionPerformed
-
+    /**
+     * comboBoxLevelActionPerformed
+     * This method set the level depending the coboBox item selected by the user
+     * @param evt 
+     */
     private void comboBoxLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxLevelActionPerformed
         // TODO add your handling code here:
         if(comboBoxLevel.getSelectedItem().equals("Level 1")){
@@ -283,10 +301,19 @@ public class ProgramForm extends javax.swing.JFrame {
             this.level = 3;
         }
     }//GEN-LAST:event_comboBoxLevelActionPerformed
-
+    /**
+     * removeProgrammeActionPerformed
+     * This method requires the user to select a programme on the JTable
+     * if successful then the programme will be removed from the JTable, List and DB
+     * @param evt 
+     */
     private void removeProgrammeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeProgrammeActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = programmeTable.getSelectedRow();
+        if(selectedRowIndex < 0){
+            JOptionPane.showMessageDialog(null, "Please select a programme", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Object programmeCode = programmeTable.getValueAt(selectedRowIndex, 0);
         String code = programmeCode.toString();
         CISConnection cis = new CISConnection("cis4005");

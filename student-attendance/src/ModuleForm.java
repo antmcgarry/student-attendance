@@ -1,4 +1,5 @@
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Module;
 import student.attendance.JDBConnection.CISConnection;
@@ -15,31 +16,34 @@ import student.attendance.ModuleList;
  * @author anthonymcgarry
  */
 public class ModuleForm extends javax.swing.JFrame {
-    private static DefaultTableModel model;
-    private ModuleList list = new ModuleList();
-    private int level = 1;
-    private int semester = 1;
+    private static DefaultTableModel model; //sets the table model
+    private ModuleList list = new ModuleList(); //module list to store the modules
+    private int level = 1; //module level
+    private int semester = 1;// module semester
+    CISConnection cis = new CISConnection("cis4005");// Establishes connection to the DB
     
     /**
      * Creates new form ModuleForm
      */
     public ModuleForm() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        getModules();
+        this.setLocationRelativeTo(null);//center from
+        getModules();// get the modules from the DB
     }
     
     public void getModules(){
-        CISConnection cis = new CISConnection("cis4005");
-        cis.getModuleList(list);
-        list.getModules();
-        model = (DefaultTableModel) moduleTable.getModel();
-        System.out.println(list);
+        cis.getModuleList(list); //Get the modules from the DB
+        model = (DefaultTableModel) moduleTable.getModel(); // Set the model to match JTable modle
         for(int i = 0; i < list.Size(); i++){
+           //For each module in the moduleList pass the module object to the inserTableRow method
            insertTableRow(list.get(i));
         }
     }
-    
+    /**
+     * This method renders a new row for each module object 
+     * that is passed to this method and renders the data in their respected column
+     * @param m get the module object
+     */
     private void insertTableRow(Module m){
         Object rowData[] = new Object[5];
         rowData[0] = m.getModuleCode();
@@ -172,6 +176,11 @@ public class ModuleForm extends javax.swing.JFrame {
 
         cancelButton.setBackground(new java.awt.Color(153, 0, 51));
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -272,17 +281,24 @@ public class ModuleForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * addModuleActionPerformed module takes all the input fields and creates a new module
+     * which is then added to the module list and rendered in the JTable and submitted to DB
+     * After successfully adding a new module all the fields, level and semester are set back to default values.
+     * @param evt 
+     */
     private void addModuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addModuleActionPerformed
         // TODO add your handling code here:
         String code = textFieldModuleCode.getText();
         String title = textFieldModuleTitle.getText();
         String credit = textFieldModuleCredit.getText();
         if(code == null || code.equals("") || title == null || title.equals("") || credit == null || credit.equals("") ){
+            JOptionPane.showMessageDialog(null, "Every field requires an input", "Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
         if(!isNumeric(credit)){
-            System.out.println("Credit must be a number");
+            JOptionPane.showMessageDialog(null, "Credit must be a number", "Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
         int newId = list.get(list.Size() -1).getModuleId();
@@ -294,7 +310,6 @@ public class ModuleForm extends javax.swing.JFrame {
         int id = newId;
         int numberCredit = Integer.parseInt(credit);
         Module m = new Module(id, title, numberCredit, code, level, semester);
-        CISConnection cis = new CISConnection("cis4005");
         cis.insertModule(m);
         list.add(m);
         insertTableRow(m);
@@ -308,13 +323,21 @@ public class ModuleForm extends javax.swing.JFrame {
        
         
     }//GEN-LAST:event_addModuleActionPerformed
-
+    /**
+     * removeModuleActionPerformed requires the user to select module from the JTable
+     * once selected it is then checks to see if the given module is available in the moduleList
+     * if this is true then the module is removed from the list, JTable and also the DB
+     * @param evt 
+     */
     private void removeModuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeModuleActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex = moduleTable.getSelectedRow();
+        if(selectedRowIndex < 0){
+            JOptionPane.showMessageDialog(null, "Please select a module", "Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Object moduleCode = moduleTable.getValueAt(selectedRowIndex, 0);
         String code = moduleCode.toString();
-        CISConnection cis = new CISConnection("cis4005");
         for(int i = 0; i < list.Size(); i++){
             Module m = list.get(i);
             if(code == m.getModuleCode()){
@@ -326,7 +349,10 @@ public class ModuleForm extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_removeModuleActionPerformed
-
+    /**
+     * This method set the level depending on which option was selected by the user
+     * @param evt 
+     */
     private void comboBoxModuleLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxModuleLevelActionPerformed
         // TODO add your handling code here:
         if(comboBoxModuleLevel.getSelectedItem().equals("Level 1")){
@@ -339,7 +365,10 @@ public class ModuleForm extends javax.swing.JFrame {
             this.level = 3;
         }
     }//GEN-LAST:event_comboBoxModuleLevelActionPerformed
-
+    /**
+     * This method set the semester depending on which option was selected by the user
+     * @param evt 
+     */
     private void comboBoxModuleSemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxModuleSemesterActionPerformed
         // TODO add your handling code here:
         if(comboBoxModuleSemester.getSelectedItem().equals("Semester 1")){
@@ -349,6 +378,18 @@ public class ModuleForm extends javax.swing.JFrame {
             this.semester = 2;
         }
     }//GEN-LAST:event_comboBoxModuleSemesterActionPerformed
+    /**
+     * This method returns the user back to the admin form
+     * @param evt 
+     */
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        // TODO add your handling code here:
+        AdminSetupForm form = new AdminSetupForm();
+        form.setVisible(true);
+        form.pack();
+        form.setLocationRelativeTo(null);
+        this.dispose(); 
+    }//GEN-LAST:event_cancelButtonActionPerformed
     
     /**
      * 

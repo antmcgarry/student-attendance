@@ -18,18 +18,19 @@ import student.attendance.StudentList;
  * @author Anthony Mcgarry
  */
 public class AddStudentForm extends javax.swing.JFrame {
-    public StudentList sl;
-    private char register = 'F';
+    public StudentList sl; // Used to store add the new student which is created
+    private char register = 'F'; // Used when creating a new student by default a student will be set as full-time if not specified
     /**
      * Creates new form addTutorForm
+     * @param list gather the current list of students and allows for the new student to be added to the current list
      */
-    public AddStudentForm() {
-
-    }
-    
     public AddStudentForm(StudentList list){
         this.sl = list;
         initComponents();
+    }
+
+    private AddStudentForm() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -204,8 +205,13 @@ public class AddStudentForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * This method is to generate a new student object using the data passed to the respected fields
+     * @param evt 
+     */
     private void button_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_submitActionPerformed
+        // get the last students number and increments it by 1 in the if statement
         int newId = sl.get(sl.Size() -1).getStudentNo();
         if (newId >= 1) {
           newId++;
@@ -220,7 +226,8 @@ public class AddStudentForm extends javax.swing.JFrame {
         String add = textField_address.getText();        
         String email = firstName + "." + lastName +"@ormskirk.ac.uk";
         String password = "password";
-        char reg = this.register; // need to add drop down to form
+        char reg = this.register;
+        //Checks if any of the fields have been left blank if the fields are blank then a warning message will display informing the user.
         if(firstName == " " || firstName == null){
             JOptionPane.showMessageDialog(null, "Please fill in First Name field", "Warning",JOptionPane.WARNING_MESSAGE);
             return;
@@ -241,15 +248,24 @@ public class AddStudentForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please fill in Address field", "Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
+        //Creates a new student object using the data provided
         Student student = new Student(id, firstName, lastName, age, dob, add, email, password, reg);
+        // Establishes a connection to the DB
         CISConnection cis = new CISConnection("cis4005");
+        // Stores the new student in to the DB
         cis.insertStudent(student);
+        // Uses the static method from StudentForm to insert the Student to the Jtable on previous from
         StudentForm.insertNewStudent(student);
+        //Add the student to the current student list
         sl.add(student);
         dispose();
          
     }//GEN-LAST:event_button_submitActionPerformed
-
+    /**
+     * This method checks which student register was selected in the 
+     * comboBox and set the char to either 'F' or 'P' for the DB
+     * @param evt 
+     */
     private void studentRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentRegisterActionPerformed
         if (studentRegister.getSelectedItem().equals("Full-Time")){
             this.register = 'F';
@@ -258,7 +274,10 @@ public class AddStudentForm extends javax.swing.JFrame {
             this.register = 'P';
         }
     }//GEN-LAST:event_studentRegisterActionPerformed
-
+    /**
+     * This method Closes the from by pressing the cancel button 
+     * @param evt 
+     */
     private void button_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_cancelActionPerformed
         // TODO add your handling code here:
         dispose();

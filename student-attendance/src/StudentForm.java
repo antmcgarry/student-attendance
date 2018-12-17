@@ -206,10 +206,10 @@ public class StudentForm extends javax.swing.JFrame {
 
     private void onBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onBackButtonActionPerformed
         // TODO add your handling code here:
-        LoginForm lf = new LoginForm();
-        lf.setVisible(true);
-        lf.pack(); // Pack method sizes the frame so that all its contents are at or above their preferred sizes.
-        lf.setLocationRelativeTo(null);
+        AdminSetupForm form = new AdminSetupForm();
+        form.setVisible(true);
+        form.pack(); // Pack method sizes the frame so that all its contents are at or above their preferred sizes.
+        form.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_onBackButtonActionPerformed
     

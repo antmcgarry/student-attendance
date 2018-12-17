@@ -28,6 +28,7 @@ public class ProgramSetupForm extends javax.swing.JFrame {
     Boolean leader = false;
     /**
      * Creates new form ProgramSetupForm
+     * Set the labels based on the programme information
      * @param p getting the programme passed from the setup Page
      */
     public ProgramSetupForm(Programme p) {
@@ -42,7 +43,12 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         getModulesAssigned();
         getProgrammeLeader();
     }
-    
+    /**
+     * getProgrammeLeader
+     * check if the Programme already has a leader of not
+     * if the no tutor leader available then the label is set
+     * if the tutor is assigned as the leader then the label is set to the tutor name
+     */
     private void getProgrammeLeader() {
        Tutor temp = cis.getProgrammeLeader(p.getProgramId());
        if(temp == null){
@@ -56,6 +62,11 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * getModulesAssigned
+     * Get all the modules from the DB that are assigned to the programme
+     * and populate the information to the JTable
+     */
     private void getModulesAssigned(){
         cis.getModluesToProgramme(tList, p.getProgramId());
         tList.getModules();
@@ -68,15 +79,24 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    /**
+     * loadModules
+     * Loads all the modules from the DB and stores them in a list
+     * and add them to the comboBox
+     */
     private void loadModules(){
         cis.getModuleList(list);
-        list.getModules();
         comboBoxModule.addItem("Select...");
         for(int i = 0; i < list.Size(); i++){
            comboBoxModule.addItem(list.get(i).getModuleTitle());
         }
     }
     
+     /**
+     * loadTutors
+     * Loads all the Tutors from the DB and stores them in a list
+     * and add them to the comboBox
+     */
     private void loadTutors(){
         cis.getAllTutors(tutorList);
         tutorList.getTutors();
@@ -85,6 +105,11 @@ public class ProgramSetupForm extends javax.swing.JFrame {
            comboBoxTutors.addItem(tutorList.get(i).getFirstName() + " " + tutorList.get(i).getLastName());
         }
     }
+    /**
+     * insertTableRow
+     * @param m get the module Object passed and populates 
+     * all the data required in the JTable
+     */
     private void insertTableRow(Module m){
         Object rowData[] = new Object[5];
         rowData[0] = m.getModuleCode();
@@ -323,7 +348,15 @@ public class ProgramSetupForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * assignModuleButtonActionPerformed
+     * This method assigns modules to the Programme
+     * checks if the programme has too many modules already assigned depending on the level 
+     * checks if the module has been selected or not
+     * checks if the is duplicates of the module in the module list
+     * if all checks pass then the JTable, List and DB is updated with the module assigned
+     * @param evt 
+     */
     private void assignModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignModuleButtonActionPerformed
         // TODO add your handling code here:
         int s = comboBoxModule.getSelectedIndex();
@@ -356,7 +389,14 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         tList.add(m);
         insertTableRow(m);
     }//GEN-LAST:event_assignModuleButtonActionPerformed
-
+    /**
+     * removeModuleButtonActionPerformed
+     * This method unassigns modules from the programme
+     * Checks if a module has been selected in the JTable
+     * if module has been selected and it is valid then the module is unassigned
+     * and the DB is updated and the JTable removes the selected module
+     * @param evt 
+     */
     private void removeModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeModuleButtonActionPerformed
         // TODO add your handling code here:
        int selectedRowIndex = moduleTable.getSelectedRow();
@@ -377,7 +417,14 @@ public class ProgramSetupForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_removeModuleButtonActionPerformed
-
+    /**
+     * onAssignProgrammeLeaderActionPerformed
+     * This method assigns tutors to be the programme leader
+     * Checks if a tutor has been selected
+     * Checks if a tutor has already been assigned as leader
+     * if successful then the tutor is assigned and the label is updated along side with the DB
+     * @param evt 
+     */
     private void onAssignProgrammeLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onAssignProgrammeLeaderActionPerformed
         // TODO add your handling code here:
         int s = comboBoxTutors.getSelectedIndex();
@@ -399,10 +446,21 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         String lName = tutorList.get(s -1).getLastName();
         labelTutorName.setText(tutorNo + " " + fName + " " + lName );
     }//GEN-LAST:event_onAssignProgrammeLeaderActionPerformed
-
+    /**
+     * onRemoveProgrammeLeaderActionPerformed
+     * Ask the user if they are sure they want to unassign the leader
+     * Checks if a leader has been assigned or not
+     * Checks if the DB as a record of the leader
+     * After all the checks the tutor is unassigned from the programme
+     * label and DB is updated accordingly
+     * @param evt 
+     */
     private void onRemoveProgrammeLeaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onRemoveProgrammeLeaderActionPerformed
         // TODO add your handling code here:
-        if (!leader) return;
+        if (!leader){
+           JOptionPane.showMessageDialog(null, "A leader is already assigned", "Warning",JOptionPane.WARNING_MESSAGE);
+           return; 
+        }
         int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove programme leader?", "Remove", JOptionPane.YES_NO_OPTION);
         if(option == 1) return;
         Tutor t = cis.getProgrammeLeader(p.getProgramId());
@@ -418,7 +476,11 @@ public class ProgramSetupForm extends javax.swing.JFrame {
         System.out.println("REMOVE");
 
     }//GEN-LAST:event_onRemoveProgrammeLeaderActionPerformed
-
+    /**
+     * onBackButtonActionPerformed
+     * Navigate the user back to the Setup Form
+     * @param evt 
+     */
     private void onBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onBackButtonActionPerformed
         // TODO add your handling code here:
         SetupForm sf = new SetupForm();

@@ -43,13 +43,6 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                  <Component id="onSetupTutor" min="-2" pref="148" max="-2" attributes="0"/>
-                  <EmptySpace pref="106" max="32767" attributes="0"/>
-                  <Component id="onSetupStudent" min="-2" pref="148" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-              </Group>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
@@ -60,8 +53,20 @@
                           <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
                           <Component id="onLogout" min="-2" pref="173" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="onSetupProgrammes" min="-2" pref="148" max="-2" attributes="0"/>
+                              <Component id="onSetupTutor" min="-2" pref="148" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="onSetupStudent" min="-2" pref="148" max="-2" attributes="0"/>
+                              <Component id="onSetupModules" min="-2" pref="148" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="51" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -70,12 +75,17 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="onSetupTutor" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="onSetupStudent" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="onSetupTutor" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="onSetupProgrammes" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="onSetupModules" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="onLogout" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="23" max="32767" attributes="0"/>
               </Group>
@@ -94,12 +104,12 @@
             <Property name="text" type="java.lang.String" value="Admin Zone"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="onSetupTutor">
+        <Component class="javax.swing.JButton" name="onSetupProgrammes">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Setup Tutors"/>
+            <Property name="text" type="java.lang.String" value="Setup Programmes"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onSetupTutorActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onSetupProgrammesActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="onSetupStudent">
@@ -119,6 +129,22 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onLogoutActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="onSetupTutor">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Setup Tutors"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onSetupTutorActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="onSetupModules">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Setup Modules"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="onSetupModulesActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

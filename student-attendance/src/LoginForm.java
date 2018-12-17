@@ -13,15 +13,16 @@ import student.attendance.JDBConnection.CISConnection;
  * @author Anthony Mcgarry
  */
 public class LoginForm extends javax.swing.JFrame {
-    private String role = "admin";
+    private String role = "admin"; // get set depending on the comboBox selected
     /**
      * Creates new form LoginForm
+     * 
      */
     public LoginForm() {
         initComponents();
         this.setLocationRelativeTo(null); //Centers the login form to the center of the screen
-        String title = "<html><u><b>Ormskirk University Portal</b></u></html>";
-        jLabel1.setText(title);
+        String title = "<html><u><b>Ormskirk University Portal</b></u></html>";// Used HTML code to add an underline and bold to the text
+        jLabel1.setText(title);//Pass the string to title label on the form
     }
 
     /**
@@ -175,23 +176,34 @@ public class LoginForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * This method uses a MouseEvent which quits the application
+     * if the user presses the Cancel button and confirms to quit.
+     * @param evt 
+     */
     private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
+        int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Logout", JOptionPane.YES_NO_OPTION);
+        if(option == 1) return;
         System.exit(0);
     }//GEN-LAST:event_cancelButtonMouseClicked
-
+    /**
+     * This method controls the Login process when a user enters a valid email and password
+     * @param evt 
+     */
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
-        String password = passwordTextField.getText();
-        String email = emailTextField.getText();
-        CISConnection cis = new CISConnection("cis4005");
-        
-        Boolean login = cis.login(email, password, role);
+
+        String password = passwordTextField.getText();//get the password from the password field
+        String email = emailTextField.getText();//get the email from the text fiel
+        CISConnection cis = new CISConnection("cis4005");//establishes a connection to the DB
+        //Check if the DB has a record matching the details passed to the parameter
+        Boolean login = cis.login(email, password, role); 
         if(login){
             passwordTextField.setText("");
             emailTextField.setText("");
             switch (role) {
                 case "admin":
+                    //Loads the admin form if succesfully logs in and the role is admin
                     AdminSetupForm asf = new AdminSetupForm();
                     asf.setVisible(true);
                     asf.pack();
@@ -200,6 +212,7 @@ public class LoginForm extends javax.swing.JFrame {
                     this.dispose();
                     break;
                 case "tutor":
+                     //Loads the tutor form if succesfully logs in and the role is tutor
                     SetupForm sf = new SetupForm();
                     sf.setVisible(true);
                     sf.pack();
@@ -208,6 +221,7 @@ public class LoginForm extends javax.swing.JFrame {
                     this.dispose();
                     break;
                 case "student":
+                     //Loads the student form if succesfully logs in and the role is student
                     System.out.println("SOON IT WILL BE HERE");
                     break;
                 default:
@@ -215,9 +229,14 @@ public class LoginForm extends javax.swing.JFrame {
             }
             return;
         }
+        //unable to login this warning message will appare to the user
         JOptionPane.showMessageDialog(null, "Invalid login please try again", "Warning",JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_loginButtonActionPerformed
-
+    /**
+     * This method will set the variable role to one of the three
+     * out comes below depending on the option selected by the user
+     * @param evt 
+     */
     private void comboBoxRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxRoleActionPerformed
         // TODO add your handling code here:
         if(comboBoxRole.getSelectedItem().equals("Administrator")){

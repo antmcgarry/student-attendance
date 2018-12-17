@@ -18,7 +18,7 @@ public class AdminSetupForm extends javax.swing.JFrame {
      */
     public AdminSetupForm() {
         initComponents();
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null); //Set form to the center of the screen
     }
 
     /**
@@ -32,9 +32,11 @@ public class AdminSetupForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        onSetupTutor = new javax.swing.JButton();
+        onSetupProgrammes = new javax.swing.JButton();
         onSetupStudent = new javax.swing.JButton();
         onLogout = new javax.swing.JButton();
+        onSetupTutor = new javax.swing.JButton();
+        onSetupModules = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,10 +46,10 @@ public class AdminSetupForm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Admin Zone");
 
-        onSetupTutor.setText("Setup Tutors");
-        onSetupTutor.addActionListener(new java.awt.event.ActionListener() {
+        onSetupProgrammes.setText("Setup Programmes");
+        onSetupProgrammes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onSetupTutorActionPerformed(evt);
+                onSetupProgrammesActionPerformed(evt);
             }
         });
 
@@ -66,16 +68,24 @@ public class AdminSetupForm extends javax.swing.JFrame {
             }
         });
 
+        onSetupTutor.setText("Setup Tutors");
+        onSetupTutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onSetupTutorActionPerformed(evt);
+            }
+        });
+
+        onSetupModules.setText("Setup Modules");
+        onSetupModules.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onSetupModulesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(onSetupTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                .addComponent(onSetupStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -83,19 +93,32 @@ public class AdminSetupForm extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(179, 179, 179)
-                        .addComponent(onLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(onLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(onSetupProgrammes, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(onSetupTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(95, 95, 95)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(onSetupStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(onSetupModules, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jLabel1)
-                .addGap(62, 62, 62)
+                .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(onSetupTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(onSetupStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                    .addComponent(onSetupStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(onSetupTutor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(onSetupProgrammes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(onSetupModules, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(onLogout)
                 .addContainerGap(23, Short.MAX_VALUE))
         );
@@ -113,9 +136,13 @@ public class AdminSetupForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * This Form is used to control the on logout button action 
+     * @param evt 
+     */
     private void onLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onLogoutActionPerformed
-        // TODO add your handling code here:
+        // An option pane will populate asking the user if they are sure they want to logout
+        // If they do then the user is navigated back to the login form
         int option = JOptionPane.showConfirmDialog(null, "Do you really want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
         if(option == 1) return;
         LoginForm lf = new LoginForm();
@@ -124,17 +151,24 @@ public class AdminSetupForm extends javax.swing.JFrame {
         lf.setLocationRelativeTo(null);
         this.dispose(); 
     }//GEN-LAST:event_onLogoutActionPerformed
-
-    private void onSetupTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onSetupTutorActionPerformed
+    /**
+     * This method navigates the user to the Programme form if setup programme button is pressed 
+     * @param evt 
+     */
+    private void onSetupProgrammesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onSetupProgrammesActionPerformed
         // TODO add your handling code here:
-        TutorForm tf = new TutorForm();
-        tf.setVisible(true);
-        tf.pack();
-        tf.setLocationRelativeTo(null);
+        ProgramForm form = new ProgramForm();
+        form.setVisible(true);
+        form.pack();
+        form.setLocationRelativeTo(null);
         this.dispose(); 
         
-    }//GEN-LAST:event_onSetupTutorActionPerformed
-
+        
+    }//GEN-LAST:event_onSetupProgrammesActionPerformed
+    /**
+     * This method navigates the user to the Student form if setup student button is pressed 
+     * @param evt 
+     */
     private void onSetupStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onSetupStudentActionPerformed
         // TODO add your handling code here:
         StudentForm sf = new StudentForm();
@@ -143,6 +177,30 @@ public class AdminSetupForm extends javax.swing.JFrame {
         sf.setLocationRelativeTo(null);
         this.dispose(); 
     }//GEN-LAST:event_onSetupStudentActionPerformed
+    /**
+     * This method navigates the user to the Tutor form if setup tutor button is pressed 
+     * @param evt 
+     */
+    private void onSetupTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onSetupTutorActionPerformed
+        // TODO add your handling code here:
+        TutorForm tf = new TutorForm();
+        tf.setVisible(true);
+        tf.pack();
+        tf.setLocationRelativeTo(null);
+        this.dispose(); 
+    }//GEN-LAST:event_onSetupTutorActionPerformed
+    /**
+     * This method navigates the user to the Module form if setup module button is pressed 
+     * @param evt 
+     */
+    private void onSetupModulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onSetupModulesActionPerformed
+        // TODO add your handling code here:
+        ModuleForm form = new ModuleForm();
+        form.setVisible(true);
+        form.pack();
+        form.setLocationRelativeTo(null);
+        this.dispose(); 
+    }//GEN-LAST:event_onSetupModulesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,6 +241,8 @@ public class AdminSetupForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton onLogout;
+    private javax.swing.JButton onSetupModules;
+    private javax.swing.JButton onSetupProgrammes;
     private javax.swing.JButton onSetupStudent;
     private javax.swing.JButton onSetupTutor;
     // End of variables declaration//GEN-END:variables
