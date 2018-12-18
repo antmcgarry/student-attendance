@@ -20,7 +20,16 @@ public class Person {
     private String address;
     private String email;
     private String password;
-    
+    /**
+     * Person base Object
+     * @param fName The person first name
+     * @param lName The person last name
+     * @param a The person age
+     * @param dob The person date of birth
+     * @param add The person address
+     * @param e The person email address
+     * @param p The person password
+     */
     public Person(String fName, String lName, int a, String dob, String add, String e, String p){
         this.firstName = fName;
         this.lastName = lName;
@@ -31,53 +40,82 @@ public class Person {
         this.password = p;
     }
 
-    Person() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     // The public getters and setters for the private instance fields.
     // Only used Setters for the age and address as these fields will be able to change.
-    
+    /**
+     * getFirstName
+     * @return the person first name
+     */
     public String getFirstName(){
         return firstName;
     }
-    
+    /**
+     * getLastName
+     * @return the person last name
+     */
     public String getLastName() {
         return lastName;
     }
-    
+    /**
+     * getAge
+     * @return the person age
+     */
     public int getAge(){
         return age;
     }
-    
+    /**
+     * setAge
+     * @param a update the person age
+     */
     public void setAge(int a) {
         this.age = a; 
     }
-    
+    /**
+     * getDateofBirth
+     * @return the person date of birth
+     */
     public String getDateofBirth() {
         return dateOfBirth;
     }
-    
+    /**
+     * getAddress
+     * @return the person address
+     */
     public String getAddress() {
         return address;
     }
-    
+    /**
+     * SetAddress
+     * @param add update the person address
+     */
     public void SetAddress(String add) {
         this.address = add;
     }
-    
+    /**
+     * getEmail
+     * @return the person email address
+     */
     public String getEmail(){
         return email;
     }
-    
+    /**
+     * setEmail
+     * @param email update the person email address
+     */
     public void setEmail(String email){
         this.email = email;
     }
-    
+    /**
+     * setPassword
+     * @param p updates the person password
+     */
     public void setPassword(String p){
         this.password = p;
     }
-    
+    /**
+     * getPassword
+     * @return the person password
+     */
     public String getPassword(){
         return password;
     }
