@@ -12,3 +12,9 @@ os.arch=x86_64
 os.version=10.14.1
 derby.system.home=/Users/anthonymcgarry/Documents/Univeristy/application development in java/student-attendance/studentdb
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Tue Dec 18 07:10:24 GMT 2018: Shutting down Derby engine
+----------------------------------------------------------------
+Tue Dec 18 07:10:24 GMT 2018:
+Shutting down instance a816c00e-0167-b76f-0818-000066815159 on database directory /Users/anthonymcgarry/Documents/Univeristy/application development in java/student-attendance/studentdb/cis4005 with class loader sun.misc.Launcher$AppClassLoader@6f94fa3e 
+----------------------------------------------------------------
