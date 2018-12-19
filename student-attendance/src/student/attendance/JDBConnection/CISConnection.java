@@ -298,7 +298,10 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when printing all students: " + sqle.toString());
         }
     }
-    
+    /**
+     * getModuleList
+     * @param list take the module list to store the modules from the DB
+     */
     public void getModuleList(ModuleList list){
         final String retrieveQuery = "SELECT * from module";
         this.setQuery(retrieveQuery);
@@ -348,7 +351,10 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when inserting module record: " + sqle.toString());
         }
     }
-    
+    /**
+     * removeModule
+     * @param code remove the module from the DB base on the module code
+     */
     public void removeModule(String code){
         final String sql = "DELETE FROM module WHERE modulecode = ?";
         try
@@ -386,7 +392,11 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when adding module to programme: " + sqle.toString());
         }
     }
-    
+    /**
+     * getModluesToProgramme
+     * @param list stores the modules in the list from the DB
+     * @param id uses the id of the programme to get modules related to the programme id
+     */
     public void getModluesToProgramme(ModuleList list, int id){
         final String retrieveQuery = "SELECT MODULE.ID, MODULE.MODULETITLE, MODULE.CREDITS, MODULECODE, LEVEL, SEMESTER FROM CIS4005.MODULE inner join CIS4005.MODULEPROGRAMME on MODULEPROGRAMME.PROGRAMMEID = ? AND MODULEPROGRAMME.MODULEID = MODULE.ID";
         ResultSet output;
@@ -415,7 +425,11 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when printing all students: " + sqle.toString());
         }
     }
-    
+    /**
+     * getProgrammeLeader
+     * @param ProgrammeId uses the ID based on the programme
+     * @return get the tutor who is the leader assigned to the programme
+     */
     public Tutor getProgrammeLeader(int ProgrammeId){
     final String retrieveQuery = "SELECT TUTOR.ID, TUTOR.FORENAME, TUTOR.SURNAME, TUTOR.TUTORNO, TUTOR.EMAIL, TUTOR.PASSWORD, TUTOR.DOB, TUTOR.AGE, TUTOR.ADDRESS, TUTOR.STATUS FROM CIS4005.TUTOR inner join CIS4005.TUTORPROGRAMME on TUTORPROGRAMME.PROGRAMMEID = ? AND TUTORPROGRAMME.TUTORID = TUTOR.ID";
     ResultSet output;
@@ -448,7 +462,12 @@ public class CISConnection extends DBConnection {
         }
         return null;
     }
-    
+    /**
+     * removeModuleFromProgramme
+     * @param moduleId find the module ID in the DB
+     * @param programmeId find the programme ID in the DB
+     * removes the module assigned to the programme
+     */
     public void removeModuleFromProgramme(final int moduleId, final int programmeId){
         final String sql = "DELETE FROM moduleprogramme WHERE moduleid = ? and programmeId = ?";
         try
@@ -465,7 +484,12 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when deleting student record: " + sqle.toString());
         }
     }
-    
+    /**
+     * assignProgrammeLeader
+     * @param tutorId takes the tutor ID 
+     * @param programmeId  take the Programme ID
+     * assigns the tutor to programme as the programme leader
+     */
     public void assignProgrammeLeader(final int tutorId, final int programmeId)
     {
         final String insertStmt = "INSERT INTO TUTORPROGRAMME (tutorId, programmeId) VALUES (?,?)";
@@ -482,7 +506,12 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when adding module to programme: " + sqle.toString());
         }
     }
-    
+    /**
+     * removeProgrammeLeader
+     * @param tutorId takes the tutor ID
+     * @param programmeId takes the Programme ID
+     * Remove the tutor assigned as the programme leader from the DB
+     */
     public void removeProgrammeLeader(final int tutorId, final int programmeId){
         final String sql = "DELETE FROM tutorprogramme WHERE tutorid = ? and programmeId = ?";
         try
@@ -499,7 +528,11 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when deleting student record: " + sqle.toString());
         }
     }
-    
+    /**
+     * getModuleLeader
+     * @param moduleId get the module id 
+     * @return if the tutor in related to the module id the return the tutor object
+     */
     public Tutor getModuleLeader(int moduleId){
     final String retrieveQuery = "SELECT TUTOR.ID, TUTOR.FORENAME, TUTOR.SURNAME, TUTOR.TUTORNO, TUTOR.EMAIL, TUTOR.PASSWORD, TUTOR.DOB, TUTOR.AGE, TUTOR.ADDRESS, TUTOR.STATUS FROM CIS4005.TUTOR inner join CIS4005.TUTORMODULE on TUTORMODULE.MODULEID = ? AND TUTORMODULE.TUTORID = TUTOR.ID";
     ResultSet output;
@@ -532,7 +565,11 @@ public class CISConnection extends DBConnection {
         }
         return null;
     }
-    
+    /**
+     * getStudenttoModule
+     * @param list stores student object in the list
+     * @param id uses module id to match students assigned to module
+     */
     public void getStudenttoModule(StudentList list, int id) {
         final String retrieveQuery = "SELECT STUDENT.ID, STUDENT.FORENAME, STUDENT.SURNAME, STUDENT.STUDENTNO, STUDENT.FULLPARTTIME, STUDENT.EMAIL, STUDENT.PASSWORD, STUDENT.DOB, STUDENT.AGE, STUDENT.ADDRESS, STUDENT.STATUS FROM CIS4005.STUDENT inner join CIS4005.STUDENTMODULE on STUDENTMODULE.STUDENTID = STUDENT.ID AND STUDENTMODULE.MODULEID = ?";
         ResultSet output;
@@ -567,7 +604,12 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when printing all students: " + sqle.toString());
         }
     }
-    
+    /**
+     * addStudenttoModule
+     * @param studentId takes the student ID
+     * @param moduleId takes the module ID
+     * assigns the student to the module
+     */
     public void addStudenttoModule(int studentId, int moduleId){
         final String insertStmt = "INSERT INTO studentmodule (studentId, moduleId) VALUES (?,?)";
         try
@@ -583,7 +625,12 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when adding module to programme: " + sqle.toString());
         }
     }
-    
+    /**
+     * removeStudentFromModule
+     * @param studentId takes the student ID
+     * @param moduleId takes the module ID
+     * Removes the student assigned to the module
+     */
     public void removeStudentFromModule(int studentId, int moduleId){
         final String sql = "DELETE FROM studentmodule WHERE studentId = ? and moduleId = ?";
         try
@@ -600,7 +647,12 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when deleting student record: " + sqle.toString());
         }
     }
-    
+    /**
+     * removeModuleLeader
+     * @param tutorId takes tutor ID
+     * @param moduleId takes module ID
+     * Unassigns the tutor as module leader 
+     */
     public void removeModuleLeader(int tutorId, int moduleId){
         final String sql = "DELETE FROM tutormodule WHERE tutorId = ? and moduleId = ?";
         try
@@ -617,7 +669,12 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when deleting student record: " + sqle.toString());
         }
     }
-    
+    /**
+     * assignModuleLeader
+     * @param tutorId takes the tutor ID
+     * @param moduleId takes the module ID
+     * Assigns the tutor as the module leader
+     */
     public void assignModuleLeader(int tutorId, int moduleId)
     {
         final String insertStmt = "INSERT INTO TUTORMODULE (tutorId, moduleId) VALUES (?,?)";
@@ -634,7 +691,13 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when adding module to programme: " + sqle.toString());
         }
     }
-    
+    /**
+     * submitRegister
+     * @param moduleId takes the module ID
+     * @param studentId takes the student ID
+     * @param semester takes the module semester
+     * @param attended  takes the student attended
+     */
     public void submitRegister(int moduleId, int studentId, int semester, int attended){
          final String insertStmt = "INSERT INTO REGISTER (studentId, moduleId, attended, semester) VALUES (?,?,?,?)";
          try
@@ -652,7 +715,12 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when adding module to programme: " + sqle.toString());
         }
     }
-    
+    /**
+     * getModulesToStudent
+     * @param list add module object to the list provided 
+     * @param studentId takes the student ID
+     * get the modules assigned to the student
+     */
     public void getModulesToStudent(ModuleList list, int studentId){
        final String retrieveQuery = "SELECT MODULE.ID, MODULE.MODULETITLE, MODULE.CREDITS, MODULECODE, LEVEL, SEMESTER FROM CIS4005.MODULE inner join CIS4005.STUDENTMODULE on STUDENTMODULE.STUDENTID = ? AND STUDENTMODULE.MODULEID = MODULE.ID";
         ResultSet output;
@@ -681,7 +749,13 @@ public class CISConnection extends DBConnection {
             System.out.println("Exception when printing all students: " + sqle.toString());
         } 
     }
-    
+    /**
+     * checkAttendance
+     * @param moduleId takes module ID
+     * @param studentId takes student ID
+     * @param reg takes student register type
+     * @return true if the student is breaking the requirements for the attendance
+     */
     public Boolean checkAttendance(int moduleId, int studentId, char reg){
         String retrieveQuery = null;
         int attended = 0;
@@ -716,7 +790,13 @@ public class CISConnection extends DBConnection {
         } 
         return false;
     }
-    
+    /**
+     * 
+     * @param u takes the email address
+     * @param p takes the password
+     * @param role takes the role
+     * @return if successful in logging in the returns true else false
+     */
     public Boolean login(final String u, final String p, final String role){
         String queryString = null;
         switch (role) {
